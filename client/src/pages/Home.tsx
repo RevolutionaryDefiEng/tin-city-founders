@@ -40,6 +40,7 @@ const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.p
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
   { label: "Programmes", href: "#programmes" },
+  { label: "Built In Jos", href: "#built-in-jos" },
   { label: "Partner with us", href: "#partnerships" },
 ];
 
@@ -305,7 +306,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="directory-invite" aria-labelledby="directory-title">
+        <section id="built-in-jos" className="directory-invite" aria-labelledby="directory-title">
           <div className="directory-copy">
             <span className="micro-label">BUILT IN JOS · FOUNDER DIRECTORY</span>
             <h2 id="directory-title">Put what you are building <em>on the map.</em></h2>

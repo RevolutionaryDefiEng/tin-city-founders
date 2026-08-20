@@ -232,6 +232,16 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partnership-card a svg { transition: transform 160ms ease; }
 .partnership-card a:hover svg { transform: translate(2px, -2px); }
 
+@media (max-width: 1160px) {
+  .header-inner { gap: 23px; }
+  .desktop-nav { gap: 18px; }
+  .partnerships-content { grid-template-columns: 1fr; gap: 52px; }
+  .partnerships-copy { max-width: 620px; }
+  .partner-enquiry-form-wrap { max-width: 620px; }
+  .partnership-cards { max-width: none; }
+  .partnership-card { min-height: 294px; }
+}
+
 .workshop-section { position: relative; min-height: 720px; display: flex; align-items: end; padding: 68px 6vw; overflow: hidden; background: #2b493a; }
 .workshop-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.78) contrast(1.05); }
 .workshop-section::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25, 48, 37, 0.89), rgba(31, 57, 43, 0.48) 54%, rgba(31, 57, 43, 0.21)); }
