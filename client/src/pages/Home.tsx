@@ -28,7 +28,7 @@ const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
 const womanSpeakerImage = "/manus-storage/tcf-speaker-woman_ad8fa94d.jpg";
 const manSpeakerImage = "/manus-storage/tcf-speaker-man_06305855.jpg";
 const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
-const logoImage = "/manus-storage/tcf-symbol_c9e270c1.png";
+const officialLogoImage = "/manus-storage/tcf-logo-primary-cropped_29287bed.png";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -75,14 +75,10 @@ const partnershipItems = [
   },
 ];
 
-function BrandLockup({ inverse = false }: { inverse?: boolean }) {
+function BrandLockup() {
   return (
     <a href="#top" className="brand-lockup" aria-label="Tin City Founders home">
-      <img className="brand-mark" src={logoImage} alt="Tin City Founders symbol" />
-      <span className={inverse ? "brand-type brand-type-inverse" : "brand-type"}>
-        <span>Tin City</span>
-        <span>Founders</span>
-      </span>
+      <img className="official-logo" src={officialLogoImage} alt="Tin City Founders" />
     </a>
   );
 }
@@ -110,7 +106,7 @@ export default function Home() {
     <div id="top" className="min-h-screen overflow-x-hidden bg-[#f4efe5] text-[#1f2e25]">
       <header className={isScrolled ? "site-header site-header-scrolled" : "site-header"}>
         <div className="header-inner">
-          <BrandLockup inverse={!isScrolled && !isOpen} />
+          <BrandLockup />
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} className="nav-link">
@@ -301,7 +297,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="footer-top">
-          <BrandLockup inverse />
+          <BrandLockup />
           <span className="footer-location"><MapPin size={15} /> Jos, Plateau State, Nigeria</span>
         </div>
         <div className="footer-grid">
