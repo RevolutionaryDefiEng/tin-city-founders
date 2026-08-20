@@ -34,7 +34,7 @@ export const appRouter = router({
     })),
     login: publicProcedure.input(dashboardLoginSchema).mutation(async ({ ctx, input }) => {
       if (!isValidDashboardCredential(input.username, input.password)) {
-        throw new Error("Invalid dashboard credentials");
+        return { success: false } as const;
       }
       const token = await createDashboardSession();
       ctx.res.cookie(DASHBOARD_SESSION_COOKIE, token, {

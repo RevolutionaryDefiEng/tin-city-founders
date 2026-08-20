@@ -52,7 +52,11 @@ function EnquiriesDashboard() {
   const isLocalDashboardSession = Boolean(dashboardSession.data?.authenticated);
   const isAdmin = user?.role === "admin" || isLocalDashboardSession;
   const dashboardLogin = trpc.dashboard.login.useMutation({
-    onSuccess: async () => {
+    onSuccess: async (result) => {
+      if (!result.success) {
+        toast.error("The username or password is not correct. Please try again.");
+        return;
+      }
       setPassword("");
       await Promise.all([
         utils.dashboard.session.invalidate(),
@@ -61,7 +65,7 @@ function EnquiriesDashboard() {
       ]);
       toast.success("Partner Team dashboard unlocked.");
     },
-    onError: () => toast.error("Those credentials could not be verified."),
+    onError: () => toast.error("The dashboard is temporarily unavailable. Please try again."),
   });
   const dashboardLogout = trpc.dashboard.logout.useMutation({
     onSuccess: async () => {

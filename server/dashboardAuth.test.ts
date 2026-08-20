@@ -35,6 +35,6 @@ describe("local dashboard credentials", () => {
   it("rejects an incorrect local dashboard password", async () => {
     const { ctx } = createDashboardContext();
     const caller = appRouter.createCaller(ctx);
-    await expect(caller.dashboard.login({ username: process.env.TCF_PARTNER_DASHBOARD_USERNAME!, password: "not-the-configured-password" })).rejects.toThrow("Invalid dashboard credentials");
+    await expect(caller.dashboard.login({ username: process.env.TCF_PARTNER_DASHBOARD_USERNAME!, password: "not-the-configured-password" })).resolves.toEqual({ success: false });
   });
 });

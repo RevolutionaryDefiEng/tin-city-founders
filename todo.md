@@ -36,3 +36,6 @@
 - [x] Define and securely configure local credentials for partner-dashboard access.
 - [x] Implement secure local dashboard sign-in, session handling, and sign-out.
 - [x] Test local credential access and dashboard protection before saving the revised checkpoint.
+- [x] Diagnose the local Partner Team credential error in the active dashboard runtime.
+- [x] Correct the dashboard login procedure and client error handling.
+- [x] Verify successful and failed local dashboard sign-in behavior, then save the revised checkpoint.
