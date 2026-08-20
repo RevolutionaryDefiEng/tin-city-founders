@@ -67,18 +67,33 @@ const programmeItems = [
 
 const partnershipItems = [
   {
+    id: "programme-sponsorship",
+    number: "01",
     title: "Programme sponsorship",
     text: "Underwrite a founder cohort, skills series, or learning infrastructure designed around a defined local need.",
+    detailTitle: "Anchor a practical season of founder growth.",
+    detailText: "Support a clearly defined series of founder gatherings, capability clinics, or mentor-led learning designed around local business needs.",
+    outcomes: ["A named founder cohort or learning series", "A shared delivery plan and reporting rhythm", "Thoughtful visibility within a trusted local community"],
     icon: HeartHandshake,
   },
   {
+    id: "strategic-collaboration",
+    number: "02",
     title: "Strategic collaboration",
     text: "Bring expertise, technology, market access, or research capacity into a community that values practical exchange.",
+    detailTitle: "Put useful expertise and access in the room.",
+    detailText: "Co-design a focused activation that connects founders with tools, specialist knowledge, new market relationships, or relevant research capacity.",
+    outcomes: ["A locally adapted activation or workshop", "Direct founder access to practical expertise", "Shared learning captured for future programming"],
     icon: Network,
   },
   {
+    id: "place-based-investment",
+    number: "03",
     title: "Place-based investment",
     text: "Help convene solutions that support resilient small businesses and more inclusive local economic development.",
+    detailTitle: "Strengthen the conditions that help enterprise stay.",
+    detailText: "Invest in the connective work around small businesses: local convening, community infrastructure, and collaborative responses to shared economic challenges.",
+    outcomes: ["A place-aware scope shaped with local founders", "A coalition approach to shared challenges", "Evidence of participation, learning, and outcomes"],
     icon: Globe2,
   },
 ];
@@ -344,7 +359,7 @@ export default function Home() {
                   Download sponsorship prospectus <FileDown size={18} />
                 </a>
               </div>
-              <div className="partner-enquiry-form-wrap" aria-labelledby="partner-enquiry-title">
+              <div id="partner-enquiry" className="partner-enquiry-form-wrap" aria-labelledby="partner-enquiry-title">
                 <div className="partner-enquiry-heading">
                   <span className="micro-label">START A DIALOGUE</span>
                   <h3 id="partner-enquiry-title">Tell us where you see the fit.</h3>
@@ -405,18 +420,34 @@ export default function Home() {
               <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
             <div className="partnership-cards">
-              {partnershipItems.map((item, index) => {
+              {partnershipItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <article className="partnership-card" key={item.title}>
-                    <div className="partnership-card-top"><span>0{index + 1}</span><Icon size={22} strokeWidth={1.7} /></div>
+                  <a className="partnership-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
+                    <div className="partnership-card-top"><span>{item.number}</span><Icon size={22} strokeWidth={1.7} /></div>
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
-                    <a href="#contact" aria-label={`Learn more about ${item.title}`}><span>Open a dialogue</span><ArrowUpRight size={17} /></a>
-                  </article>
+                    <span className="bubble-open-label"><span>Explore pathway</span><ArrowDown size={16} /></span>
+                  </a>
                 );
               })}
             </div>
+          </div>
+          <div className="pathway-details" aria-label="Detailed sponsorship pathways">
+            {partnershipItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article id={item.id} className="pathway-detail" key={item.id}>
+                  <div className="pathway-detail-top"><span>{item.number} · SPONSORSHIP PATHWAY</span><Icon size={20} strokeWidth={1.8} /></div>
+                  <h3>{item.detailTitle}</h3>
+                  <p>{item.detailText}</p>
+                  <ul>
+                    {item.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
+                  </ul>
+                  <a href="#partner-enquiry" className="pathway-detail-link">Discuss this pathway <ArrowUpRight size={17} /></a>
+                </article>
+              );
+            })}
           </div>
         </section>
 
