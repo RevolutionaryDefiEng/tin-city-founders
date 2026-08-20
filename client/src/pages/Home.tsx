@@ -34,7 +34,7 @@ const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
 const officialLogoLightImage = "/manus-storage/tcf-logo-transparent-light-exact_25248531.png";
 const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30f7112d.png";
 const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
-const builtInJosDirectoryUrl = "https://www.africanintelligence.tech/facilitator/students";
+const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.png";
 
 const navItems = [

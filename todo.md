@@ -17,3 +17,4 @@
 - [x] Prepare the supplied Built In Jos directory invitation visual for web delivery.
 - [x] Add a “Join the Map” directory call-to-action after the community voices section.
 - [x] Verify the directory invitation on desktop and mobile, then save the revised checkpoint.
+- [x] Replace the Built In Jos registration target with the corrected Google Form URL and verify the call-to-action.
