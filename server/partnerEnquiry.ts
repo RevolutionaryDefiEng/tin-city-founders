@@ -24,6 +24,8 @@ export const activationTimings = [
   "exploring",
 ] as const;
 
+export const enquiryStatuses = ["new", "reviewing", "closed"] as const;
+
 export const partnerEnquirySchema = z.object({
   organizationName: z.string().trim().min(2).max(200),
   contactName: z.string().trim().min(2).max(160),
@@ -32,6 +34,16 @@ export const partnerEnquirySchema = z.object({
   intendedSupport: z.enum(supportOptions),
   activationTiming: z.enum(activationTimings),
   message: z.string().trim().max(2000).optional(),
+});
+
+export const partnerEnquiryFiltersSchema = z.object({
+  search: z.string().trim().max(200).default(""),
+  status: z.enum(enquiryStatuses).optional(),
+});
+
+export const partnerEnquiryStatusUpdateSchema = z.object({
+  id: z.number().int().positive(),
+  status: z.enum(enquiryStatuses),
 });
 
 export type PartnerEnquiryInput = z.infer<typeof partnerEnquirySchema>;

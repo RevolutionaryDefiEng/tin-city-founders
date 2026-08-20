@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertPartnerEnquiry, InsertUser, partnerEnquiries, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -96,4 +96,66 @@ export async function createPartnerEnquiry(enquiry: InsertPartnerEnquiry): Promi
   }
 
   await db.insert(partnerEnquiries).values(enquiry);
+}
+
+export type PartnerEnquiryFilters = {
+  search: string;
+  status?: "new" | "reviewing" | "closed";
+};
+
+export async function listPartnerEnquiries(filters: PartnerEnquiryFilters) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Partner enquiry storage is temporarily unavailable");
+  }
+
+  const conditions = [];
+  if (filters.status) {
+    conditions.push(eq(partnerEnquiries.status, filters.status));
+  }
+
+  const query = filters.search.trim();
+  if (query) {
+    const term = `%${query}%`;
+    conditions.push(
+      or(
+        like(partnerEnquiries.organizationName, term),
+        like(partnerEnquiries.contactName, term),
+        like(partnerEnquiries.contactEmail, term),
+      ),
+    );
+  }
+
+  return db
+    .select()
+    .from(partnerEnquiries)
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(desc(partnerEnquiries.createdAt));
+}
+
+export async function getPartnerEnquirySummary() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Partner enquiry storage is temporarily unavailable");
+  }
+
+  return db
+    .select({
+      status: partnerEnquiries.status,
+      count: sql<number>`count(*)`,
+    })
+    .from(partnerEnquiries)
+    .groupBy(partnerEnquiries.status);
+}
+
+export async function updatePartnerEnquiryStatus(
+  id: number,
+  status: "new" | "reviewing" | "closed",
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Partner enquiry storage is temporarily unavailable");
+  }
+
+  await db.update(partnerEnquiries).set({ status }).where(eq(partnerEnquiries.id, id));
 }

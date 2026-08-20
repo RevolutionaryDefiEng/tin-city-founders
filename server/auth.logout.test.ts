@@ -59,4 +59,13 @@ describe("auth.logout", () => {
       path: "/",
     });
   });
+
+  it("does not allow a non-admin user to access partner enquiries", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    await expect(caller.admin.partnerEnquiries.list({ search: "" })).rejects.toMatchObject({
+      code: "FORBIDDEN",
+    });
+  });
 });

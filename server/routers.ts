@@ -1,10 +1,9 @@
 import { COOKIE_NAME } from "@shared/const";
-import { z } from "zod";
-import { createPartnerEnquiry } from "./db";
+import { createPartnerEnquiry, getPartnerEnquirySummary, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
-import { partnerEnquirySchema } from "./partnerEnquiry";
+import { adminProcedure, publicProcedure, router } from "./_core/trpc";
+import { partnerEnquiryFiltersSchema, partnerEnquirySchema, partnerEnquiryStatusUpdateSchema } from "./partnerEnquiry";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -26,6 +25,15 @@ export const appRouter = router({
         message: input.message ?? null,
       });
       return { success: true } as const;
+    }),
+  }),
+  admin: router({
+    partnerEnquiries: router({
+      list: adminProcedure.input(partnerEnquiryFiltersSchema).query(({ input }) => listPartnerEnquiries(input)),
+      summary: adminProcedure.query(() => getPartnerEnquirySummary()),
+      updateStatus: adminProcedure.input(partnerEnquiryStatusUpdateSchema).mutation(({ input }) =>
+        updatePartnerEnquiryStatus(input.id, input.status),
+      ),
     }),
   }),
 });

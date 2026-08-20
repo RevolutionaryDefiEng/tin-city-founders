@@ -29,3 +29,7 @@
 - [x] Improve bubble typography, vertical rhythm, and action-label alignment for clearer pathway browsing.
 - [x] Add concise sponsorship scope guidance to each detailed pathway panel.
 - [x] Verify bubble readability and scope context on desktop, tablet, and mobile, then save the revised checkpoint.
+- [x] Define protected administrative enquiry workflow, filters, status updates, and export fields.
+- [x] Add authorized backend procedures to list, filter, update, and export partner enquiries.
+- [x] Build the protected administrative enquiry dashboard and navigation route.
+- [x] Test dashboard access, filtering, status changes, export, and responsive behavior before saving the revised checkpoint.
