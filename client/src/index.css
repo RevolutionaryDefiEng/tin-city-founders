@@ -222,13 +222,17 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-success span { color: #7d4a24; font-size: 8px; letter-spacing: 0.13em; font-weight: 800; }
 .partner-enquiry-success strong { font-family: "DM Serif Display", Georgia, serif; font-size: 20px; line-height: 1.12; font-weight: 400; }
 .partnership-conversation-link { margin-top: 18px; }
-.partnership-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; align-items: stretch; background: #cfc5b5; border: 1px solid #cfc5b5; }
-.partnership-card { display: flex; flex-direction: column; min-height: 360px; padding: 26px 22px 20px; background: #f9f5ed; transition: background 180ms ease, transform 180ms cubic-bezier(0.23, 1, 0.32, 1); }
-.partnership-card:hover { position: relative; z-index: 1; background: #fffdfa; transform: translateY(-7px); box-shadow: 0 15px 28px rgba(39, 48, 41, 0.13); }
-.partnership-card-top { display: flex; justify-content: space-between; align-items: center; color: #d58c24; font-size: 10px; letter-spacing: 0.08em; font-weight: 800; }
-.partnership-card h3 { margin: auto 0 15px; color: #234536; font-size: 27px; }
-.partnership-card p { margin-bottom: 24px; color: #58655b; font-size: 12px; line-height: 1.75; }
-.partnership-card a { display: inline-flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 15px; border-top: 1px solid #cfc5b5; color: #234536; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 800; }
+.partnership-cards { position: relative; min-height: 585px; overflow: hidden; }
+.partnership-card { position: absolute; display: flex; flex-direction: column; justify-content: center; width: 276px; aspect-ratio: 1; padding: 32px; overflow: hidden; border-radius: 50%; background: #f9f5ed; color: #234536; box-shadow: 0 12px 24px rgba(35, 54, 43, 0.12); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease; }
+.partnership-card::after { content: ""; position: absolute; right: 18px; top: 18px; width: 50px; height: 50px; border: 1px solid currentColor; border-radius: 50%; opacity: 0.18; }
+.partnership-card:nth-child(1) { top: 0; left: 0; width: 306px; background: #234536; color: #fffdf7; }
+.partnership-card:nth-child(2) { top: 72px; right: 0; width: 267px; background: #d58c24; color: #1f2e25; }
+.partnership-card:nth-child(3) { left: 23%; bottom: 0; width: 294px; background: #fffdfa; color: #234536; }
+.partnership-card:hover { z-index: 2; transform: translateY(-8px) scale(1.015); box-shadow: 0 20px 32px rgba(35, 54, 43, 0.2); }
+.partnership-card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; color: currentColor; font-size: 10px; letter-spacing: 0.08em; font-weight: 800; }
+.partnership-card h3 { position: relative; z-index: 1; margin: 19px 0 10px; color: currentColor; font-size: 26px; line-height: 0.97; }
+.partnership-card p { position: relative; z-index: 1; margin: 0; color: currentColor; font-size: 10px; line-height: 1.55; opacity: 0.82; }
+.partnership-card a { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 15px; padding-top: 10px; border-top: 1px solid currentColor; color: currentColor; font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
 .partnership-card a svg { transition: transform 160ms ease; }
 .partnership-card a:hover svg { transform: translate(2px, -2px); }
 
@@ -238,8 +242,8 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .partnerships-content { grid-template-columns: 1fr; gap: 52px; }
   .partnerships-copy { max-width: 620px; }
   .partner-enquiry-form-wrap { max-width: 620px; }
-  .partnership-cards { max-width: none; }
-  .partnership-card { min-height: 294px; }
+  .partnership-cards { width: min(700px, 100%); max-width: none; margin: 0 auto; }
+  .partnership-card { min-height: 0; }
 }
 
 .workshop-section { position: relative; min-height: 720px; display: flex; align-items: end; padding: 68px 6vw; overflow: hidden; background: #2b493a; }
@@ -344,9 +348,9 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .partner-enquiry-form { padding: 14px; }
   .partner-enquiry-grid { grid-template-columns: 1fr; }
   .partner-enquiry-span { grid-column: auto; }
-  .partnership-cards { grid-template-columns: 1fr; gap: 1px; }
-  .partnership-card { min-height: 245px; padding: 23px 19px 18px; }
-  .partnership-card h3 { margin: 37px 0 11px; }
+  .partnership-cards { display: grid; grid-template-columns: 1fr; min-height: 0; gap: 16px; max-width: 300px; margin: 0 auto; overflow: visible; }
+  .partnership-card, .partnership-card:nth-child(1), .partnership-card:nth-child(2), .partnership-card:nth-child(3) { position: relative; inset: auto; width: 100%; padding: 33px; }
+  .partnership-card h3 { margin: 19px 0 10px; }
   .workshop-section { min-height: 650px; padding: 52px 20px; }
   .workshop-section::after { background: linear-gradient(90deg, rgba(25, 48, 37, 0.9), rgba(31, 57, 43, 0.3)); }
   .contact-section { padding: 79px 20px 65px; }

@@ -21,3 +21,5 @@
 - [x] Repair the partnerships section layout at mid-width viewports so prospectus, form, and partnership pathways use the available space.
 - [x] Add a Built In Jos header navigation link that scrolls to the directory invitation.
 - [x] Verify the repaired layout and navigation on desktop, tablet, and mobile, then save the revised checkpoint.
+- [x] Replace the sparse rectangular partnership cards with an intentional circular bubble composition.
+- [x] Verify the partnership bubbles use the available space cleanly across desktop, tablet, and mobile, then save the revised checkpoint.
