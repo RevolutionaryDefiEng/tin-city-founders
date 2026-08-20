@@ -11,3 +11,6 @@
 - [x] Create a branded sponsorship prospectus for partnership audiences.
 - [x] Add a download call-to-action and focused investor-facing refinements to the partnerships section.
 - [x] Verify the prospectus and responsive website update, then save the revised checkpoint.
+- [x] Define partner enquiry details, support options, and activation timing fields.
+- [x] Implement the partner enquiry form beneath the sponsorship prospectus download card.
+- [x] Verify the responsive form experience and save the revised checkpoint.

@@ -4,6 +4,8 @@
  * Jos evergreen for trust, Tin Amber for movement, and staggered field-journal layouts.
  */
 import { useEffect, useState } from "react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -78,6 +80,30 @@ const partnershipItems = [
   },
 ];
 
+const organizationTypeOptions = [
+  { value: "international_organization", label: "International organization" },
+  { value: "enterprise_platform", label: "Enterprise platform" },
+  { value: "impact_funder", label: "Impact funder or investor" },
+  { value: "foundation", label: "Foundation" },
+  { value: "other", label: "Other" },
+] as const;
+
+const supportOptions = [
+  { value: "programme_sponsorship", label: "Programme sponsorship" },
+  { value: "strategic_collaboration", label: "Strategic collaboration" },
+  { value: "tool_or_credit_access", label: "Tool or credit access" },
+  { value: "founder_visibility", label: "Founder visibility" },
+  { value: "showcase_or_demo_day", label: "Showcase or Demo Day" },
+  { value: "other", label: "Other" },
+] as const;
+
+const activationTimingOptions = [
+  { value: "next_30_days", label: "Within 30 days" },
+  { value: "one_to_three_months", label: "In 1–3 months" },
+  { value: "three_to_six_months", label: "In 3–6 months" },
+  { value: "exploring", label: "Exploring possibilities" },
+] as const;
+
 function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
   return (
     <a href="#top" className="brand-lockup" aria-label="Tin City Founders home">
@@ -93,6 +119,16 @@ function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [enquirySent, setEnquirySent] = useState(false);
+  const submitPartnerEnquiry = trpc.partnerships.submitEnquiry.useMutation({
+    onSuccess: () => {
+      setEnquirySent(true);
+      toast.success("Your partnership enquiry has been received.");
+    },
+    onError: () => {
+      toast.error("We could not submit your enquiry. Please try again or email the team directly.");
+    },
+  });
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
@@ -108,6 +144,20 @@ export default function Home() {
   }, []);
 
   const closeMenu = () => setIsOpen(false);
+
+  const handlePartnerEnquiry = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    submitPartnerEnquiry.mutate({
+      organizationName: String(form.get("organizationName") ?? ""),
+      contactName: String(form.get("contactName") ?? ""),
+      contactEmail: String(form.get("contactEmail") ?? ""),
+      organizationType: String(form.get("organizationType") ?? "") as (typeof organizationTypeOptions)[number]["value"],
+      intendedSupport: String(form.get("intendedSupport") ?? "") as (typeof supportOptions)[number]["value"],
+      activationTiming: String(form.get("activationTiming") ?? "") as (typeof activationTimingOptions)[number]["value"],
+      message: String(form.get("message") ?? "") || undefined,
+    });
+  };
 
   return (
     <div id="top" className="min-h-screen overflow-x-hidden bg-[#f4efe5] text-[#1f2e25]">
@@ -274,6 +324,64 @@ export default function Home() {
                 <a href={sponsorshipProspectusUrl} download target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
                   Download sponsorship prospectus <FileDown size={18} />
                 </a>
+              </div>
+              <div className="partner-enquiry-form-wrap" aria-labelledby="partner-enquiry-title">
+                <div className="partner-enquiry-heading">
+                  <span className="micro-label">START A DIALOGUE</span>
+                  <h3 id="partner-enquiry-title">Tell us where you see the fit.</h3>
+                  <p>Share a few details and the partnership team will respond with a locally grounded next step.</p>
+                </div>
+                {enquirySent ? (
+                  <div className="partner-enquiry-success" role="status">
+                    <span>ENQUIRY RECEIVED</span>
+                    <strong>Thank you. We will review your intended support and follow up using the contact details provided.</strong>
+                  </div>
+                ) : (
+                  <form className="partner-enquiry-form" onSubmit={handlePartnerEnquiry}>
+                    <div className="partner-enquiry-grid">
+                      <label>
+                        <span>Organization name</span>
+                        <input name="organizationName" autoComplete="organization" required placeholder="Your organization" />
+                      </label>
+                      <label>
+                        <span>Your name</span>
+                        <input name="contactName" autoComplete="name" required placeholder="Full name" />
+                      </label>
+                      <label className="partner-enquiry-span">
+                        <span>Work email</span>
+                        <input name="contactEmail" type="email" autoComplete="email" required placeholder="name@organization.org" />
+                      </label>
+                      <label>
+                        <span>Organization type</span>
+                        <select name="organizationType" defaultValue="" required>
+                          <option value="" disabled>Select one</option>
+                          {organizationTypeOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                        </select>
+                      </label>
+                      <label>
+                        <span>Intended support</span>
+                        <select name="intendedSupport" defaultValue="" required>
+                          <option value="" disabled>Select one</option>
+                          {supportOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                        </select>
+                      </label>
+                      <label className="partner-enquiry-span">
+                        <span>Activation timing</span>
+                        <select name="activationTiming" defaultValue="" required>
+                          <option value="" disabled>Select one</option>
+                          {activationTimingOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                        </select>
+                      </label>
+                      <label className="partner-enquiry-span">
+                        <span>What would you like to explore? <em>Optional</em></span>
+                        <textarea name="message" rows={3} maxLength={2000} placeholder="A founder clinic, convening season, tool access, visibility programme, or another idea." />
+                      </label>
+                    </div>
+                    <button type="submit" className="partner-enquiry-submit" disabled={submitPartnerEnquiry.isPending}>
+                      {submitPartnerEnquiry.isPending ? "Sending enquiry…" : "Send partner enquiry"} <ArrowUpRight size={17} />
+                    </button>
+                  </form>
+                )}
               </div>
               <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
