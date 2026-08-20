@@ -28,7 +28,8 @@ const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
 const womanSpeakerImage = "/manus-storage/tcf-speaker-woman_ad8fa94d.jpg";
 const manSpeakerImage = "/manus-storage/tcf-speaker-man_06305855.jpg";
 const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
-const officialLogoImage = "/manus-storage/tcf-logo-primary-cropped_29287bed.png";
+const officialLogoLightImage = "/manus-storage/tcf-logo-transparent-light-exact_25248531.png";
+const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30f7112d.png";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -75,10 +76,14 @@ const partnershipItems = [
   },
 ];
 
-function BrandLockup() {
+function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
   return (
     <a href="#top" className="brand-lockup" aria-label="Tin City Founders home">
-      <img className="official-logo" src={officialLogoImage} alt="Tin City Founders" />
+      <img
+        className="official-logo"
+        src={variant === "dark" ? officialLogoDarkImage : officialLogoLightImage}
+        alt="Tin City Founders"
+      />
     </a>
   );
 }
@@ -106,7 +111,7 @@ export default function Home() {
     <div id="top" className="min-h-screen overflow-x-hidden bg-[#f4efe5] text-[#1f2e25]">
       <header className={isScrolled ? "site-header site-header-scrolled" : "site-header"}>
         <div className="header-inner">
-          <BrandLockup />
+          <BrandLockup variant={isScrolled || isOpen ? "dark" : "light"} />
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} className="nav-link">

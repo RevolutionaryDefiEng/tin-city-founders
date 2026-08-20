@@ -4,3 +4,6 @@
 - [x] Prepare the supplied official Tin City Founders logo for reliable web use.
 - [x] Replace the generated header and footer logo treatment with the official primary logo.
 - [x] Verify official logo visibility at desktop and mobile sizes, then save the revised checkpoint.
+- [x] Extract the diamond emblem as the official favicon asset.
+- [x] Remove the solid background from the official logo artwork for seamless page integration.
+- [x] Apply the transparent logo and favicon, then verify the updated brand treatment.
