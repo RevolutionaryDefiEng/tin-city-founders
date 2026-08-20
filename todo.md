@@ -1,0 +1,3 @@
+- [x] Prepare the supplied group photograph and supporting event photographs for web delivery.
+- [x] Replace generated images in the hero, mentorship, and workshop sections with authentic Tin City Founders photography.
+- [x] Verify desktop and mobile image crops, then save the revised website checkpoint.

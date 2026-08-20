@@ -22,9 +22,12 @@ import {
   X,
 } from "lucide-react";
 
-const heroImage = "/manus-storage/tcf-hero-jos-founders_005ff4a2.jpg";
-const mentorshipImage = "/manus-storage/tcf-mentorship-circle_f28e15d2.jpg";
-const workshopImage = "/manus-storage/tcf-innovation-workshop_00823e9e.jpg";
+const heroImage = "/manus-storage/tcf-hero-group_c84bbe3c.jpg";
+const mentorshipImage = "/manus-storage/tcf-group-workshop_baf69e6a.jpg";
+const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
+const womanSpeakerImage = "/manus-storage/tcf-speaker-woman_ad8fa94d.jpg";
+const manSpeakerImage = "/manus-storage/tcf-speaker-man_06305855.jpg";
+const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
 const logoImage = "/manus-storage/tcf-symbol_c9e270c1.png";
 
 const navItems = [
@@ -141,7 +144,7 @@ export default function Home() {
 
       <main>
         <section className="hero-section" aria-labelledby="hero-title">
-          <img src={heroImage} alt="Entrepreneurs gathering above the city in Jos" className="hero-image" />
+          <img src={heroImage} alt="Tin City Founders community members gathered at an event in Jos" className="hero-image" />
           <div className="hero-overlay" />
           <div className="hero-topography" aria-hidden="true">
             <span />
@@ -215,7 +218,7 @@ export default function Home() {
 
         <section className="field-story" aria-label="Founder mentorship and skills development">
           <div className="field-story-photo-wrap">
-            <img src={mentorshipImage} alt="Founders taking part in a mentorship circle" className="field-story-photo" />
+            <img src={mentorshipImage} alt="Tin City Founders members gathered during a community session" className="field-story-photo" />
             <div className="photo-caption"><span>FIELD NOTE</span><span>Mentorship is knowledge moving person to person.</span></div>
           </div>
           <div className="field-story-panel">
@@ -223,6 +226,27 @@ export default function Home() {
             <p>When founders can test ideas with peers, learn from experience, and access focused guidance, local potential becomes more durable.</p>
             <div className="field-story-line" />
             <span>Community-led. Not-for-profit. Built for the long term.</span>
+          </div>
+        </section>
+
+        <section className="voices-gallery" aria-labelledby="voices-title">
+          <div className="voices-intro">
+            <span className="micro-label">INSIDE THE ROOM</span>
+            <h2 id="voices-title">Ideas gather strength when more people <em>take the floor.</em></h2>
+          </div>
+          <div className="voices-photos">
+            <figure className="voice-frame voice-frame-a">
+              <img src={womanSpeakerImage} alt="A Tin City Founders member speaking at a community gathering" />
+              <figcaption><span>01</span> Founder exchange</figcaption>
+            </figure>
+            <figure className="voice-frame voice-frame-b">
+              <img src={manSpeakerImage} alt="A Tin City Founders member sharing an idea at a gathering" />
+              <figcaption><span>02</span> Practical insight</figcaption>
+            </figure>
+            <figure className="voice-frame voice-frame-c">
+              <img src={blueSpeakerImage} alt="A Tin City Founders member contributing to a community conversation" />
+              <figcaption><span>03</span> Local perspective</figcaption>
+            </figure>
           </div>
         </section>
 
@@ -254,7 +278,7 @@ export default function Home() {
         </section>
 
         <section className="workshop-section" aria-labelledby="workshop-title">
-          <img src={workshopImage} alt="Founders collaborating during a practical enterprise workshop" className="workshop-image" />
+          <img src={workshopImage} alt="Tin City Founders members gathered together after a community event" className="workshop-image" />
           <div className="workshop-note">
             <span className="micro-label">THE PARTNERSHIP STANDARD</span>
             <h2 id="workshop-title">Grounded in local context. <em>Designed for shared learning.</em></h2>

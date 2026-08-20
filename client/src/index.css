@@ -159,6 +159,20 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .field-story-line { width: 58px; height: 2px; background: #d58c24; }
 .field-story-panel > span { margin-top: 18px; color: #c8d1c6; font-size: 11px; line-height: 1.5; letter-spacing: 0.045em; text-transform: uppercase; font-weight: 700; }
 
+.voices-gallery { padding: 112px 6vw 104px; background: #ece3d4; }
+.voices-intro { display: grid; grid-template-columns: 0.62fr 1.25fr; gap: 38px; align-items: end; max-width: 1320px; margin: 0 auto 62px; }
+.voices-intro .micro-label { color: #234536; }
+.voices-intro h2 { max-width: 780px; margin: 0; color: #234536; font-family: "DM Serif Display", Georgia, serif; font-size: clamp(2.8rem, 4.8vw, 5rem); font-weight: 400; letter-spacing: -0.045em; line-height: 0.96; }
+.voices-intro h2 em { color: #7d4a24; }
+.voices-photos { display: grid; grid-template-columns: 0.8fr 1fr 0.8fr; align-items: end; gap: clamp(18px, 3.4vw, 48px); max-width: 1080px; margin: auto; }
+.voice-frame { margin: 0; }
+.voice-frame img { width: 100%; height: auto; display: block; object-fit: cover; filter: saturate(0.84) contrast(1.02); }
+.voice-frame-a { transform: translateY(36px); }
+.voice-frame-b { transform: translateY(-20px); }
+.voice-frame-c { transform: translateY(22px); }
+.voice-frame figcaption { display: flex; gap: 9px; align-items: baseline; padding-top: 11px; color: #4b594f; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; }
+.voice-frame figcaption span { color: #d58c24; }
+
 .partnerships-section { padding: 120px 6vw; background: #f4efe5; }
 .partnerships-heading, .partnerships-content { max-width: 1320px; margin: auto; }
 .partnerships-heading { display: grid; grid-template-columns: 0.5fr 1.5fr; gap: 36px; align-items: end; }
@@ -222,6 +236,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .programmes-intro > p { max-width: 500px; }
   .field-story { grid-template-columns: 1fr; }
   .field-story-photo-wrap { min-height: 500px; }
+  .voices-intro { grid-template-columns: 1fr; gap: 21px; }
   .partnerships-heading { grid-template-columns: 1fr; gap: 22px; }
   .partnership-cards { max-width: 850px; }
   .workshop-section { min-height: 660px; }
@@ -252,6 +267,13 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .field-story-photo-wrap { min-height: 420px; }
   .photo-caption { inset: auto 16px 15px; }
   .field-story-panel { padding: 61px 20px; }
+  .voices-gallery { padding: 77px 20px 68px; }
+  .voices-intro { margin-bottom: 41px; }
+  .voices-photos { gap: 10px; }
+  .voice-frame-a { transform: translateY(16px); }
+  .voice-frame-b { transform: translateY(-10px); }
+  .voice-frame-c { transform: translateY(10px); }
+  .voice-frame figcaption { font-size: 7px; letter-spacing: 0.045em; }
   .partnerships-section { padding-top: 80px; padding-bottom: 80px; }
   .partnerships-content { margin-top: 45px; }
   .partnership-cards { grid-template-columns: 1fr; gap: 1px; }
