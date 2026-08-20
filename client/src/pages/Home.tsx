@@ -12,6 +12,7 @@ import {
   Globe2,
   Handshake,
   HeartHandshake,
+  FileDown,
   Mail,
   MapPin,
   Menu,
@@ -30,6 +31,7 @@ const manSpeakerImage = "/manus-storage/tcf-speaker-man_06305855.jpg";
 const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
 const officialLogoLightImage = "/manus-storage/tcf-logo-transparent-light-exact_25248531.png";
 const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30f7112d.png";
+const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -256,11 +258,24 @@ export default function Home() {
             <div className="section-meta section-meta-dark"><span className="section-index">03</span><span>PARTNERSHIP PATHWAYS</span></div>
             <h2 id="partnerships-title">Bring more of what works <em>within reach.</em></h2>
           </div>
+          <div className="partnership-signals" aria-label="Partner readiness signals">
+            <span>Founder-dense local network</span>
+            <span>Repeatable community delivery</span>
+            <span>Evidence designed into the work</span>
+          </div>
           <div className="partnerships-content">
             <div className="partnerships-copy">
-              <p className="lead-copy">We welcome international organizations that see local founders as essential partners in inclusive, practical economic development.</p>
+              <p className="lead-copy">We welcome international organizations, enterprise platforms, and impact investors that see local founders as essential partners in inclusive, practical economic development.</p>
               <p>Every partnership begins with a conversation about the local context, the mutual value of collaboration, and the most responsible way to translate resources into lasting capability.</p>
-              <a href="#contact" className="button-primary button-primary-forest">Start a partnership conversation <ArrowUpRight size={18} /></a>
+              <div className="prospectus-download-card">
+                <div className="prospectus-card-meta"><span>PARTNERSHIP BRIEF</span><span>2026 · PDF</span></div>
+                <h3>See the community model, sponsorship pathways, and first 90 days.</h3>
+                <p>Built from Tin City Founders’ operating roadmap, founder-spotlight model, and community constitution.</p>
+                <a href={sponsorshipProspectusUrl} download target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
+                  Download sponsorship prospectus <FileDown size={18} />
+                </a>
+              </div>
+              <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
             <div className="partnership-cards">
               {partnershipItems.map((item, index) => {

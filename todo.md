@@ -7,3 +7,7 @@
 - [x] Extract the diamond emblem as the official favicon asset.
 - [x] Remove the solid background from the official logo artwork for seamless page integration.
 - [x] Apply the transparent logo and favicon, then verify the updated brand treatment.
+- [x] Review the supplied governance, programme, and roadmap documents for verified prospectus content.
+- [x] Create a branded sponsorship prospectus for partnership audiences.
+- [x] Add a download call-to-action and focused investor-facing refinements to the partnerships section.
+- [x] Verify the prospectus and responsive website update, then save the revised checkpoint.
