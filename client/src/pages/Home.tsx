@@ -423,18 +423,21 @@ export default function Home() {
               </div>
               <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
-            <div className="partnership-cards">
-              {partnershipItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <a className="partnership-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
-                    <div className="partnership-card-top"><span>{item.number}</span><Icon size={22} strokeWidth={1.7} /></div>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                    <span className="bubble-open-label"><span>Explore pathway</span><ArrowDown size={16} /></span>
-                  </a>
-                );
-              })}
+            <div className="partnership-stage">
+              <img src={mentorshipImage} alt="" aria-hidden="true" className="partnership-stage-image" />
+              <div className="partnership-cards">
+                {partnershipItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <a className="partnership-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
+                      <div className="partnership-card-top"><span>{item.number}</span><Icon size={22} strokeWidth={1.7} /></div>
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                      <span className="bubble-open-label"><span>Explore pathway</span><ArrowDown size={16} /></span>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <div className="pathway-details" aria-label="Detailed sponsorship pathways">

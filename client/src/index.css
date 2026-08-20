@@ -185,13 +185,14 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .directory-visual img { display: block; width: 100%; height: auto; }
 .directory-visual > span { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 15px; color: #183c2e; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; }
 
-.partnerships-section { padding: 120px 6vw; background: #f4efe5; }
-.partnerships-heading, .partnerships-content { max-width: 1320px; margin: auto; }
+.partnerships-section { position: relative; overflow: hidden; padding: 120px 6vw; background: #f4efe5; }
+.partnerships-section::before { content: ""; position: absolute; right: -18vw; top: 300px; width: 42vw; aspect-ratio: 1; border: 1px solid rgba(125, 74, 36, 0.13); border-radius: 50%; box-shadow: 0 0 0 34px #f4efe5, 0 0 0 35px rgba(125, 74, 36, 0.1); pointer-events: none; }
+.partnerships-heading, .partnerships-content, .partnership-signals, .pathway-details { position: relative; z-index: 1; max-width: 1320px; margin-left: auto; margin-right: auto; }
 .partnerships-heading { display: grid; grid-template-columns: 0.5fr 1.5fr; gap: 36px; align-items: end; }
 .partnership-signals { display: flex; flex-wrap: wrap; gap: 9px; max-width: 1320px; margin: 32px auto 0; padding-top: 16px; border-top: 1px solid #cfc5b5; }
 .partnership-signals span { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid #cfc5b5; color: #496053; font-size: 9px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; }
 .partnership-signals span::before { content: ""; display: block; width: 5px; height: 5px; background: #d58c24; transform: rotate(45deg); }
-.partnerships-content { display: grid; grid-template-columns: minmax(270px, 0.7fr) minmax(0, 1.25fr); gap: clamp(45px, 9vw, 150px); margin-top: 67px; }
+.partnerships-content { display: grid; grid-template-columns: minmax(300px, 0.72fr) minmax(520px, 1.18fr); gap: clamp(48px, 7vw, 116px); align-items: start; margin-top: 67px; }
 .partnerships-copy { max-width: 430px; }
 .prospectus-download-card { position: relative; margin-top: 27px; padding: 23px 20px 22px; overflow: hidden; background: #234536; color: #fffdf7; box-shadow: 0 14px 28px rgba(35, 69, 54, 0.16); }
 .prospectus-download-card::after { content: ""; position: absolute; right: -41px; top: -47px; width: 132px; height: 132px; border: 1px solid rgba(244, 199, 117, 0.45); transform: rotate(45deg); }
@@ -203,7 +204,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-heading .micro-label { color: #234536; }
 .partner-enquiry-heading h3 { margin: 11px 0 7px; font-family: "DM Serif Display", Georgia, serif; color: #234536; font-size: 27px; line-height: 1.02; letter-spacing: -0.033em; font-weight: 400; }
 .partner-enquiry-heading p { margin-bottom: 17px; color: #59665b; font-size: 12px; line-height: 1.7; }
-.partner-enquiry-form { padding: 16px; border: 1px solid #cfc5b5; background: #fffdfa; }
+.partner-enquiry-form { padding: 18px; border: 1px solid #cfc5b5; background: rgba(255, 253, 250, 0.96); box-shadow: 0 12px 28px rgba(35, 54, 43, 0.08); }
 .partner-enquiry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .partner-enquiry-form label { display: grid; gap: 6px; min-width: 0; }
 .partner-enquiry-form label > span { color: #4e6054; font-size: 8px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; }
@@ -222,13 +223,18 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-success span { color: #7d4a24; font-size: 8px; letter-spacing: 0.13em; font-weight: 800; }
 .partner-enquiry-success strong { font-family: "DM Serif Display", Georgia, serif; font-size: 20px; line-height: 1.12; font-weight: 400; }
 .partnership-conversation-link { margin-top: 18px; }
-.partnership-cards { position: relative; justify-self: start; width: min(620px, 100%); min-height: 505px; overflow: visible; }
-.partnership-card { position: absolute; display: flex; flex-direction: column; justify-content: flex-start; width: 276px; aspect-ratio: 1; padding: 30px; overflow: hidden; border-radius: 50%; background: #f9f5ed; color: #234536; text-decoration: none; box-shadow: 0 12px 24px rgba(35, 54, 43, 0.12); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease, filter 180ms ease; }
+.partnership-stage { position: relative; isolation: isolate; display: grid; place-items: center; min-height: 536px; padding: 24px; overflow: hidden; border: 1px solid #cfc5b5; background: #1d3f30; box-shadow: 20px 22px 0 rgba(35, 69, 54, 0.1); }
+.partnership-stage::before { content: ""; position: absolute; z-index: 0; inset: 0; background: linear-gradient(135deg, rgba(16, 47, 35, 0.92) 0%, rgba(20, 65, 48, 0.77) 46%, rgba(22, 52, 39, 0.86) 100%); }
+.partnership-stage::after { content: ""; position: absolute; z-index: 1; inset: 14px; border: 1px solid rgba(244, 199, 117, 0.33); pointer-events: none; }
+.partnership-stage-image { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; filter: saturate(0.64) contrast(1.05); }
+.partnership-cards { position: relative; z-index: 2; width: min(572px, 100%); min-height: 488px; }
+.partnership-card { position: absolute; display: flex; flex-direction: column; justify-content: flex-start; width: 278px; aspect-ratio: 1; padding: 30px; overflow: hidden; border-radius: 50%; background: #f9f5ed; color: #234536; text-decoration: none; box-shadow: 0 14px 28px rgba(8, 31, 21, 0.28); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease, filter 180ms ease; }
 .partnership-card::after { content: ""; position: absolute; right: 18px; top: 18px; width: 50px; height: 50px; border: 1px solid currentColor; border-radius: 50%; opacity: 0.18; }
-.partnership-card:nth-child(1) { top: 0; left: 8px; width: 282px; background: #234536; color: #fffdf7; }
-.partnership-card:nth-child(2) { top: 52px; left: 303px; width: 252px; background: #d58c24; color: #1f2e25; }
-.partnership-card:nth-child(3) { left: 163px; bottom: 0; width: 260px; background: #fffdfa; color: #234536; }
+.partnership-card:nth-child(1) { top: 0; left: 0; width: 282px; background: #234536; color: #fffdf7; }
+.partnership-card:nth-child(2) { top: 48px; right: 0; width: 260px; background: #d58c24; color: #1f2e25; }
+.partnership-card:nth-child(3) { left: 50%; bottom: 0; width: 262px; background: #fffdfa; color: #234536; transform: translateX(-50%); }
 .partnership-card:hover { z-index: 2; transform: translateY(-7px) scale(1.025); box-shadow: 0 20px 32px rgba(35, 54, 43, 0.2); filter: saturate(1.08); }
+.partnership-card:nth-child(3):hover { transform: translateX(-50%) translateY(-7px) scale(1.025); }
 .partnership-card:focus-visible { z-index: 3; outline: 3px solid #d58c24; outline-offset: 5px; }
 .partnership-card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 27px; color: currentColor; font-size: 10px; letter-spacing: 0.08em; font-weight: 800; }
 .partnership-card h3 { position: relative; z-index: 1; max-width: 202px; margin: 0 0 10px; color: currentColor; font-size: 25px; line-height: 0.95; letter-spacing: -0.03em; }
@@ -236,7 +242,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .bubble-open-label { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-top: auto; padding-top: 10px; border-top: 1px solid currentColor; color: currentColor; font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
 .bubble-open-label svg { transition: transform 160ms ease; }
 .partnership-card:hover .bubble-open-label svg { transform: translateY(3px); }
-.pathway-details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 1320px; margin: 78px auto 0; padding-top: 22px; border-top: 1px solid #cfc5b5; }
+.pathway-details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 78px; padding-top: 22px; border-top: 1px solid #cfc5b5; }
 .pathway-detail { min-height: 422px; padding: 26px; background: #fffdfa; border: 1px solid #d9cfbf; scroll-margin-top: 118px; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease; }
 .pathway-detail:nth-child(1) { border-top: 4px solid #234536; }
 .pathway-detail:nth-child(2) { border-top: 4px solid #d58c24; }
@@ -260,7 +266,8 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .partnerships-content { grid-template-columns: 1fr; gap: 52px; }
   .partnerships-copy { max-width: 620px; }
   .partner-enquiry-form-wrap { max-width: 620px; }
-  .partnership-cards { width: min(620px, 100%); max-width: none; margin: 0 auto; }
+  .partnership-stage { width: min(680px, 100%); margin: 0 auto; }
+  .partnership-cards { max-width: none; margin: 0 auto; }
   .partnership-card { min-height: 0; }
   .pathway-details { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -318,7 +325,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .directory-invite { grid-template-columns: 1fr 0.85fr; padding-left: 6vw; padding-right: 6vw; }
   .partnerships-heading { grid-template-columns: 1fr; gap: 22px; }
   .partnership-signals { margin-top: 26px; }
-  .partnership-cards { max-width: 850px; }
+  .partnership-stage { max-width: 680px; }
   .pathway-details { grid-template-columns: 1fr; max-width: 640px; }
   .pathway-detail { min-height: 0; }
   .workshop-section { min-height: 660px; }
@@ -370,8 +377,11 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .partner-enquiry-form { padding: 14px; }
   .partner-enquiry-grid { grid-template-columns: 1fr; }
   .partner-enquiry-span { grid-column: auto; }
+  .partnership-stage { min-height: 0; padding: 16px; box-shadow: 12px 13px 0 rgba(35, 69, 54, 0.1); }
+  .partnership-stage::after { inset: 9px; }
   .partnership-cards { display: grid; grid-template-columns: 1fr; min-height: 0; gap: 16px; max-width: 300px; margin: 0 auto; overflow: visible; }
-  .partnership-card, .partnership-card:nth-child(1), .partnership-card:nth-child(2), .partnership-card:nth-child(3) { position: relative; inset: auto; width: 100%; padding: 33px; }
+  .partnership-card, .partnership-card:nth-child(1), .partnership-card:nth-child(2), .partnership-card:nth-child(3) { position: relative; inset: auto; width: 100%; padding: 33px; transform: none; }
+  .partnership-card:nth-child(3):hover { transform: translateY(-7px) scale(1.025); }
   .partnership-card h3 { margin: 0 0 10px; }
   .pathway-details { gap: 11px; margin-top: 54px; padding-top: 16px; }
   .pathway-detail { padding: 22px 18px; }

@@ -41,3 +41,6 @@
 - [x] Verify successful and failed local dashboard sign-in behavior, then save the revised checkpoint.
 - [x] Add the official Instagram profile link beneath the partnership phone number and in the footer contact information.
 - [x] Verify the Instagram links and responsive contact layout, then save the revised checkpoint.
+- [x] Add an authentic, subtle background image treatment to the partnership area.
+- [x] Correct sponsorship-bubble and enquiry-panel alignment, spacing, and interaction cues across responsive layouts.
+- [x] Verify the refreshed partnership experience on desktop and mobile, then save the revised checkpoint.
