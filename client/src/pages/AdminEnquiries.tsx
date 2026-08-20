@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Download, ExternalLink, Filter, Loader2, Search, ShieldCheck } from "lucide-react";
+import { Download, ExternalLink, Filter, Loader2, LockKeyhole, LogOut, Search, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
@@ -45,13 +45,36 @@ function EnquiriesDashboard() {
   const utils = trpc.useUtils();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<EnquiryStatus | "all">("all");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dashboardSession = trpc.dashboard.session.useQuery();
+  const isLocalDashboardSession = Boolean(dashboardSession.data?.authenticated);
+  const isAdmin = user?.role === "admin" || isLocalDashboardSession;
+  const dashboardLogin = trpc.dashboard.login.useMutation({
+    onSuccess: async () => {
+      setPassword("");
+      await Promise.all([
+        utils.dashboard.session.invalidate(),
+        utils.admin.partnerEnquiries.list.invalidate(),
+        utils.admin.partnerEnquiries.summary.invalidate(),
+      ]);
+      toast.success("Partner Team dashboard unlocked.");
+    },
+    onError: () => toast.error("Those credentials could not be verified."),
+  });
+  const dashboardLogout = trpc.dashboard.logout.useMutation({
+    onSuccess: async () => {
+      await utils.dashboard.session.invalidate();
+      toast.success("Local dashboard session ended.");
+    },
+  });
 
   const filters = useMemo(
     () => ({ search, ...(status === "all" ? {} : { status }) }),
     [search, status],
   );
 
-  const isAdmin = user?.role === "admin";
   const enquiriesQuery = trpc.admin.partnerEnquiries.list.useQuery(filters, { enabled: isAdmin });
   const summaryQuery = trpc.admin.partnerEnquiries.summary.useQuery(undefined, { enabled: isAdmin });
   const updateStatus = trpc.admin.partnerEnquiries.updateStatus.useMutation({
@@ -108,18 +131,32 @@ function EnquiriesDashboard() {
     toast.success(`Exported ${enquiries.length} visible ${enquiries.length === 1 ? "enquiry" : "enquiries"}.`);
   };
 
-  if (loading) {
+  if (loading || dashboardSession.isLoading) {
     return <div className="grid min-h-[60vh] place-items-center"><Loader2 className="animate-spin text-[#234536]" /></div>;
   }
 
   if (!isAdmin) {
     return (
-      <div className="mx-auto grid max-w-xl gap-5 py-20 text-center">
-        <ShieldCheck className="mx-auto h-12 w-12 text-[#d58c24]" />
-        <span className="text-xs font-extrabold tracking-[0.16em] text-[#7d4a24]">RESTRICTED PARTNER TEAM AREA</span>
-        <h1 className="font-serif text-4xl tracking-tight text-[#234536]">This dashboard is reserved for authorized administrators.</h1>
-        <p className="text-sm leading-7 text-[#59665b]">Sign in with the Tin City Founders account that has administrator access to review partnership enquiries.</p>
-        <Button asChild className="mx-auto bg-[#234536] text-white hover:bg-[#35634e]"><Link href="/">Return to website</Link></Button>
+      <div className="mx-auto grid max-w-md gap-6 py-14">
+        <div className="grid gap-4 text-center">
+          <ShieldCheck className="mx-auto h-12 w-12 text-[#d58c24]" />
+          <span className="text-xs font-extrabold tracking-[0.16em] text-[#7d4a24]">RESTRICTED PARTNER TEAM AREA</span>
+          <h1 className="font-serif text-4xl tracking-tight text-[#234536]">Sign in to continue.</h1>
+          <p className="text-sm leading-7 text-[#59665b]">Use the Partner Team credentials to review and manage submitted enquiries.</p>
+        </div>
+        <form className="grid gap-4 border border-[#d9cfbf] bg-[#fffdfa] p-6 shadow-[0_12px_30px_rgba(35,54,43,0.07)]" onSubmit={(event) => { event.preventDefault(); dashboardLogin.mutate({ username, password }); }}>
+          <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.1em] text-[#45584a]">Username
+            <Input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" required className="h-11 border-[#cfc5b5] text-sm normal-case tracking-normal" />
+          </label>
+          <label className="grid gap-2 text-xs font-bold uppercase tracking-[0.1em] text-[#45584a]">Password
+            <Input value={password} onChange={(event) => setPassword(event.target.value)} type="password" autoComplete="current-password" required className="h-11 border-[#cfc5b5] text-sm normal-case tracking-normal" />
+          </label>
+          <Button type="submit" disabled={dashboardLogin.isPending} className="mt-2 h-11 bg-[#234536] text-white hover:bg-[#35634e]">
+            {dashboardLogin.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LockKeyhole className="mr-2 h-4 w-4" />}
+            {dashboardLogin.isPending ? "Verifying access…" : "Open partner dashboard"}
+          </Button>
+        </form>
+        <Button asChild variant="outline" className="border-[#234536] bg-transparent text-[#234536] hover:bg-[#e6ede3]"><Link href="/">Return to website</Link></Button>
       </div>
     );
   }
@@ -129,13 +166,16 @@ function EnquiriesDashboard() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-8 pb-10">
-      <div className="flex flex-col gap-5 border-b border-[#d9cfbf] pb-7 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-5 border-b border-[#d9cfbf] pb-7 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl space-y-3">
           <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-[0.16em] text-[#7d4a24]"><ShieldCheck className="h-4 w-4" /> PARTNER TEAM WORKSPACE</span>
           <h1 className="font-serif text-5xl tracking-[-0.045em] text-[#234536]">Partnership enquiries</h1>
           <p className="max-w-xl text-sm leading-6 text-[#59665b]">Review incoming organization details, track follow-up, and export the visible enquiry list for the team.</p>
         </div>
-        <Button onClick={exportVisibleEnquiries} variant="outline" className="border-[#234536] bg-transparent text-[#234536] hover:bg-[#e6ede3]"><Download className="mr-2 h-4 w-4" /> Export visible CSV</Button>
+        <div className="flex flex-wrap gap-2">
+          {isLocalDashboardSession ? <Button onClick={() => dashboardLogout.mutate()} variant="outline" className="border-[#cfc5b5] bg-transparent text-[#59665b] hover:bg-[#f4efe5]"><LogOut className="mr-2 h-4 w-4" /> Sign out</Button> : null}
+          <Button onClick={exportVisibleEnquiries} variant="outline" className="border-[#234536] bg-transparent text-[#234536] hover:bg-[#e6ede3]"><Download className="mr-2 h-4 w-4" /> Export visible CSV</Button>
+        </div>
       </div>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="Enquiry summary">
@@ -218,5 +258,5 @@ function EnquiriesDashboard() {
 }
 
 export default function AdminEnquiries() {
-  return <DashboardLayout><EnquiriesDashboard /></DashboardLayout>;
+  return <DashboardLayout allowLocalAccess><EnquiriesDashboard /></DashboardLayout>;
 }

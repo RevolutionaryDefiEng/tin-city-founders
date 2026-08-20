@@ -33,3 +33,6 @@
 - [x] Add authorized backend procedures to list, filter, update, and export partner enquiries.
 - [x] Build the protected administrative enquiry dashboard and navigation route.
 - [x] Test dashboard access, filtering, status changes, export, and responsive behavior before saving the revised checkpoint.
+- [x] Define and securely configure local credentials for partner-dashboard access.
+- [x] Implement secure local dashboard sign-in, session handling, and sign-out.
+- [x] Test local credential access and dashboard protection before saving the revised checkpoint.

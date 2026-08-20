@@ -39,8 +39,10 @@ const MAX_WIDTH = 480;
 
 export default function DashboardLayout({
   children,
+  allowLocalAccess = false,
 }: {
   children: React.ReactNode;
+  allowLocalAccess?: boolean;
 }) {
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
@@ -56,7 +58,7 @@ export default function DashboardLayout({
     return <DashboardLayoutSkeleton />
   }
 
-  if (!user) {
+  if (!user && !allowLocalAccess) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
@@ -88,7 +90,7 @@ export default function DashboardLayout({
         } as CSSProperties
       }
     >
-      <DashboardLayoutContent setSidebarWidth={setSidebarWidth}>
+      <DashboardLayoutContent setSidebarWidth={setSidebarWidth} allowLocalAccess={allowLocalAccess}>
         {children}
       </DashboardLayoutContent>
     </SidebarProvider>
@@ -98,11 +100,13 @@ export default function DashboardLayout({
 type DashboardLayoutContentProps = {
   children: React.ReactNode;
   setSidebarWidth: (width: number) => void;
+  allowLocalAccess: boolean;
 };
 
 function DashboardLayoutContent({
   children,
   setSidebarWidth,
+  allowLocalAccess,
 }: DashboardLayoutContentProps) {
   const { user, logout } = useAuth();
   const [location, setLocation] = useLocation();
@@ -210,22 +214,22 @@ function DashboardLayoutContent({
                   </Avatar>
                   <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
                     <p className="text-sm font-medium truncate leading-none">
-                      {user?.name || "-"}
+                      {user?.name || (allowLocalAccess ? "Partner Team" : "-")}
                     </p>
                     <p className="text-xs text-muted-foreground truncate mt-1.5">
-                      {user?.email || "-"}
+                      {user?.email || (allowLocalAccess ? "Local dashboard access" : "-")}
                     </p>
                   </div>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem
+                {user ? <DropdownMenuItem
                   onClick={logout}
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Sign out</span>
-                </DropdownMenuItem>
+                </DropdownMenuItem> : null}
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarFooter>

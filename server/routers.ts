@@ -1,5 +1,6 @@
 import { COOKIE_NAME } from "@shared/const";
 import { createPartnerEnquiry, getPartnerEnquirySummary, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
+import { createDashboardSession, DASHBOARD_SESSION_COOKIE, dashboardLoginSchema, dashboardSessionMaxAgeMs, hasDashboardSession, isValidDashboardCredential } from "./dashboardAuth";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
@@ -24,6 +25,26 @@ export const appRouter = router({
         ...input,
         message: input.message ?? null,
       });
+      return { success: true } as const;
+    }),
+  }),
+  dashboard: router({
+    session: publicProcedure.query(async ({ ctx }) => ({
+      authenticated: await hasDashboardSession(ctx.req.headers.cookie),
+    })),
+    login: publicProcedure.input(dashboardLoginSchema).mutation(async ({ ctx, input }) => {
+      if (!isValidDashboardCredential(input.username, input.password)) {
+        throw new Error("Invalid dashboard credentials");
+      }
+      const token = await createDashboardSession();
+      ctx.res.cookie(DASHBOARD_SESSION_COOKIE, token, {
+        ...getSessionCookieOptions(ctx.req),
+        maxAge: dashboardSessionMaxAgeMs,
+      });
+      return { success: true } as const;
+    }),
+    logout: publicProcedure.mutation(({ ctx }) => {
+      ctx.res.clearCookie(DASHBOARD_SESSION_COOKIE, { ...getSessionCookieOptions(ctx.req), maxAge: -1 });
       return { success: true } as const;
     }),
   }),
