@@ -73,6 +73,7 @@ const partnershipItems = [
     text: "Underwrite a founder cohort, skills series, or learning infrastructure designed around a defined local need.",
     detailTitle: "Anchor a practical season of founder growth.",
     detailText: "Support a clearly defined series of founder gatherings, capability clinics, or mentor-led learning designed around local business needs.",
+    scope: "A defined founder cohort, learning series, or repeatable clinic cycle shaped around one priority need.",
     outcomes: ["A named founder cohort or learning series", "A shared delivery plan and reporting rhythm", "Thoughtful visibility within a trusted local community"],
     icon: HeartHandshake,
   },
@@ -83,6 +84,7 @@ const partnershipItems = [
     text: "Bring expertise, technology, market access, or research capacity into a community that values practical exchange.",
     detailTitle: "Put useful expertise and access in the room.",
     detailText: "Co-design a focused activation that connects founders with tools, specialist knowledge, new market relationships, or relevant research capacity.",
+    scope: "A focused activation that brings a partner’s tool, expertise, or market access to a clearly defined founder group.",
     outcomes: ["A locally adapted activation or workshop", "Direct founder access to practical expertise", "Shared learning captured for future programming"],
     icon: Network,
   },
@@ -93,6 +95,7 @@ const partnershipItems = [
     text: "Help convene solutions that support resilient small businesses and more inclusive local economic development.",
     detailTitle: "Strengthen the conditions that help enterprise stay.",
     detailText: "Invest in the connective work around small businesses: local convening, community infrastructure, and collaborative responses to shared economic challenges.",
+    scope: "A community-facing pilot or convening season that advances one shared condition for stronger local enterprise.",
     outcomes: ["A place-aware scope shaped with local founders", "A coalition approach to shared challenges", "Evidence of participation, learning, and outcomes"],
     icon: Globe2,
   },
@@ -441,6 +444,7 @@ export default function Home() {
                   <div className="pathway-detail-top"><span>{item.number} · SPONSORSHIP PATHWAY</span><Icon size={20} strokeWidth={1.8} /></div>
                   <h3>{item.detailTitle}</h3>
                   <p>{item.detailText}</p>
+                  <div className="pathway-scope"><span>Typical scope</span><strong>{item.scope}</strong></div>
                   <ul>
                     {item.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
                   </ul>

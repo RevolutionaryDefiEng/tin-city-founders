@@ -223,28 +223,31 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-success strong { font-family: "DM Serif Display", Georgia, serif; font-size: 20px; line-height: 1.12; font-weight: 400; }
 .partnership-conversation-link { margin-top: 18px; }
 .partnership-cards { position: relative; justify-self: start; width: min(620px, 100%); min-height: 505px; overflow: visible; }
-.partnership-card { position: absolute; display: flex; flex-direction: column; justify-content: center; width: 276px; aspect-ratio: 1; padding: 32px; overflow: hidden; border-radius: 50%; background: #f9f5ed; color: #234536; text-decoration: none; box-shadow: 0 12px 24px rgba(35, 54, 43, 0.12); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease, filter 180ms ease; }
+.partnership-card { position: absolute; display: flex; flex-direction: column; justify-content: flex-start; width: 276px; aspect-ratio: 1; padding: 30px; overflow: hidden; border-radius: 50%; background: #f9f5ed; color: #234536; text-decoration: none; box-shadow: 0 12px 24px rgba(35, 54, 43, 0.12); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease, filter 180ms ease; }
 .partnership-card::after { content: ""; position: absolute; right: 18px; top: 18px; width: 50px; height: 50px; border: 1px solid currentColor; border-radius: 50%; opacity: 0.18; }
 .partnership-card:nth-child(1) { top: 0; left: 8px; width: 282px; background: #234536; color: #fffdf7; }
 .partnership-card:nth-child(2) { top: 52px; left: 303px; width: 252px; background: #d58c24; color: #1f2e25; }
 .partnership-card:nth-child(3) { left: 163px; bottom: 0; width: 260px; background: #fffdfa; color: #234536; }
 .partnership-card:hover { z-index: 2; transform: translateY(-7px) scale(1.025); box-shadow: 0 20px 32px rgba(35, 54, 43, 0.2); filter: saturate(1.08); }
 .partnership-card:focus-visible { z-index: 3; outline: 3px solid #d58c24; outline-offset: 5px; }
-.partnership-card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; color: currentColor; font-size: 10px; letter-spacing: 0.08em; font-weight: 800; }
-.partnership-card h3 { position: relative; z-index: 1; margin: 19px 0 10px; color: currentColor; font-size: 26px; line-height: 0.97; }
-.partnership-card p { position: relative; z-index: 1; margin: 0; color: currentColor; font-size: 10px; line-height: 1.55; opacity: 0.82; }
-.bubble-open-label { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 15px; padding-top: 10px; border-top: 1px solid currentColor; color: currentColor; font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
+.partnership-card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 27px; color: currentColor; font-size: 10px; letter-spacing: 0.08em; font-weight: 800; }
+.partnership-card h3 { position: relative; z-index: 1; max-width: 202px; margin: 0 0 10px; color: currentColor; font-size: 25px; line-height: 0.95; letter-spacing: -0.03em; }
+.partnership-card p { position: relative; z-index: 1; max-width: 204px; margin: 0; color: currentColor; font-size: 10px; line-height: 1.45; opacity: 0.84; }
+.bubble-open-label { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-top: auto; padding-top: 10px; border-top: 1px solid currentColor; color: currentColor; font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
 .bubble-open-label svg { transition: transform 160ms ease; }
 .partnership-card:hover .bubble-open-label svg { transform: translateY(3px); }
 .pathway-details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; max-width: 1320px; margin: 78px auto 0; padding-top: 22px; border-top: 1px solid #cfc5b5; }
-.pathway-detail { min-height: 386px; padding: 26px; background: #fffdfa; border: 1px solid #d9cfbf; scroll-margin-top: 118px; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease; }
+.pathway-detail { min-height: 422px; padding: 26px; background: #fffdfa; border: 1px solid #d9cfbf; scroll-margin-top: 118px; transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease; }
 .pathway-detail:nth-child(1) { border-top: 4px solid #234536; }
 .pathway-detail:nth-child(2) { border-top: 4px solid #d58c24; }
 .pathway-detail:nth-child(3) { border-top: 4px solid #80907f; }
 .pathway-detail:hover { transform: translateY(-4px); box-shadow: 0 12px 23px rgba(35, 54, 43, 0.11); }
 .pathway-detail-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #7d4a24; font-size: 8px; letter-spacing: 0.1em; font-weight: 800; }
-.pathway-detail h3 { margin: 53px 0 13px; color: #234536; font-size: 30px; line-height: 1; }
+.pathway-detail h3 { margin: 40px 0 13px; color: #234536; font-size: 30px; line-height: 1; }
 .pathway-detail p { margin: 0 0 17px; color: #556257; font-size: 12px; line-height: 1.65; }
+.pathway-scope { display: grid; gap: 6px; margin: 0 0 17px; padding: 10px 0; border-top: 1px solid #e3dacb; border-bottom: 1px solid #e3dacb; }
+.pathway-scope span { color: #7d4a24; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; }
+.pathway-scope strong { color: #33483b; font-size: 10px; line-height: 1.45; font-weight: 700; }
 .pathway-detail ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; color: #405045; font-size: 10px; line-height: 1.45; }
 .pathway-detail li { display: flex; gap: 8px; }
 .pathway-detail li::before { content: ""; flex: 0 0 5px; width: 5px; height: 5px; margin-top: 5px; background: #d58c24; transform: rotate(45deg); }
@@ -368,7 +371,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .partner-enquiry-span { grid-column: auto; }
   .partnership-cards { display: grid; grid-template-columns: 1fr; min-height: 0; gap: 16px; max-width: 300px; margin: 0 auto; overflow: visible; }
   .partnership-card, .partnership-card:nth-child(1), .partnership-card:nth-child(2), .partnership-card:nth-child(3) { position: relative; inset: auto; width: 100%; padding: 33px; }
-  .partnership-card h3 { margin: 19px 0 10px; }
+  .partnership-card h3 { margin: 0 0 10px; }
   .pathway-details { gap: 11px; margin-top: 54px; padding-top: 16px; }
   .pathway-detail { padding: 22px 18px; }
   .pathway-detail h3 { margin-top: 35px; font-size: 27px; }

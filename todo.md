@@ -26,3 +26,6 @@
 - [x] Rebalance the desktop partnership bubbles so the three pathways form one intentional composition.
 - [x] Add corresponding on-page sponsorship pathway details and link every partnership bubble to its target.
 - [x] Verify the dynamic pathways section and bubble links across desktop, tablet, and mobile, then save the revised checkpoint.
+- [x] Improve bubble typography, vertical rhythm, and action-label alignment for clearer pathway browsing.
+- [x] Add concise sponsorship scope guidance to each detailed pathway panel.
+- [x] Verify bubble readability and scope context on desktop, tablet, and mobile, then save the revised checkpoint.
