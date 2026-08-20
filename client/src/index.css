@@ -283,6 +283,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .contact-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
 .contact-actions .button-primary { background: #1f2e25; color: #fffdf7; }
 .contact-actions .button-primary:hover { background: #fff7e8; color: #1f2e25; }
+.contact-details { display: grid; gap: 10px; }
 .contact-phone { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 800; }
 
 .site-footer { padding: 42px 6vw 23px; background: #182a21; color: #fffdf7; }

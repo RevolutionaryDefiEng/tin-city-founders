@@ -15,6 +15,7 @@ import {
   Handshake,
   HeartHandshake,
   FileDown,
+  Instagram,
   Mail,
   MapPin,
   Menu,
@@ -471,7 +472,10 @@ export default function Home() {
             <p>Tell us what your organization is working toward. We will bring the local perspective and an open agenda for practical collaboration.</p>
             <div className="contact-actions">
               <a href="mailto:info@africanintelligence.tech" className="button-primary button-primary-amber">Email the partnership team <Mail size={18} /></a>
-              <a href="tel:07073425222" className="contact-phone"><Phone size={17} /> 0707 342 5222</a>
+              <div className="contact-details">
+                <a href="tel:07073425222" className="contact-phone"><Phone size={17} /> 0707 342 5222</a>
+                <a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer" className="contact-phone"><Instagram size={17} /> @tincity_founders</a>
+              </div>
             </div>
           </div>
         </section>
@@ -485,7 +489,7 @@ export default function Home() {
         <div className="footer-grid">
           <div><span className="footer-label">A community association for</span><p>Entrepreneurship, innovation, and shared economic progress.</p></div>
           <div className="footer-links"><a href="#mandate">Our mandate</a><a href="#programmes">Programmes</a><a href="#partnerships">Partnerships</a><a href="#contact">Contact</a><a href="/admin/enquiries">Partner team</a></div>
-          <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:07073425222">0707 342 5222</a></div>
+          <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:07073425222">0707 342 5222</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders</a></div>
         </div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} Tin City Founders</span><span>Made in Jos · Open to the world</span></div>
       </footer>

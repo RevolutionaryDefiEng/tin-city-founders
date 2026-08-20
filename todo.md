@@ -39,3 +39,5 @@
 - [x] Diagnose the local Partner Team credential error in the active dashboard runtime.
 - [x] Correct the dashboard login procedure and client error handling.
 - [x] Verify successful and failed local dashboard sign-in behavior, then save the revised checkpoint.
+- [x] Add the official Instagram profile link beneath the partnership phone number and in the footer contact information.
+- [x] Verify the Instagram links and responsive contact layout, then save the revised checkpoint.
