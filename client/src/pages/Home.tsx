@@ -34,6 +34,8 @@ const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
 const officialLogoLightImage = "/manus-storage/tcf-logo-transparent-light-exact_25248531.png";
 const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30f7112d.png";
 const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
+const builtInJosDirectoryUrl = "https://www.africanintelligence.tech/facilitator/students";
+const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.png";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -301,6 +303,22 @@ export default function Home() {
               <figcaption><span>03</span> Local perspective</figcaption>
             </figure>
           </div>
+        </section>
+
+        <section className="directory-invite" aria-labelledby="directory-title">
+          <div className="directory-copy">
+            <span className="micro-label">BUILT IN JOS · FOUNDER DIRECTORY</span>
+            <h2 id="directory-title">Put what you are building <em>on the map.</em></h2>
+            <p>Built In Jos is a growing directory of the people, products, and small businesses building across the Plateau. Add your founder profile so new connections, useful introductions, and community visibility can find you.</p>
+            <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
+              Add your founder profile <ArrowUpRight size={18} />
+            </a>
+            <span className="directory-footnote">For founders and business owners building in Jos and across Plateau State.</span>
+          </div>
+          <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="directory-visual" aria-label="Open the Built In Jos directory registration form">
+            <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" />
+            <span>Open the directory form <ArrowUpRight size={17} /></span>
+          </a>
         </section>
 
         <section id="partnerships" className="partnerships-section" aria-labelledby="partnerships-title">

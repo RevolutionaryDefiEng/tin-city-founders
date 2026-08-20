@@ -14,3 +14,6 @@
 - [x] Define partner enquiry details, support options, and activation timing fields.
 - [x] Implement the partner enquiry form beneath the sponsorship prospectus download card.
 - [x] Verify the responsive form experience and save the revised checkpoint.
+- [x] Prepare the supplied Built In Jos directory invitation visual for web delivery.
+- [x] Add a “Join the Map” directory call-to-action after the community voices section.
+- [x] Verify the directory invitation on desktop and mobile, then save the revised checkpoint.
