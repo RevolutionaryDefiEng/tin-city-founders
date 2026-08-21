@@ -72,3 +72,6 @@
 - [x] Diagnose the homepage tRPC “Load failed” query error using client, network, and server evidence.
 - [x] Fix the underlying public homepage query reliability issue and provide a graceful unavailable state if needed.
 - [x] Verify successful homepage loading, query behavior, and automated checks before saving the revised checkpoint.
+- [x] Refine the hero message around Tin City Founders’ “don’t build alone” and “give before you take” community ethos.
+- [x] Strengthen the hero supporting copy so it communicates credible value to thoughtful partners and investors without overclaiming.
+- [x] Verify the refreshed hero copy and responsive hierarchy, then save the revised checkpoint.

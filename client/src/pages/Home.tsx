@@ -5,6 +5,7 @@
  */
 import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
+import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
 import {
   ArrowDown,
@@ -246,19 +247,19 @@ export default function Home() {
           </div>
           <div className="hero-content">
             <div className="eyebrow eyebrow-light"><span /> JOS, PLATEAU STATE · NIGERIA</div>
-            <h1 id="hero-title">Where enterprise begins. <em>Opportunity travels.</em></h1>
-            <p className="hero-deck">Tin City Founders brings local entrepreneurs together to build stronger businesses, deeper capability, and lasting economic momentum.</p>
+            <h1 id="hero-title">{heroCopy.lead} <em>{heroCopy.emphasis}</em></h1>
+            <p className="hero-deck">{heroCopy.deck}</p>
             <div className="hero-actions">
               <a href="#partnerships" className="button-primary button-primary-amber">
                 Explore partnership pathways <ArrowUpRight size={18} />
               </a>
               <a href="#mandate" className="button-text button-text-light">
-                Understand our mandate <ArrowDown size={17} />
+                {heroCopy.secondaryAction} <ArrowDown size={17} />
               </a>
             </div>
           </div>
           <div className="hero-bottom-note">
-            <span>PARTNERSHIP BRIEF</span>
+            <span>{heroCopy.promise}</span>
             <span>01 / 05</span>
           </div>
         </section>
