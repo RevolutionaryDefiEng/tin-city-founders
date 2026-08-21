@@ -66,3 +66,6 @@
 - [x] Create and apply three cohesive partnership images that support the Tin City Founders editorial brand and international partner audience.
 - [x] Preserve direct pathway navigation and verify the redesigned partnership experience on desktop and mobile before saving the revised checkpoint.
 - [x] Finalize and document the distinct visual treatment for all three partnership pathway cards, then save the revised checkpoint.
+- [x] Prepare the supplied Strategic Collaboration and Place-Based Investment event photographs for web delivery.
+- [x] Replace the corresponding partnership pathway-card images and descriptions with the supplied authentic photographs.
+- [x] Verify the updated desktop and mobile pathway image crops, then save the revised checkpoint.

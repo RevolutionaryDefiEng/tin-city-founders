@@ -39,8 +39,8 @@ const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.png";
 const programmeSponsorshipImage = "/manus-storage/tcf-programme-sponsorship_9340ff82.jpg";
-const strategicCollaborationImage = womanSpeakerImage;
-const placeBasedInvestmentImage = workshopImage;
+const strategicCollaborationImage = "/manus-storage/tcf-strategic-collaboration-authentic_1c059de8.jpg";
+const placeBasedInvestmentImage = "/manus-storage/tcf-place-based-investment-authentic_9b3abbfd.jpg";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -95,7 +95,7 @@ const partnershipItems = [
     outcomes: ["A locally adapted activation or workshop", "Direct founder access to practical expertise", "Shared learning captured for future programming"],
     icon: Network,
     image: strategicCollaborationImage,
-    imageAlt: "A Tin City Founders member sharing insight during a community gathering",
+    imageAlt: "Tin City Founders members participating in a practical community session",
   },
   {
     id: "place-based-investment",
@@ -108,7 +108,7 @@ const partnershipItems = [
     outcomes: ["A place-aware scope shaped with local founders", "A coalition approach to shared challenges", "Evidence of participation, learning, and outcomes"],
     icon: Globe2,
     image: placeBasedInvestmentImage,
-    imageAlt: "Tin City Founders members connecting after a local workshop session",
+    imageAlt: "Tin City Founders members in a peer working session with laptops and planning notes",
   },
 ];
 
