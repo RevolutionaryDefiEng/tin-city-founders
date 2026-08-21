@@ -1,0 +1,20 @@
+CREATE TABLE `directory_imports` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`directoryFileKey` varchar(500) NOT NULL,
+	`mixerFileKey` varchar(500) NOT NULL,
+	`giveAndGrowFileKey` varchar(500) NOT NULL,
+	`directoryRows` int NOT NULL,
+	`mixerRows` int NOT NULL,
+	`giveAndGrowRows` int NOT NULL,
+	`sourceRowCount` int NOT NULL,
+	`uniqueCommunityRecords` int NOT NULL,
+	`duplicateRecordsCollapsed` int NOT NULL,
+	`publicFounderCount` int NOT NULL,
+	`privateDirectoryRows` int NOT NULL,
+	`ventureProfiles` int NOT NULL,
+	`sectorsRepresented` int NOT NULL,
+	`locationsRepresented` int NOT NULL,
+	`importedBy` varchar(160) NOT NULL,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `directory_imports_id` PRIMARY KEY(`id`)
+);

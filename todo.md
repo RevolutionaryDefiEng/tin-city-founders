@@ -48,3 +48,9 @@
 - [x] Store the consolidated, privacy-conscious directory count in the website data model.
 - [x] Add a polished live Built In Jos founder-count and directory statistics display.
 - [x] Test the consolidated count, responsive statistics interface, and save the revised checkpoint.
+- [x] Review the protected dashboard and design an admin-only CSV refresh workflow for the directory and event exports.
+- [x] Implement server-side CSV validation, de-duplication, profile upsert, and import-summary persistence.
+- [x] Build the protected dashboard upload action and detailed latest-import summary interface.
+- [x] Test authorized and unauthorized refresh behavior, count updates, import summary accuracy, and responsive presentation before saving the revised checkpoint.
+- [x] Verify the admin CSV refresh workspace on a mobile viewport, then save the revised checkpoint.
+- [x] Save the verified admin-only CSV refresh workflow as a restorable website checkpoint.

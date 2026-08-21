@@ -1,6 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { createPartnerEnquiry, getLiveDirectoryStats, getPartnerEnquirySummary, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
 import { createDashboardSession, DASHBOARD_SESSION_COOKIE, dashboardLoginSchema, dashboardSessionMaxAgeMs, hasDashboardSession, isValidDashboardCredential } from "./dashboardAuth";
+import { directoryCsvRefreshSchema, latestDirectoryImportSummary, refreshDirectoryFromCsv } from "./directoryImport";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
@@ -52,6 +53,12 @@ export const appRouter = router({
     }),
   }),
   admin: router({
+    directoryImports: router({
+      latest: adminProcedure.query(() => latestDirectoryImportSummary()),
+      refresh: adminProcedure.input(directoryCsvRefreshSchema).mutation(({ ctx, input }) =>
+        refreshDirectoryFromCsv(input, ctx.user?.name ?? ctx.user?.email ?? "Partner Team"),
+      ),
+    }),
     partnerEnquiries: router({
       list: adminProcedure.input(partnerEnquiryFiltersSchema).query(({ input }) => listPartnerEnquiries(input)),
       summary: adminProcedure.query(() => getPartnerEnquirySummary()),

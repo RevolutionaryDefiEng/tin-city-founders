@@ -78,3 +78,27 @@ export const communityProfiles = mysqlTable("community_profiles", {
 
 export type CommunityProfile = typeof communityProfiles.$inferSelect;
 export type InsertCommunityProfile = typeof communityProfiles.$inferInsert;
+
+/** Audit trail for completed Partner Team CSV refreshes. Raw files remain private. */
+export const directoryImports = mysqlTable("directory_imports", {
+  id: int("id").autoincrement().primaryKey(),
+  directoryFileKey: varchar("directoryFileKey", { length: 500 }).notNull(),
+  mixerFileKey: varchar("mixerFileKey", { length: 500 }).notNull(),
+  giveAndGrowFileKey: varchar("giveAndGrowFileKey", { length: 500 }).notNull(),
+  directoryRows: int("directoryRows").notNull(),
+  mixerRows: int("mixerRows").notNull(),
+  giveAndGrowRows: int("giveAndGrowRows").notNull(),
+  sourceRowCount: int("sourceRowCount").notNull(),
+  uniqueCommunityRecords: int("uniqueCommunityRecords").notNull(),
+  duplicateRecordsCollapsed: int("duplicateRecordsCollapsed").notNull(),
+  publicFounderCount: int("publicFounderCount").notNull(),
+  privateDirectoryRows: int("privateDirectoryRows").notNull(),
+  ventureProfiles: int("ventureProfiles").notNull(),
+  sectorsRepresented: int("sectorsRepresented").notNull(),
+  locationsRepresented: int("locationsRepresented").notNull(),
+  importedBy: varchar("importedBy", { length: 160 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type DirectoryImport = typeof directoryImports.$inferSelect;
+export type InsertDirectoryImport = typeof directoryImports.$inferInsert;

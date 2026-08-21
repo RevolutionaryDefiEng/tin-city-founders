@@ -11,8 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Download, ExternalLink, Filter, Loader2, LockKeyhole, LogOut, Search, ShieldCheck } from "lucide-react";
-import { useMemo, useState } from "react";
+import { DatabaseZap, Download, ExternalLink, FileSpreadsheet, Filter, Loader2, LockKeyhole, LogOut, RefreshCw, Search, ShieldCheck, Upload } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -36,8 +36,30 @@ function formatDate(value: Date | string) {
   });
 }
 
+function formatDateTime(value: Date | string) {
+  return new Date(value).toLocaleString("en-NG", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function csvValue(value: string | number | null | undefined) {
   return `"${String(value ?? "").replaceAll('"', '""')}"`;
+}
+
+const MAX_CSV_BYTES = 1_500_000;
+
+async function serializeCsv(file: File, label: string) {
+  if (!file.name.toLowerCase().endsWith(".csv")) {
+    throw new Error(`${label} must be a CSV file.`);
+  }
+  if (file.size > MAX_CSV_BYTES) {
+    throw new Error(`${label} is larger than the 1.5 MB upload limit.`);
+  }
+  return { name: file.name, content: await file.text() };
 }
 
 function EnquiriesDashboard() {
@@ -47,6 +69,12 @@ function EnquiriesDashboard() {
   const [status, setStatus] = useState<EnquiryStatus | "all">("all");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [directoryFile, setDirectoryFile] = useState<File | null>(null);
+  const [mixerFile, setMixerFile] = useState<File | null>(null);
+  const [giveAndGrowFile, setGiveAndGrowFile] = useState<File | null>(null);
+  const directoryFileInput = useRef<HTMLInputElement>(null);
+  const mixerFileInput = useRef<HTMLInputElement>(null);
+  const giveAndGrowFileInput = useRef<HTMLInputElement>(null);
 
   const dashboardSession = trpc.dashboard.session.useQuery();
   const isLocalDashboardSession = Boolean(dashboardSession.data?.authenticated);
@@ -62,6 +90,7 @@ function EnquiriesDashboard() {
         utils.dashboard.session.invalidate(),
         utils.admin.partnerEnquiries.list.invalidate(),
         utils.admin.partnerEnquiries.summary.invalidate(),
+        utils.admin.directoryImports.latest.invalidate(),
       ]);
       toast.success("Partner Team dashboard unlocked.");
     },
@@ -81,6 +110,7 @@ function EnquiriesDashboard() {
 
   const enquiriesQuery = trpc.admin.partnerEnquiries.list.useQuery(filters, { enabled: isAdmin });
   const summaryQuery = trpc.admin.partnerEnquiries.summary.useQuery(undefined, { enabled: isAdmin });
+  const latestDirectoryImport = trpc.admin.directoryImports.latest.useQuery(undefined, { enabled: isAdmin });
   const updateStatus = trpc.admin.partnerEnquiries.updateStatus.useMutation({
     onSuccess: async () => {
       await Promise.all([
@@ -90,6 +120,22 @@ function EnquiriesDashboard() {
       toast.success("Enquiry status updated.");
     },
     onError: () => toast.error("The status could not be updated. Please try again."),
+  });
+  const refreshDirectory = trpc.admin.directoryImports.refresh.useMutation({
+    onSuccess: async (summary) => {
+      setDirectoryFile(null);
+      setMixerFile(null);
+      setGiveAndGrowFile(null);
+      if (directoryFileInput.current) directoryFileInput.current.value = "";
+      if (mixerFileInput.current) mixerFileInput.current.value = "";
+      if (giveAndGrowFileInput.current) giveAndGrowFileInput.current.value = "";
+      await Promise.all([
+        utils.admin.directoryImports.latest.invalidate(),
+        utils.directory.stats.invalidate(),
+      ]);
+      toast.success(`Directory refreshed: ${summary.publicFounderCount} public founder profiles are now live.`);
+    },
+    onError: (error) => toast.error(error.message || "The directory refresh could not be completed."),
   });
 
   const statusCounts = useMemo(() => {
@@ -133,6 +179,23 @@ function EnquiriesDashboard() {
     link.remove();
     URL.revokeObjectURL(url);
     toast.success(`Exported ${enquiries.length} visible ${enquiries.length === 1 ? "enquiry" : "enquiries"}.`);
+  };
+
+  const handleDirectoryRefresh = async () => {
+    if (!directoryFile || !mixerFile || !giveAndGrowFile) {
+      toast.error("Add all three CSV exports before refreshing the directory.");
+      return;
+    }
+    try {
+      const [directory, mixer, giveAndGrow] = await Promise.all([
+        serializeCsv(directoryFile, "Built In Jos directory export"),
+        serializeCsv(mixerFile, "Mixer guest export"),
+        serializeCsv(giveAndGrowFile, "Give & Grow guest export"),
+      ]);
+      await refreshDirectory.mutateAsync({ directory, mixer, giveAndGrow });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "The selected CSV files could not be prepared.");
+    }
   };
 
   if (loading || dashboardSession.isLoading) {
@@ -196,6 +259,73 @@ function EnquiriesDashboard() {
         ))}
       </section>
 
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(330px,0.8fr)]" aria-label="Directory CSV refresh">
+        <div className="border border-[#d9cfbf] bg-[#234536] p-5 text-white shadow-[0_16px_34px_rgba(35,54,43,0.12)] sm:p-6">
+          <div className="flex flex-col gap-4 border-b border-white/20 pb-5 sm:flex-row sm:items-start sm:justify-between">
+            <div className="max-w-xl">
+              <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-[0.16em] text-[#f4c775]"><DatabaseZap className="h-4 w-4" /> BUILT IN JOS DATA REFRESH</span>
+              <h2 className="mt-3 font-serif text-3xl tracking-[-0.04em]">Refresh the live directory.</h2>
+              <p className="mt-2 text-sm leading-6 text-[#d8e0d7]">Upload the current Built In Jos response export and both Tin City Founders guest exports. The refresh validates each file, consolidates overlaps, updates the live count, and records an audit summary.</p>
+            </div>
+            <span className="inline-flex w-fit items-center gap-2 border border-[#f4c775]/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#f4c775]"><ShieldCheck className="h-3.5 w-3.5" /> Partner Team only</span>
+          </div>
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            <label className="group grid min-h-35 cursor-pointer content-between border border-white/25 bg-white/5 p-4 transition-colors hover:border-[#f4c775]/80 hover:bg-white/10">
+              <input ref={directoryFileInput} type="file" accept=".csv,text/csv" className="sr-only" onChange={(event) => setDirectoryFile(event.target.files?.[0] ?? null)} />
+              <span className="grid gap-2"><FileSpreadsheet className="h-5 w-5 text-[#f4c775]" /><span className="text-xs font-bold leading-5">Built In Jos directory</span></span>
+              <span className="truncate text-[11px] text-[#d8e0d7]">{directoryFile?.name ?? "Choose CSV"}</span>
+            </label>
+            <label className="group grid min-h-35 cursor-pointer content-between border border-white/25 bg-white/5 p-4 transition-colors hover:border-[#f4c775]/80 hover:bg-white/10">
+              <input ref={mixerFileInput} type="file" accept=".csv,text/csv" className="sr-only" onChange={(event) => setMixerFile(event.target.files?.[0] ?? null)} />
+              <span className="grid gap-2"><FileSpreadsheet className="h-5 w-5 text-[#f4c775]" /><span className="text-xs font-bold leading-5">Mixer guests</span></span>
+              <span className="truncate text-[11px] text-[#d8e0d7]">{mixerFile?.name ?? "Choose CSV"}</span>
+            </label>
+            <label className="group grid min-h-35 cursor-pointer content-between border border-white/25 bg-white/5 p-4 transition-colors hover:border-[#f4c775]/80 hover:bg-white/10">
+              <input ref={giveAndGrowFileInput} type="file" accept=".csv,text/csv" className="sr-only" onChange={(event) => setGiveAndGrowFile(event.target.files?.[0] ?? null)} />
+              <span className="grid gap-2"><FileSpreadsheet className="h-5 w-5 text-[#f4c775]" /><span className="text-xs font-bold leading-5">Give &amp; Grow guests</span></span>
+              <span className="truncate text-[11px] text-[#d8e0d7]">{giveAndGrowFile?.name ?? "Choose CSV"}</span>
+            </label>
+          </div>
+          <div className="mt-5 flex flex-col gap-3 border-t border-white/20 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-xl text-xs leading-5 text-[#c7d5ca]">Files remain private to the Partner Team. Only consent-safe aggregate directory statistics are shown publicly. Maximum file size: 1.5 MB each.</p>
+            <Button onClick={handleDirectoryRefresh} disabled={refreshDirectory.isPending} className="h-11 bg-[#f3b13a] text-[#1f2e25] hover:bg-[#f7c765]">
+              {refreshDirectory.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
+              {refreshDirectory.isPending ? "Refreshing directory…" : "Validate and refresh"}
+            </Button>
+          </div>
+        </div>
+
+        <div className="border border-[#d9cfbf] bg-[#fffdfa] p-5 shadow-[0_12px_30px_rgba(35,54,43,0.06)] sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-[0.14em] text-[#7d4a24]"><Upload className="h-4 w-4" /> LATEST IMPORT SUMMARY</span>
+              <h2 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-[#234536]">Current data snapshot.</h2>
+            </div>
+            {latestDirectoryImport.data ? <span className="text-right text-[10px] leading-4 text-[#637065]">{formatDateTime(latestDirectoryImport.data.createdAt)}<br />by {latestDirectoryImport.data.importedBy}</span> : null}
+          </div>
+          {latestDirectoryImport.isLoading ? (
+            <div className="grid min-h-48 place-items-center"><Loader2 className="h-5 w-5 animate-spin text-[#234536]" /></div>
+          ) : latestDirectoryImport.data ? (
+            <div className="mt-6 grid gap-4">
+              <div className="grid grid-cols-3 gap-px bg-[#d9cfbf]">
+                {[
+                  ["Source rows", latestDirectoryImport.data.sourceRowCount],
+                  ["Unique people", latestDirectoryImport.data.uniqueCommunityRecords],
+                  ["Duplicates merged", latestDirectoryImport.data.duplicateRecordsCollapsed],
+                ].map(([label, count]) => <div key={String(label)} className="bg-[#f4efe5] p-3"><p className="text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#637065]">{label}</p><p className="mt-1 font-serif text-2xl text-[#234536]">{count}</p></div>)}
+              </div>
+              <dl className="grid gap-2 border-t border-[#e0d7c8] pt-4 text-sm">
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Public founder profiles</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.publicFounderCount}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Private directory responses</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.privateDirectoryRows}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Venture / sector / location coverage</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.ventureProfiles} / {latestDirectoryImport.data.sectorsRepresented} / {latestDirectoryImport.data.locationsRepresented}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">CSV rows by source</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.directoryRows} / {latestDirectoryImport.data.mixerRows} / {latestDirectoryImport.data.giveAndGrowRows}</dd></div>
+              </dl>
+            </div>
+          ) : (
+            <div className="mt-6 border border-dashed border-[#cfc5b5] bg-[#f4efe5] p-5 text-sm leading-6 text-[#637065]">No dashboard refresh has been recorded yet. Upload the three current exports to create the first audit summary.</div>
+          )}
+        </div>
+      </section>
       <section className="border border-[#d9cfbf] bg-[#fffdfa] p-4 shadow-[0_12px_30px_rgba(35,54,43,0.06)] sm:p-6">
         <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-2 text-sm font-bold text-[#234536]"><Filter className="h-4 w-4 text-[#d58c24]" /> Filter partnership pipeline</div>

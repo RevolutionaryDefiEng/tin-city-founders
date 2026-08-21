@@ -1,6 +1,6 @@
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { communityProfiles, directoryMetrics, InsertPartnerEnquiry, InsertUser, partnerEnquiries, users } from "../drizzle/schema";
+import { communityProfiles, directoryImports, directoryMetrics, InsertCommunityProfile, InsertDirectoryImport, InsertPartnerEnquiry, InsertUser, partnerEnquiries, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -212,4 +212,61 @@ export async function getLiveDirectoryStats() {
     sectorsRepresented: sectors.length,
     locationsRepresented: locations.length,
   };
+}
+
+export async function replaceCommunityProfilesAndRecordImport(
+  profiles: InsertCommunityProfile[],
+  importRecord: InsertDirectoryImport,
+) {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Directory import storage is temporarily unavailable");
+  }
+
+  await db.transaction(async (tx) => {
+    await tx.delete(communityProfiles);
+    if (profiles.length) {
+      await tx.insert(communityProfiles).values(profiles);
+    }
+    await tx.insert(directoryMetrics).values({
+      publicFounderCount: importRecord.publicFounderCount,
+      ventureProfiles: importRecord.ventureProfiles,
+      sectorsRepresented: importRecord.sectorsRepresented,
+      locationsRepresented: importRecord.locationsRepresented,
+      sourceRowCount: importRecord.sourceRowCount,
+      uniqueCommunityRecords: importRecord.uniqueCommunityRecords,
+      duplicateRecordsCollapsed: importRecord.duplicateRecordsCollapsed,
+    });
+    await tx.insert(directoryImports).values(importRecord);
+  });
+}
+
+export async function getLatestDirectoryImport() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Directory import history is temporarily unavailable");
+  }
+
+  const result = await db
+    .select({
+      id: directoryImports.id,
+      directoryRows: directoryImports.directoryRows,
+      mixerRows: directoryImports.mixerRows,
+      giveAndGrowRows: directoryImports.giveAndGrowRows,
+      sourceRowCount: directoryImports.sourceRowCount,
+      uniqueCommunityRecords: directoryImports.uniqueCommunityRecords,
+      duplicateRecordsCollapsed: directoryImports.duplicateRecordsCollapsed,
+      publicFounderCount: directoryImports.publicFounderCount,
+      privateDirectoryRows: directoryImports.privateDirectoryRows,
+      ventureProfiles: directoryImports.ventureProfiles,
+      sectorsRepresented: directoryImports.sectorsRepresented,
+      locationsRepresented: directoryImports.locationsRepresented,
+      importedBy: directoryImports.importedBy,
+      createdAt: directoryImports.createdAt,
+    })
+    .from(directoryImports)
+    .orderBy(desc(directoryImports.createdAt), desc(directoryImports.id))
+    .limit(1);
+
+  return result[0] ?? null;
 }
