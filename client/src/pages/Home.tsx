@@ -336,12 +336,15 @@ export default function Home() {
             <span className="micro-label">BUILT IN JOS · FOUNDER DIRECTORY</span>
             <h2 id="directory-title">Put what you are building <em>on the map.</em></h2>
             <p>Built In Jos is a growing directory of the people, products, and small businesses building across the Plateau. Add your founder profile so new connections, useful introductions, and community visibility can find you.</p>
-            <div className="directory-stats-panel" aria-live="polite" aria-label="Live Built In Jos directory statistics">
-              <div className="directory-founder-count">
+            <div className="directory-snapshot" aria-live="polite" aria-label="Built In Jos directory statistics">
+              <div className="directory-response-count">
                 <span className="directory-live-label"><i /> BUILT IN JOS RESPONSES</span>
                 <strong>{directoryStats.isLoading ? "…" : (directoryStats.data?.directoryResponses?.toLocaleString() ?? "—")}</strong>
                 <span>founder submissions</span>
-                <p><strong>{directoryStats.data?.publicFounderCount?.toLocaleString() ?? "—"} public profiles</strong> are currently visible after founders’ listing choices and duplicate checks.</p>
+              </div>
+              <div className="directory-public-status">
+                <p><strong>{directoryStats.data?.publicFounderCount?.toLocaleString() ?? "—"}</strong><span>public profiles</span></p>
+                <small>Visible after founder consent and duplicate checks.</small>
               </div>
               <dl className="directory-stat-grid">
                 <div><dt>VENTURES</dt><dd>{directoryStats.data?.ventureProfiles?.toLocaleString() ?? "—"}</dd></div>
@@ -354,10 +357,27 @@ export default function Home() {
             </a>
             <span className="directory-footnote">For founders and business owners building in Jos and across Plateau State.</span>
           </div>
-          <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="directory-visual" aria-label="Open the Built In Jos directory registration form">
-            <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" />
-            <span>Open the directory form <ArrowUpRight size={17} /></span>
-          </a>
+          <div className="directory-side">
+            <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="directory-visual" aria-label="Open the Built In Jos directory registration form">
+              <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" />
+              <span>Open the directory form <ArrowUpRight size={17} /></span>
+            </a>
+            <section className="recent-founder-feed" aria-labelledby="recent-founders-title">
+              <div className="recent-founder-heading">
+                <span className="micro-label">RECENTLY JOINED</span>
+                <h3 id="recent-founders-title">New voices on the map.</h3>
+              </div>
+              <div className="recent-founder-list">
+                {directoryStats.isLoading ? <p className="recent-founder-empty">Loading the latest public profiles…</p> : directoryStats.data?.recentFounders?.length ? directoryStats.data.recentFounders.slice(0, 3).map((founder) => (
+                  <article className="recent-founder-row" key={`${founder.name}-${founder.venture}-${founder.location}`}>
+                    <span className="recent-founder-mark" aria-hidden="true">{founder.name.charAt(0)}</span>
+                    <div><h4>{founder.name}</h4><p>{founder.venture || founder.sector || "Independent founder"}</p></div>
+                    {founder.location ? <span className="recent-founder-location"><MapPin size={12} /> {founder.location}</span> : null}
+                  </article>
+                )) : <p className="recent-founder-empty">New public founder profiles will appear here as the directory grows.</p>}
+              </div>
+            </section>
+          </div>
         </section>
 
         <section id="partnerships" className="partnerships-section" aria-labelledby="partnerships-title">

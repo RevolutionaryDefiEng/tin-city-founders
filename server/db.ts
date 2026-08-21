@@ -187,7 +187,7 @@ export async function getLiveDirectoryStats() {
     throw new Error("Directory statistics are temporarily unavailable");
   }
 
-  const [aggregate, sectors, locations] = await Promise.all([
+  const [aggregate, sectors, locations, recentFounders] = await Promise.all([
     db
       .select({
         publicFounderCount: sql<number>`count(*)`,
@@ -203,6 +203,18 @@ export async function getLiveDirectoryStats() {
       .selectDistinct({ location: communityProfiles.location })
       .from(communityProfiles)
       .where(and(eq(communityProfiles.directoryListed, true), sql`${communityProfiles.location} <> ''`)),
+    db
+      .select({
+        name: communityProfiles.canonicalName,
+        venture: communityProfiles.ventureName,
+        sector: communityProfiles.sector,
+        location: communityProfiles.location,
+        joinedAt: communityProfiles.sourceSubmittedAt,
+      })
+      .from(communityProfiles)
+      .where(eq(communityProfiles.directoryListed, true))
+      .orderBy(desc(communityProfiles.sourceSubmittedAt), desc(communityProfiles.id))
+      .limit(4),
   ]);
 
   const counts = aggregate[0];
@@ -213,6 +225,12 @@ export async function getLiveDirectoryStats() {
     ventureProfiles: Number(counts?.ventureProfiles ?? 0),
     sectorsRepresented: sectors.length,
     locationsRepresented: locations.length,
+    recentFounders: recentFounders.map((founder) => ({
+      name: founder.name,
+      venture: founder.venture,
+      sector: founder.sector,
+      location: founder.location,
+    })),
   };
 }
 

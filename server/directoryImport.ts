@@ -37,6 +37,7 @@ type ImportRecord = {
   stage: string;
   location: string;
   directoryListed: boolean;
+  sourceSubmittedAt: Date | null;
 };
 
 function text(value: unknown) {
@@ -54,6 +55,11 @@ function normalizePhone(value: unknown) {
 
 function normalizeName(value: unknown) {
   return text(value).toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function parseSubmittedAt(value: unknown) {
+  const submittedAt = new Date(text(value));
+  return Number.isNaN(submittedAt.getTime()) ? null : submittedAt;
 }
 
 function safeFileName(name: string) {
@@ -119,7 +125,7 @@ function unionFind(records: ImportRecord[]) {
 export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
   const directoryRows = readCsv(
     input.directory.content,
-    ["Your name", "Startup / venture name", "Sector", "Stage", "Contact — WhatsApp or phone", "Where are you based?", directoryConsentColumn],
+    ["Timestamp", "Your name", "Startup / venture name", "Sector", "Stage", "Contact — WhatsApp or phone", "Where are you based?", directoryConsentColumn],
     "Built In Jos directory CSV",
   );
   const guestColumns = ["name", "email", "phone_number"];
@@ -140,6 +146,7 @@ export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
       stage: text(row["Stage"]),
       location: text(row["Where are you based?"]),
       directoryListed: text(row[directoryConsentColumn]).toLowerCase().startsWith("yes"),
+      sourceSubmittedAt: parseSubmittedAt(row.Timestamp),
     })),
     ...mixerRows.map((row) => ({
       source: "mixer" as const,
@@ -154,6 +161,7 @@ export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
       stage: "",
       location: "",
       directoryListed: false,
+      sourceSubmittedAt: null,
     })),
     ...giveAndGrowRows.map((row) => ({
       source: "give_and_grow" as const,
@@ -168,6 +176,7 @@ export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
       stage: "",
       location: "",
       directoryListed: false,
+      sourceSubmittedAt: null,
     })),
   ];
 
@@ -175,6 +184,10 @@ export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
   const profiles: InsertCommunityProfile[] = groups.map((group: ImportRecord[]) => {
     const directoryRecord = group.find((record: ImportRecord) => record.source === "directory");
     const preferred = directoryRecord ?? group[0];
+    const sourceSubmittedAt = group
+      .map((record: ImportRecord) => record.sourceSubmittedAt)
+      .filter((value): value is Date => value !== null)
+      .sort((left, right) => right.getTime() - left.getTime())[0] ?? null;
     const identity = [
       group.find((record: ImportRecord) => record.email)?.email,
       group.find((record: ImportRecord) => record.phone)?.phone,
@@ -190,6 +203,7 @@ export function prepareDirectoryCsvImport(input: DirectoryCsvRefreshInput) {
       stage: preferred.stage,
       location: preferred.location,
       directoryListed: group.some((record: ImportRecord) => record.directoryListed),
+      sourceSubmittedAt,
       sources: Array.from(new Set<SourceName>(group.map((record: ImportRecord) => record.source))).sort().join(","),
     };
   });

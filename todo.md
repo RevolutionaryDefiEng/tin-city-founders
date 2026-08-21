@@ -58,3 +58,7 @@
 - [x] Add the official Tin City Founders TikTok link to the partnership contact area and footer.
 - [x] Verify the clarified directory metrics and TikTok links on desktop and mobile, then save the revised checkpoint.
 - [x] Clarify the submitted-response and public-profile distinction in the protected latest-import summary, then save the revised checkpoint.
+- [x] Simplify the Built In Jos response and public-profile statistics treatment for a cleaner visual hierarchy.
+- [x] Add a consent-safe recently joined public founder feed using names, ventures, sectors, and locations only.
+- [x] Verify the refined directory experience, privacy boundaries, and responsive feed layout, then save the revised checkpoint.
+- [x] Remove source timestamps from the public founder-feed response while retaining them for server-side ordering, then save the revised checkpoint.

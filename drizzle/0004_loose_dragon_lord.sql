@@ -1,0 +1,1 @@
+ALTER TABLE `community_profiles` ADD `sourceSubmittedAt` timestamp;

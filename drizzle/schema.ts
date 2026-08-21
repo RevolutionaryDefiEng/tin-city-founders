@@ -71,6 +71,7 @@ export const communityProfiles = mysqlTable("community_profiles", {
   stage: varchar("stage", { length: 120 }).notNull().default(""),
   location: varchar("location", { length: 160 }).notNull().default(""),
   directoryListed: boolean("directoryListed").notNull().default(false),
+  sourceSubmittedAt: timestamp("sourceSubmittedAt"),
   sources: text("sources").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

@@ -29,6 +29,13 @@
       "when": 1787310454997,
       "tag": "0003_grey_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1787312477388,
+      "tag": "0004_loose_dragon_lord",
+      "breakpoints": true
     }
   ]
 }

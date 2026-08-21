@@ -34,7 +34,9 @@ describe("directory CSV consolidation", () => {
       locationsRepresented: 1,
     });
     expect(result.profiles).toHaveLength(3);
-    expect(result.profiles.find((profile) => profile.directoryListed)?.canonicalName).toBe("Ada Founder");
+    const publicProfile = result.profiles.find((profile) => profile.directoryListed);
+    expect(publicProfile?.canonicalName).toBe("Ada Founder");
+    expect(publicProfile?.sourceSubmittedAt).toBeInstanceOf(Date);
   });
 
   it("rejects an export when its expected columns are missing", () => {
