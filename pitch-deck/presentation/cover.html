@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tin City Founders — Build with the People Already Building</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container { width: 1280px; min-height: 720px; background: #183C2E; color: #FFFDF7; overflow: hidden; }
+    .cover-grid { min-height: 720px; display: grid; grid-template-columns: 56% 44%; }
+    .cover-copy { margin-left: 78px; padding-top: 53px; display: flex; flex-direction: column; justify-content: space-between; }
+    .brand-logo { width: 175px; height: 46px; object-fit: contain; object-position: left center; }
+    .eyebrow { font: 700 10px/1 Arial, sans-serif; letter-spacing: 2.2px; color: #D7E0D6; text-transform: uppercase; }
+    h1 { max-width: 610px; font-family: Georgia, 'Times New Roman', serif; font-size: 69px; font-weight: 400; line-height: 0.98; letter-spacing: -2.5px; }
+    h1 em { color: #E0A347; font-style: italic; }
+    .subtitle { max-width: 490px; margin-top: 27px; font: 400 18px/1.55 Arial, sans-serif; color: #D7E0D6; }
+    .footer-line { display: flex; align-items: center; gap: 16px; font: 700 10px/1 Arial, sans-serif; letter-spacing: 1.8px; color: #D7E0D6; text-transform: uppercase; }
+    .footer-line::before { content: ''; display: block; width: 45px; height: 1px; background: #D58C24; }
+    .visual-field { position: relative; background: #F4EFE5; overflow: hidden; }
+    .cover-photo { position: absolute; width: 564px; height: 720px; object-fit: contain; object-position: center center; opacity: .42; filter: grayscale(.78) sepia(.16) contrast(.84); }
+    .wash { position: absolute; inset: 0; background: rgba(244,239,229,.42); }
+    .visual-field::before { content: ''; position: absolute; width: 620px; height: 620px; border: 1px solid rgba(24,60,46,.28); border-radius: 50%; top: 55px; left: -170px; }
+    .visual-field::after { content: ''; position: absolute; width: 430px; height: 430px; border: 1px solid rgba(24,60,46,.18); border-radius: 50%; bottom: -160px; right: -115px; }
+    .geometry { position: absolute; left: 84px; top: 112px; width: 370px; height: 480px; border-left: 1px solid #183C2E; border-bottom: 1px solid #183C2E; }
+    .geometry span { position: absolute; display: block; background: #183C2E; }
+    .geometry .bar-one { width: 220px; height: 88px; left: 0; top: 106px; }
+    .geometry .bar-two { width: 116px; height: 260px; left: 220px; top: 106px; background: #D58C24; }
+    .geometry .bar-three { width: 158px; height: 92px; left: 78px; top: 366px; }
+    .side-note { position: absolute; right: 56px; bottom: 61px; width: 214px; font: 700 10px/1.5 Arial, sans-serif; letter-spacing: 1.4px; color: #183C2E; text-transform: uppercase; }
+    .side-note b { display: block; margin-bottom: 12px; color: #D58C24; }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="cover-grid">
+      <section class="cover-copy">
+        <img class="brand-logo" src="/home/ubuntu/tin-city-founders/pitch-deck/assets/tcf-logo-transparent-light-exact.png" alt="Tin City Founders" />
+        <div>
+          <div class="eyebrow">Partnership pitch · 2026</div>
+          <h1>Build with the people <em>already building.</em></h1>
+          <p class="subtitle">A credible, community-led route into the entrepreneurial energy of Jos, Plateau State, Nigeria.</p>
+        </div>
+        <div class="footer-line">Jos, Plateau State · Nigeria</div>
+      </section>
+      <aside class="visual-field" aria-label="Tin City Founders community gathering">
+        <img class="cover-photo" src="/home/ubuntu/tin-city-founders/pitch-deck/assets/tcf-hero-group.jpg" alt="Tin City Founders community members gathered at an event" />
+        <div class="wash"></div>
+        <div class="geometry"><span class="bar-one"></span><span class="bar-two"></span><span class="bar-three"></span></div>
+        <div class="side-note"><b>01 / 12</b>Locally rooted<br/>Globally fluent<br/>Evidence-led</div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

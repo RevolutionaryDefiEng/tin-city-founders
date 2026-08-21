@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Start with one useful conversation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .slide-container { width: 1280px; min-height: 720px; background: #183C2E; color: #FFFDF7; overflow: hidden; position: relative; }
+    .slide-container::before { content: ''; position: absolute; width: 535px; height: 535px; border: 1px solid rgba(255,253,247,.15); border-radius: 50%; right: -197px; top: -156px; }
+    .slide-container::after { content: ''; position: absolute; width: 310px; height: 310px; border: 1px solid rgba(255,253,247,.12); border-radius: 50%; left: -190px; bottom: -178px; }
+    .wrap { margin: 0 78px; padding-top: 50px; position: relative; z-index: 1; }
+    .topline { border-top: 1px solid rgba(255,253,247,.35); padding-top: 15px; display: flex; justify-content: space-between; font: 700 10px/1 Arial, sans-serif; letter-spacing: 1.8px; text-transform: uppercase; color: #D7E0D6; }
+    .topline b { color: #F2C26A; }
+    .grid { display: grid; grid-template-columns: 60% 40%; margin-top: 97px; }
+    h1 { max-width: 625px; font: 400 65px/.93 Georgia, serif; letter-spacing: -2.2px; }
+    h1 em { color: #E0A347; font-style: italic; }
+    .closing-note { max-width: 475px; margin-top: 29px; font: 400 17px/1.5 Arial, sans-serif; color: #D7E0D6; }
+    .contact { border-left: 1px solid rgba(255,253,247,.38); padding-left: 46px; padding-top: 6px; }
+    .contact-label { color: #F2C26A; font: 700 10px/1 Arial, sans-serif; letter-spacing: 1.7px; text-transform: uppercase; }
+    .item { margin-top: 25px; }
+    .item small { display: block; color: #D7E0D6; font: 700 9px/1 Arial, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; }
+    .item span { display: block; margin-top: 8px; font: 400 17px/1.25 Georgia, serif; color: #FFFDF7; }
+    .social { margin-top: 28px; padding-top: 14px; border-top: 1px solid rgba(255,253,247,.35); font: 700 11px/1.45 Arial, sans-serif; letter-spacing: 1.2px; color: #D7E0D6; }
+    .social b { color: #F2C26A; }
+    .logo-field { width: 190px; height: 57px; margin-top: 20px; background: #F4EFE5; display: flex; align-items: center; padding-left: 10px; }
+    .brand-logo { width: 170px; height: 43px; object-fit: contain; object-position: left center; }
+    .mark { position: absolute; bottom: 48px; right: 2px; display: flex; align-items: center; gap: 12px; color: #D7E0D6; font: 700 10px/1 Arial, sans-serif; letter-spacing: 1.7px; text-transform: uppercase; }
+    .diamond { display: block; width: 12px; height: 12px; background: #D58C24; transform: rotate(45deg); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="wrap">
+      <div class="topline"><span><b>11</b> · Next step</span><span>Tin City Founders · Jos, Nigeria</span></div>
+      <div class="grid">
+        <section><h1>Start with one <em>useful</em> conversation.</h1><p class="closing-note">Build with purpose. Strengthen the conditions in which local enterprise can stay, connect, and grow.</p></section>
+        <section class="contact"><span class="contact-label">Contact Tin City Founders</span><div class="item"><small>Email</small><span>info@africanintelligence.tech</span></div><div class="item"><small>Telephone</small><span>+234 707 342 5222<br/>+234 802 850 5874</span></div><div class="social"><b>Instagram + TikTok</b><br/>@tincity_founders</div><div class="logo-field"><img class="brand-logo" src="/home/ubuntu/tin-city-founders/pitch-deck/assets/tcf-logo-transparent-dark-exact.png" alt="Tin City Founders" /></div></section>
+      </div>
+      <div class="mark"><i class="diamond"></i><span>Give before you take</span></div>
+    </div>
+  </div>
+</body>
+</html>

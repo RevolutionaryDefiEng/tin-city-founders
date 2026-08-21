@@ -78,3 +78,12 @@
 - [x] Add +234 802 850 5874 to the partnership contact details and footer.
 - [x] Standardize the existing partnership phone number in +234 international format and preserve working tap-to-call links.
 - [x] Verify the updated contact details on desktop and mobile, then save the revised checkpoint.
+- [x] Review Tin City Founders’ approved story, live directory proof points, sponsorship model, and branded assets for a partnership pitch deck.
+- [x] Develop a concise, sophisticated deal narrative for governments, institutions, international organizations, and investors.
+- [x] Prepare the branded slide outline and supporting visual assets for the Tin City Founders pitch deck.
+- [x] Generate and review the final partnership pitch deck for narrative clarity, brand consistency, and executive presentation quality.
+- [x] Integrate approved Tin City Founders photography and logo assets into the pitch deck so the final presentation reflects the prepared brand materials.
+- [x] Conduct and document a final slide-by-slide QA pass for numbering, brand consistency, and executive presentation quality, then save the completed deck checkpoint.
+- [x] Perform and document a fuller final slide-by-slide QA review covering numbering, brand consistency, and executive presentation quality.
+- [x] Save a new web project checkpoint for the completed pitch deck after the final QA pass.
+- [x] Save and publish the final reviewed Tin City Founders pitch-deck checkpoint.

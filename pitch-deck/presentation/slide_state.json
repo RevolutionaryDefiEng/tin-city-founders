@@ -1,0 +1,144 @@
+{
+  "project_info": {
+    "title": "Build with the people already building.",
+    "created": 1787355284.389,
+    "last_updated": 1787356325.908,
+    "total_slides": 12
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "opportunity",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "ethos",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "engine",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "proof",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "partner_value",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "mandates",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "pathways",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "evidence",
+      "state": "edited",
+      "pageNum": 9
+    },
+    {
+      "id": "activation",
+      "state": "edited",
+      "pageNum": 10
+    },
+    {
+      "id": "standard",
+      "state": "edited",
+      "pageNum": 11
+    },
+    {
+      "id": "closing",
+      "state": "edited",
+      "pageNum": 12
+    }
+  ],
+  "outline": [
+    {
+      "id": "cover",
+      "title": "Build with the people already building.",
+      "summary": "Cover slide that positions Tin City Founders as a credible, community-led route into the entrepreneurial energy of Jos, Plateau State, Nigeria.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "opportunity",
+      "title": "Opportunity is local before it is scalable.",
+      "summary": "Frame the enterprise challenge as fragmented access to peers, expertise, visibility, and opportunity, and position Tin City Founders as the connection point.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "ethos",
+      "title": "No founder should build alone.",
+      "summary": "Present the Give Before You Take ethos and the community’s not-for-profit, mutual-contribution model.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "engine",
+      "title": "The community is a repeatable local engine.",
+      "summary": "Show the operating model: founder convenings, skills clinics, Give/Ask exchanges, and Built In Jos founder visibility.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "proof",
+      "title": "A live founder base is already taking shape.",
+      "summary": "Use the consent-safe Built In Jos snapshot: 36 submissions, 31 public profiles, 30 ventures, 7 sectors, and 4 locations.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "partner_value",
+      "title": "What partners gain is credible local reach.",
+      "summary": "Articulate the partnership value: trusted context, practical access, co-designed activations, and earned local credibility.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "mandates",
+      "title": "One community model can serve several mandates.",
+      "summary": "Match partnership value to government institutions, international organizations, enterprise platforms and VCs, and foundations or impact partners.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "pathways",
+      "title": "Three pathways turn intent into useful action.",
+      "summary": "Describe Programme Sponsorship, Strategic Collaboration, and Place-Based Investment in concise, action-oriented terms.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "evidence",
+      "title": "We design for evidence, not attention.",
+      "summary": "Show how partner objectives, founder group, activation, and pre-agreed signals create a clear learning and impact narrative.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "activation",
+      "title": "Ninety days to first proof.",
+      "summary": "Show the four-stage activation arc: Align, Activate, Learn, and Build Proof.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "standard",
+      "title": "The partnership standard is simple.",
+      "summary": "Summarize the shared compact: Tin City Founders brings local context and trusted rhythm; partners bring useful resources and access.",
+      "image_plan": "Use a suitable image if needed"
+    },
+    {
+      "id": "closing",
+      "title": "Start with one useful conversation.",
+      "summary": "Closing invitation with Tin City Founders contact information and a concise call to build purposefully.",
+      "image_plan": "Use a suitable image if needed"
+    }
+  ]
+}
