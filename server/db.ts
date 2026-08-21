@@ -1,6 +1,6 @@
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertPartnerEnquiry, InsertUser, partnerEnquiries, users } from "../drizzle/schema";
+import { communityProfiles, directoryMetrics, InsertPartnerEnquiry, InsertUser, partnerEnquiries, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -158,4 +158,58 @@ export async function updatePartnerEnquiryStatus(
   }
 
   await db.update(partnerEnquiries).set({ status }).where(eq(partnerEnquiries.id, id));
+}
+
+export async function getLatestDirectoryMetrics() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Directory statistics are temporarily unavailable");
+  }
+
+  const result = await db
+    .select({
+      publicFounderCount: directoryMetrics.publicFounderCount,
+      ventureProfiles: directoryMetrics.ventureProfiles,
+      sectorsRepresented: directoryMetrics.sectorsRepresented,
+      locationsRepresented: directoryMetrics.locationsRepresented,
+      updatedAt: directoryMetrics.updatedAt,
+    })
+    .from(directoryMetrics)
+    .orderBy(desc(directoryMetrics.updatedAt), desc(directoryMetrics.id))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
+export async function getLiveDirectoryStats() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Directory statistics are temporarily unavailable");
+  }
+
+  const [aggregate, sectors, locations] = await Promise.all([
+    db
+      .select({
+        publicFounderCount: sql<number>`count(*)`,
+        ventureProfiles: sql<number>`sum(case when ${communityProfiles.ventureName} <> '' then 1 else 0 end)`,
+      })
+      .from(communityProfiles)
+      .where(eq(communityProfiles.directoryListed, true)),
+    db
+      .selectDistinct({ sector: communityProfiles.sector })
+      .from(communityProfiles)
+      .where(and(eq(communityProfiles.directoryListed, true), sql`${communityProfiles.sector} <> ''`)),
+    db
+      .selectDistinct({ location: communityProfiles.location })
+      .from(communityProfiles)
+      .where(and(eq(communityProfiles.directoryListed, true), sql`${communityProfiles.location} <> ''`)),
+  ]);
+
+  const counts = aggregate[0];
+  return {
+    publicFounderCount: Number(counts?.publicFounderCount ?? 0),
+    ventureProfiles: Number(counts?.ventureProfiles ?? 0),
+    sectorsRepresented: sectors.length,
+    locationsRepresented: locations.length,
+  };
 }

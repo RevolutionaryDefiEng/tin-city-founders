@@ -1,5 +1,5 @@
 import { COOKIE_NAME } from "@shared/const";
-import { createPartnerEnquiry, getPartnerEnquirySummary, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
+import { createPartnerEnquiry, getLiveDirectoryStats, getPartnerEnquirySummary, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
 import { createDashboardSession, DASHBOARD_SESSION_COOKIE, dashboardLoginSchema, dashboardSessionMaxAgeMs, hasDashboardSession, isValidDashboardCredential } from "./dashboardAuth";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
@@ -27,6 +27,9 @@ export const appRouter = router({
       });
       return { success: true } as const;
     }),
+  }),
+  directory: router({
+    stats: publicProcedure.query(() => getLiveDirectoryStats()),
   }),
   dashboard: router({
     session: publicProcedure.query(async ({ ctx }) => ({

@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -42,3 +42,39 @@ export const partnerEnquiries = mysqlTable("partner_enquiries", {
 
 export type PartnerEnquiry = typeof partnerEnquiries.$inferSelect;
 export type InsertPartnerEnquiry = typeof partnerEnquiries.$inferInsert;
+
+/** Aggregated, consent-safe statistics for the public Built In Jos directory. */
+export const directoryMetrics = mysqlTable("directory_metrics", {
+  id: int("id").autoincrement().primaryKey(),
+  publicFounderCount: int("publicFounderCount").notNull(),
+  ventureProfiles: int("ventureProfiles").notNull(),
+  sectorsRepresented: int("sectorsRepresented").notNull(),
+  locationsRepresented: int("locationsRepresented").notNull(),
+  sourceRowCount: int("sourceRowCount").notNull(),
+  uniqueCommunityRecords: int("uniqueCommunityRecords").notNull(),
+  duplicateRecordsCollapsed: int("duplicateRecordsCollapsed").notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+});
+
+export type DirectoryMetric = typeof directoryMetrics.$inferSelect;
+export type InsertDirectoryMetric = typeof directoryMetrics.$inferInsert;
+
+/** Private consolidated source records; public endpoints expose aggregate statistics only. */
+export const communityProfiles = mysqlTable("community_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  profileKey: varchar("profileKey", { length: 64 }).notNull().unique(),
+  canonicalName: varchar("canonicalName", { length: 160 }).notNull(),
+  email: varchar("email", { length: 320 }),
+  phone: varchar("phone", { length: 48 }),
+  ventureName: varchar("ventureName", { length: 200 }).notNull().default(""),
+  sector: varchar("sector", { length: 120 }).notNull().default(""),
+  stage: varchar("stage", { length: 120 }).notNull().default(""),
+  location: varchar("location", { length: 160 }).notNull().default(""),
+  directoryListed: boolean("directoryListed").notNull().default(false),
+  sources: text("sources").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CommunityProfile = typeof communityProfiles.$inferSelect;
+export type InsertCommunityProfile = typeof communityProfiles.$inferInsert;

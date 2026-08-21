@@ -44,3 +44,7 @@
 - [x] Add an authentic, subtle background image treatment to the partnership area.
 - [x] Correct sponsorship-bubble and enquiry-panel alignment, spacing, and interaction cues across responsive layouts.
 - [x] Verify the refreshed partnership experience on desktop and mobile, then save the revised checkpoint.
+- [x] Inspect and consolidate the three supplied directory and event CSV files using a documented de-duplication approach.
+- [x] Store the consolidated, privacy-conscious directory count in the website data model.
+- [x] Add a polished live Built In Jos founder-count and directory statistics display.
+- [x] Test the consolidated count, responsive statistics interface, and save the revised checkpoint.

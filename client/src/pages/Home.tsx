@@ -151,6 +151,11 @@ export default function Home() {
       toast.error("We could not submit your enquiry. Please try again or email the team directly.");
     },
   });
+  const directoryStats = trpc.directory.stats.useQuery(undefined, {
+    refetchInterval: 60_000,
+    refetchOnWindowFocus: true,
+    staleTime: 30_000,
+  });
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
@@ -330,6 +335,19 @@ export default function Home() {
             <span className="micro-label">BUILT IN JOS · FOUNDER DIRECTORY</span>
             <h2 id="directory-title">Put what you are building <em>on the map.</em></h2>
             <p>Built In Jos is a growing directory of the people, products, and small businesses building across the Plateau. Add your founder profile so new connections, useful introductions, and community visibility can find you.</p>
+            <div className="directory-stats-panel" aria-live="polite" aria-label="Live Built In Jos directory statistics">
+              <div className="directory-founder-count">
+                <span className="directory-live-label"><i /> LIVE DIRECTORY</span>
+                <strong>{directoryStats.isLoading ? "…" : (directoryStats.data?.publicFounderCount?.toLocaleString() ?? "—")}</strong>
+                <span>founders listed</span>
+                <p>Public profiles chosen by founders who want to be discovered across Jos and Plateau State.</p>
+              </div>
+              <dl className="directory-stat-grid">
+                <div><dt>VENTURES</dt><dd>{directoryStats.data?.ventureProfiles?.toLocaleString() ?? "—"}</dd></div>
+                <div><dt>SECTORS</dt><dd>{directoryStats.data?.sectorsRepresented?.toLocaleString() ?? "—"}</dd></div>
+                <div><dt>LOCATIONS</dt><dd>{directoryStats.data?.locationsRepresented?.toLocaleString() ?? "—"}</dd></div>
+              </dl>
+            </div>
             <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
               Add your founder profile <ArrowUpRight size={18} />
             </a>
