@@ -75,3 +75,6 @@
 - [x] Refine the hero message around Tin City Founders’ “don’t build alone” and “give before you take” community ethos.
 - [x] Strengthen the hero supporting copy so it communicates credible value to thoughtful partners and investors without overclaiming.
 - [x] Verify the refreshed hero copy and responsive hierarchy, then save the revised checkpoint.
+- [x] Add +234 802 850 5874 to the partnership contact details and footer.
+- [x] Standardize the existing partnership phone number in +234 international format and preserve working tap-to-call links.
+- [x] Verify the updated contact details on desktop and mobile, then save the revised checkpoint.
