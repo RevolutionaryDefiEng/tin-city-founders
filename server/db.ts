@@ -5,6 +5,48 @@ import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
+export type LiveDirectoryStats = {
+  directoryResponses: number;
+  publicFounderCount: number;
+  ventureProfiles: number;
+  sectorsRepresented: number;
+  locationsRepresented: number;
+  recentFounders: Array<{ name: string; venture: string; sector: string; location: string }>;
+};
+
+const DIRECTORY_STATS_TIMEOUT_MS = 12_000;
+const DIRECTORY_STATS_CACHE_MAX_AGE_MS = 10 * 60_000;
+
+function withTimeout<T>(operation: Promise<T>, timeoutMs: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timeout = setTimeout(() => reject(new Error("Directory statistics request timed out")), timeoutMs);
+    operation.then(resolve, reject).finally(() => clearTimeout(timeout));
+  });
+}
+
+export function createDirectoryStatsReader(
+  load: () => Promise<LiveDirectoryStats>,
+  now: () => number = Date.now,
+  timeoutMs = DIRECTORY_STATS_TIMEOUT_MS,
+  cacheMaxAgeMs = DIRECTORY_STATS_CACHE_MAX_AGE_MS,
+) {
+  let cached: { value: LiveDirectoryStats; cachedAt: number } | null = null;
+
+  return async (): Promise<LiveDirectoryStats> => {
+    try {
+      const value = await withTimeout(load(), timeoutMs);
+      cached = { value, cachedAt: now() };
+      return value;
+    } catch (error) {
+      if (cached && now() - cached.cachedAt <= cacheMaxAgeMs) {
+        console.warn("[Directory] Serving recent cached statistics after a transient query failure");
+        return cached.value;
+      }
+      throw error;
+    }
+  };
+}
+
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
@@ -181,7 +223,7 @@ export async function getLatestDirectoryMetrics() {
   return result[0] ?? null;
 }
 
-export async function getLiveDirectoryStats() {
+export async function getLiveDirectoryStats(): Promise<LiveDirectoryStats> {
   const db = await getDb();
   if (!db) {
     throw new Error("Directory statistics are temporarily unavailable");
@@ -232,6 +274,12 @@ export async function getLiveDirectoryStats() {
       location: founder.location,
     })),
   };
+}
+
+const readResilientDirectoryStats = createDirectoryStatsReader(getLiveDirectoryStats);
+
+export async function getResilientLiveDirectoryStats(): Promise<LiveDirectoryStats> {
+  return readResilientDirectoryStats();
 }
 
 export async function replaceCommunityProfilesAndRecordImport(

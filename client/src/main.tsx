@@ -25,6 +25,7 @@ queryClient.getQueryCache().subscribe(event => {
   if (event.type === "updated" && event.action.type === "error") {
     const error = event.query.state.error;
     redirectToLoginIfUnauthorized(error);
+    if (event.query.meta?.suppressGlobalError) return;
     console.error("[API Query Error]", error);
   }
 });

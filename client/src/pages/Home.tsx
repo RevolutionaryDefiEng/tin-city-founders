@@ -162,9 +162,12 @@ export default function Home() {
     },
   });
   const directoryStats = trpc.directory.stats.useQuery(undefined, {
-    refetchInterval: 60_000,
+    refetchInterval: 5 * 60_000,
     refetchOnWindowFocus: true,
-    staleTime: 30_000,
+    staleTime: 2 * 60_000,
+    retry: 2,
+    retryDelay: (attempt) => Math.min(1_000 * 2 ** attempt, 5_000),
+    meta: { suppressGlobalError: true },
   });
 
   useEffect(() => {
@@ -361,6 +364,12 @@ export default function Home() {
                 <div><dt>LOCATIONS</dt><dd>{directoryStats.data?.locationsRepresented?.toLocaleString() ?? "—"}</dd></div>
               </dl>
             </div>
+            {directoryStats.isError && !directoryStats.data ? (
+              <div className="directory-query-note" role="status">
+                <span>Directory statistics are refreshing. You can still add your founder profile.</span>
+                <button type="button" onClick={() => directoryStats.refetch()}>Try again</button>
+              </div>
+            ) : null}
             <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
               Add your founder profile <ArrowUpRight size={18} />
             </a>
@@ -377,7 +386,7 @@ export default function Home() {
                 <h3 id="recent-founders-title">New voices on the map.</h3>
               </div>
               <div className="recent-founder-list">
-                {directoryStats.isLoading ? <p className="recent-founder-empty">Loading the latest public profiles…</p> : directoryStats.data?.recentFounders?.length ? directoryStats.data.recentFounders.slice(0, 3).map((founder) => (
+                {directoryStats.isLoading ? <p className="recent-founder-empty">Loading the latest public profiles…</p> : directoryStats.isError && !directoryStats.data ? <p className="recent-founder-empty">The latest public profiles are refreshing. Please check back shortly.</p> : directoryStats.data?.recentFounders?.length ? directoryStats.data.recentFounders.slice(0, 3).map((founder) => (
                   <article className="recent-founder-row" key={`${founder.name}-${founder.venture}-${founder.location}`}>
                     <span className="recent-founder-mark" aria-hidden="true">{founder.name.charAt(0)}</span>
                     <div><h4>{founder.name}</h4><p>{founder.venture || founder.sector || "Independent founder"}</p></div>

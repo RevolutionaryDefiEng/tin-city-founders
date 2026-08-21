@@ -196,6 +196,9 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .directory-stat-grid dt { color: #c7d5ca; font-size: 8px; letter-spacing: 0.1em; font-weight: 800; }
 .directory-stat-grid dd { margin: 0; color: #fffdf7; font-family: "DM Serif Display", Georgia, serif; font-size: 27px; line-height: 1; font-variant-numeric: tabular-nums; }
 .directory-footnote { display: block; max-width: 430px; margin-top: 22px; color: #b9c8bc; font-size: 10px; letter-spacing: 0.045em; line-height: 1.55; text-transform: uppercase; font-weight: 700; }
+.directory-query-note { display: flex; align-items: center; justify-content: space-between; gap: 14px; max-width: 560px; margin: -10px 0 20px; padding: 10px 12px; border-left: 2px solid #f4c775; background: rgba(8, 35, 25, 0.32); color: #d8e0d7; font-size: 10px; line-height: 1.45; }
+.directory-query-note button { flex: 0 0 auto; border: 0; border-bottom: 1px solid #f4c775; padding: 0 0 2px; background: transparent; color: #f4c775; font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 800; }
+.directory-query-note button:hover { color: #fffdf7; }
 .directory-side { position: relative; z-index: 1; display: grid; gap: 22px; width: min(100%, 520px); margin-left: auto; }
 .directory-visual { display: block; max-width: 100%; margin-left: 0; background: #f4efe5; box-shadow: 16px 17px 0 rgba(8, 27, 19, 0.3); transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 220ms ease; }
 .directory-visual:hover { transform: translate(-5px, -6px); box-shadow: 28px 28px 0 rgba(8, 27, 19, 0.4); }

@@ -69,3 +69,6 @@
 - [x] Prepare the supplied Strategic Collaboration and Place-Based Investment event photographs for web delivery.
 - [x] Replace the corresponding partnership pathway-card images and descriptions with the supplied authentic photographs.
 - [x] Verify the updated desktop and mobile pathway image crops, then save the revised checkpoint.
+- [x] Diagnose the homepage tRPC “Load failed” query error using client, network, and server evidence.
+- [x] Fix the underlying public homepage query reliability issue and provide a graceful unavailable state if needed.
+- [x] Verify successful homepage loading, query behavior, and automated checks before saving the revised checkpoint.
