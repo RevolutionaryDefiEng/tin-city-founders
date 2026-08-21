@@ -38,6 +38,9 @@ const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30
 const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.png";
+const programmeSponsorshipImage = "/manus-storage/tcf-programme-sponsorship_9340ff82.jpg";
+const strategicCollaborationImage = womanSpeakerImage;
+const placeBasedInvestmentImage = workshopImage;
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -78,6 +81,8 @@ const partnershipItems = [
     scope: "A defined founder cohort, learning series, or repeatable clinic cycle shaped around one priority need.",
     outcomes: ["A named founder cohort or learning series", "A shared delivery plan and reporting rhythm", "Thoughtful visibility within a trusted local community"],
     icon: HeartHandshake,
+    image: programmeSponsorshipImage,
+    imageAlt: "A practical founder learning session led by a mentor",
   },
   {
     id: "strategic-collaboration",
@@ -89,6 +94,8 @@ const partnershipItems = [
     scope: "A focused activation that brings a partner’s tool, expertise, or market access to a clearly defined founder group.",
     outcomes: ["A locally adapted activation or workshop", "Direct founder access to practical expertise", "Shared learning captured for future programming"],
     icon: Network,
+    image: strategicCollaborationImage,
+    imageAlt: "A Tin City Founders member sharing insight during a community gathering",
   },
   {
     id: "place-based-investment",
@@ -100,6 +107,8 @@ const partnershipItems = [
     scope: "A community-facing pilot or convening season that advances one shared condition for stronger local enterprise.",
     outcomes: ["A place-aware scope shaped with local founders", "A coalition approach to shared challenges", "Evidence of participation, learning, and outcomes"],
     icon: Globe2,
+    image: placeBasedInvestmentImage,
+    imageAlt: "Tin City Founders members connecting after a local workshop session",
   },
 ];
 
@@ -462,21 +471,21 @@ export default function Home() {
               </div>
               <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
-            <div className="partnership-stage">
-              <img src={mentorshipImage} alt="" aria-hidden="true" className="partnership-stage-image" />
-              <div className="partnership-cards">
+            <div className="partnership-pathway-grid" aria-label="Partnership pathways">
                 {partnershipItems.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <a className="partnership-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
-                      <div className="partnership-card-top"><span>{item.number}</span><Icon size={22} strokeWidth={1.7} /></div>
-                      <h3>{item.title}</h3>
-                      <p>{item.text}</p>
-                      <span className="bubble-open-label"><span>Explore pathway</span><ArrowDown size={16} /></span>
+                    <a className="partnership-pathway-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
+                      <div className="partnership-pathway-image"><img src={item.image} alt={item.imageAlt} /></div>
+                      <div className="partnership-pathway-body">
+                        <div className="partnership-card-top"><span>{item.number} · PATHWAY</span><Icon size={20} strokeWidth={1.7} /></div>
+                        <h3>{item.title}</h3>
+                        <p>{item.text}</p>
+                        <span className="partnership-pathway-action"><span>Explore pathway</span><ArrowDown size={16} /></span>
+                      </div>
                     </a>
                   );
                 })}
-              </div>
             </div>
           </div>
           <div className="pathway-details" aria-label="Detailed sponsorship pathways">

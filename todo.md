@@ -62,3 +62,7 @@
 - [x] Add a consent-safe recently joined public founder feed using names, ventures, sectors, and locations only.
 - [x] Verify the refined directory experience, privacy boundaries, and responsive feed layout, then save the revised checkpoint.
 - [x] Remove source timestamps from the public founder-feed response while retaining them for server-side ordering, then save the revised checkpoint.
+- [x] Replace the overlapping partnership bubbles with an image-led pathway layout for Programme Sponsorship, Strategic Collaboration, and Place-Based Investment.
+- [x] Create and apply three cohesive partnership images that support the Tin City Founders editorial brand and international partner audience.
+- [x] Preserve direct pathway navigation and verify the redesigned partnership experience on desktop and mobile before saving the revised checkpoint.
+- [x] Finalize and document the distinct visual treatment for all three partnership pathway cards, then save the revised checkpoint.
