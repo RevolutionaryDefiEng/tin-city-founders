@@ -19,6 +19,7 @@ import {
   Mail,
   MapPin,
   Menu,
+  Music2,
   Network,
   Phone,
   Sprout,
@@ -337,10 +338,10 @@ export default function Home() {
             <p>Built In Jos is a growing directory of the people, products, and small businesses building across the Plateau. Add your founder profile so new connections, useful introductions, and community visibility can find you.</p>
             <div className="directory-stats-panel" aria-live="polite" aria-label="Live Built In Jos directory statistics">
               <div className="directory-founder-count">
-                <span className="directory-live-label"><i /> LIVE DIRECTORY</span>
-                <strong>{directoryStats.isLoading ? "…" : (directoryStats.data?.publicFounderCount?.toLocaleString() ?? "—")}</strong>
-                <span>founders listed</span>
-                <p>Public profiles chosen by founders who want to be discovered across Jos and Plateau State.</p>
+                <span className="directory-live-label"><i /> BUILT IN JOS RESPONSES</span>
+                <strong>{directoryStats.isLoading ? "…" : (directoryStats.data?.directoryResponses?.toLocaleString() ?? "—")}</strong>
+                <span>founder submissions</span>
+                <p><strong>{directoryStats.data?.publicFounderCount?.toLocaleString() ?? "—"} public profiles</strong> are currently visible after founders’ listing choices and duplicate checks.</p>
               </div>
               <dl className="directory-stat-grid">
                 <div><dt>VENTURES</dt><dd>{directoryStats.data?.ventureProfiles?.toLocaleString() ?? "—"}</dd></div>
@@ -496,6 +497,7 @@ export default function Home() {
               <div className="contact-details">
                 <a href="tel:07073425222" className="contact-phone"><Phone size={17} /> 0707 342 5222</a>
                 <a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer" className="contact-phone"><Instagram size={17} /> @tincity_founders</a>
+                <a href="https://www.tiktok.com/@tincity_founders" target="_blank" rel="noopener noreferrer" className="contact-phone"><Music2 size={17} /> @tincity_founders on TikTok</a>
               </div>
             </div>
           </div>
@@ -510,7 +512,7 @@ export default function Home() {
         <div className="footer-grid">
           <div><span className="footer-label">A community association for</span><p>Entrepreneurship, innovation, and shared economic progress.</p></div>
           <div className="footer-links"><a href="#mandate">Our mandate</a><a href="#programmes">Programmes</a><a href="#partnerships">Partnerships</a><a href="#contact">Contact</a><a href="/admin/enquiries">Partner team</a></div>
-          <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:07073425222">0707 342 5222</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders</a></div>
+          <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:07073425222">0707 342 5222</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders on Instagram</a><a href="https://www.tiktok.com/@tincity_founders" target="_blank" rel="noopener noreferrer">@tincity_founders on TikTok</a></div>
         </div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} Tin City Founders</span><span>Made in Jos · Open to the world</span></div>
       </footer>

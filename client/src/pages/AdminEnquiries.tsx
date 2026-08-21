@@ -315,10 +315,11 @@ function EnquiriesDashboard() {
                 ].map(([label, count]) => <div key={String(label)} className="bg-[#f4efe5] p-3"><p className="text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#637065]">{label}</p><p className="mt-1 font-serif text-2xl text-[#234536]">{count}</p></div>)}
               </div>
               <dl className="grid gap-2 border-t border-[#e0d7c8] pt-4 text-sm">
-                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Public founder profiles</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.publicFounderCount}</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Private directory responses</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.privateDirectoryRows}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Built In Jos form submissions</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.directoryRows}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Public profiles after consent &amp; deduplication</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.publicFounderCount}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Responses kept private</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.privateDirectoryRows}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-[#637065]">Venture / sector / location coverage</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.ventureProfiles} / {latestDirectoryImport.data.sectorsRepresented} / {latestDirectoryImport.data.locationsRepresented}</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-[#637065]">CSV rows by source</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.directoryRows} / {latestDirectoryImport.data.mixerRows} / {latestDirectoryImport.data.giveAndGrowRows}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#637065]">Form / Mixer / Give &amp; Grow rows</dt><dd className="font-bold text-[#234536]">{latestDirectoryImport.data.directoryRows} / {latestDirectoryImport.data.mixerRows} / {latestDirectoryImport.data.giveAndGrowRows}</dd></div>
               </dl>
             </div>
           ) : (

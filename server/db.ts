@@ -206,7 +206,9 @@ export async function getLiveDirectoryStats() {
   ]);
 
   const counts = aggregate[0];
+  const latestImport = await getLatestDirectoryImport();
   return {
+    directoryResponses: latestImport?.directoryRows ?? Number(counts?.publicFounderCount ?? 0),
     publicFounderCount: Number(counts?.publicFounderCount ?? 0),
     ventureProfiles: Number(counts?.ventureProfiles ?? 0),
     sectorsRepresented: sectors.length,

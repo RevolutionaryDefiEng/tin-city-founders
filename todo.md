@@ -54,3 +54,7 @@
 - [x] Test authorized and unauthorized refresh behavior, count updates, import summary accuracy, and responsive presentation before saving the revised checkpoint.
 - [x] Verify the admin CSV refresh workspace on a mobile viewport, then save the revised checkpoint.
 - [x] Save the verified admin-only CSV refresh workflow as a restorable website checkpoint.
+- [x] Clarify the 36 submitted Built In Jos responses versus the 31 profiles marked public in the directory display and admin summary.
+- [x] Add the official Tin City Founders TikTok link to the partnership contact area and footer.
+- [x] Verify the clarified directory metrics and TikTok links on desktop and mobile, then save the revised checkpoint.
+- [x] Clarify the submitted-response and public-profile distinction in the protected latest-import summary, then save the revised checkpoint.

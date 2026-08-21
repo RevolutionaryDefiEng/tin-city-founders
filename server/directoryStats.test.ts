@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 type DirectoryStatsResponse = {
+  directoryResponses: number;
   publicFounderCount: number;
   ventureProfiles: number;
   sectorsRepresented: number;
@@ -11,6 +12,7 @@ type DirectoryStatsResponse = {
 describe("public directory statistics response", () => {
   it("contains aggregate directory values only and does not expose founder contact details", () => {
     const response: DirectoryStatsResponse = {
+      directoryResponses: 36,
       publicFounderCount: 31,
       ventureProfiles: 30,
       sectorsRepresented: 7,
@@ -19,6 +21,7 @@ describe("public directory statistics response", () => {
     };
 
     expect(response).toMatchObject({
+      directoryResponses: 36,
       publicFounderCount: 31,
       ventureProfiles: 30,
       sectorsRepresented: 7,
@@ -28,4 +31,3 @@ describe("public directory statistics response", () => {
     expect(response).not.toHaveProperty("phone");
   });
 });
-
