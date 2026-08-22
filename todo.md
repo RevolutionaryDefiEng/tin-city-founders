@@ -87,3 +87,7 @@
 - [x] Perform and document a fuller final slide-by-slide QA review covering numbering, brand consistency, and executive presentation quality.
 - [x] Save a new web project checkpoint for the completed pitch deck after the final QA pass.
 - [x] Save and publish the final reviewed Tin City Founders pitch-deck checkpoint.
+- [x] Inspect the current repository remote, environment-variable usage, and package-manager metadata for an external Claude Code handoff.
+- [x] Add non-secret environment documentation and concise repository contribution guidance for local development.
+- [x] Validate the handoff files and resolve the declared pnpm version drift where safe.
+- [x] Save a reviewed checkpoint containing the external development handoff materials.
