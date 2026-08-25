@@ -194,10 +194,8 @@ export default function Home() {
         return res.text();
       })
       .then((csv) => {
-        const lines = csv.trim().split("\n");
-        const headers = lines[0].split(",").map((h) => h.replace(/^"|"$/g, "").trim());
-        const rows = lines.slice(1).map((line) => {
-          // Handle quoted CSV fields properly
+        // Robust quote-aware CSV line splitter
+        const splitCsvLine = (line: string): string[] => {
           const cols: string[] = [];
           let current = "";
           let inQuotes = false;
@@ -207,24 +205,36 @@ export default function Home() {
             else { current += ch; }
           }
           cols.push(current.trim());
+          return cols.map((c) => c.replace(/^"|"$/g, "").trim());
+        };
+
+        const lines = csv.trim().split("\n");
+        const headers = splitCsvLine(lines[0]);
+        const rows = lines.slice(1).map((line) => {
+          const cols = splitCsvLine(line);
           const row: Record<string, string> = {};
           headers.forEach((h, i) => { row[h] = cols[i] ?? ""; });
           return row;
         });
 
-        // Fuzzy-match column headers so minor wording differences in the form don't break things
+        // Log headers so we can debug column names if needed
+        console.log("[Directory] CSV headers detected:", headers);
+
+        // Fuzzy-match column headers
         const findCol = (keywords: string[]) =>
           headers.find((h) =>
             keywords.every((kw) => h.toLowerCase().includes(kw.toLowerCase()))
           ) ?? "";
 
-        const consentCol = findCol(["list", "directory"]) || findCol(["public"]) || findCol(["consent"]);
-        const ventureCol = findCol(["venture"]) || findCol(["startup"]) || findCol(["business"]);
-        const sectorCol  = findCol(["sector"]) || findCol(["industry"]);
-        const locationCol = findCol(["based"]) || findCol(["location"]) || findCol(["city"]);
-        const nameCol    = findCol(["name"]);
+        const consentCol  = findCol(["list", "directory"]) || findCol(["public", "directory"]) || findCol(["consent"]) || findCol(["list"]);
+        const ventureCol  = findCol(["venture"]) || findCol(["startup"]) || findCol(["business"]);
+        const sectorCol   = findCol(["sector"]) || findCol(["industry"]);
+        const locationCol = findCol(["based"]) || findCol(["location"]) || findCol(["city"]) || findCol(["state"]);
+        const nameCol     = findCol(["your name"]) || findCol(["full name"]) || findCol(["name"]);
 
-        // If no consent column found, treat every row as public (they're in a public sheet)
+        console.log("[Directory] Matched columns:", { consentCol, ventureCol, sectorCol, locationCol, nameCol });
+
+        // If no consent column found, treat all rows as public (public sheet = implicit consent)
         const noConsentCol = !consentCol;
 
         let publicFounderCount = 0;
@@ -235,7 +245,7 @@ export default function Home() {
 
         for (const row of [...rows].reverse()) {
           const consentValue = (row[consentCol] || "").toLowerCase();
-          const isPublic = noConsentCol || consentValue.startsWith("yes") || consentValue.includes("yes");
+          const isPublic = noConsentCol || consentValue.includes("yes");
           if (isPublic) {
             publicFounderCount++;
             const venture  = (row[ventureCol]  || "").trim();
