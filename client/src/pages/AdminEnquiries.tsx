@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DatabaseZap, Download, ExternalLink, FileSpreadsheet, Filter, Loader2, LockKeyhole, LogOut, RefreshCw, Search, ShieldCheck, Upload } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -198,7 +198,14 @@ function EnquiriesDashboard() {
     }
   };
 
-  if (loading || dashboardSession.isLoading) {
+  const [loadingTimedOut, setLoadingTimedOut] = useState(false);
+  useEffect(() => {
+    if (!loading && !dashboardSession.isLoading) return;
+    const timer = setTimeout(() => setLoadingTimedOut(true), 3000);
+    return () => clearTimeout(timer);
+  }, [loading, dashboardSession.isLoading]);
+
+  if ((loading || dashboardSession.isLoading) && !loadingTimedOut) {
     return <div className="grid min-h-[60vh] place-items-center"><Loader2 className="animate-spin text-[#234536]" /></div>;
   }
 

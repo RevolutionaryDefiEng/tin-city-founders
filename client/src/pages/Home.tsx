@@ -162,14 +162,103 @@ export default function Home() {
       toast.error("We could not submit your enquiry. Please try again or email the team directly.");
     },
   });
-  const directoryStats = trpc.directory.stats.useQuery(undefined, {
-    refetchInterval: 5 * 60_000,
-    refetchOnWindowFocus: true,
-    staleTime: 2 * 60_000,
-    retry: 2,
-    retryDelay: (attempt) => Math.min(1_000 * 2 ** attempt, 5_000),
-    meta: { suppressGlobalError: true },
+  type DirectoryStats = {
+    isLoading: boolean;
+    isError: boolean;
+    data: {
+      directoryResponses: number;
+      publicFounderCount: number;
+      ventureProfiles: number;
+      sectorsRepresented: number;
+      locationsRepresented: number;
+      recentFounders: Array<{ name: string; venture: string; sector: string; location: string }>;
+    } | null;
+    refetch: () => void;
+  };
+
+  const [directoryStats, setDirectoryStats] = useState<DirectoryStats>({
+    isLoading: true,
+    isError: false,
+    data: null,
+    refetch: () => {},
   });
+
+  const fetchDirectoryStats = () => {
+    setDirectoryStats((prev) => ({ ...prev, isLoading: true, isError: false }));
+    const csvUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSq-soguK5YPLMqa4x5Vtsk-heiPhZArBs84u8MzgZhbCxqngm10iukY8e--gUJ8xkh9Gna4bKgHYhn/pub?output=csv";
+
+    fetch(csvUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.text();
+      })
+      .then((csv) => {
+        const lines = csv.trim().split("\n");
+        const headers = lines[0].split(",").map((h) => h.replace(/^"|"$/g, "").trim());
+        const rows = lines.slice(1).map((line) => {
+          // Handle quoted CSV fields properly
+          const cols: string[] = [];
+          let current = "";
+          let inQuotes = false;
+          for (const ch of line) {
+            if (ch === '"') { inQuotes = !inQuotes; }
+            else if (ch === "," && !inQuotes) { cols.push(current.trim()); current = ""; }
+            else { current += ch; }
+          }
+          cols.push(current.trim());
+          const row: Record<string, string> = {};
+          headers.forEach((h, i) => { row[h] = cols[i] ?? ""; });
+          return row;
+        });
+
+        const consentCol = "Can we list you in the public Built in Jos directory?";
+        let publicFounderCount = 0;
+        let ventureProfiles = 0;
+        const sectors = new Set<string>();
+        const locations = new Set<string>();
+        const recentFounders: Array<{ name: string; venture: string; sector: string; location: string }> = [];
+
+        for (const row of [...rows].reverse()) {
+          const isPublic = (row[consentCol] || "").toLowerCase().startsWith("yes");
+          if (isPublic) {
+            publicFounderCount++;
+            const venture = (row["Startup / venture name"] || "").trim();
+            const sector = (row["Sector"] || "").trim();
+            const location = (row["Where are you based?"] || "").trim();
+            const name = (row["Your name"] || "").trim();
+            if (venture) ventureProfiles++;
+            if (sector) sectors.add(sector);
+            if (location) locations.add(location);
+            if (recentFounders.length < 4) {
+              recentFounders.push({ name, venture, sector, location });
+            }
+          }
+        }
+
+        setDirectoryStats({
+          isLoading: false,
+          isError: false,
+          data: {
+            directoryResponses: rows.length,
+            publicFounderCount,
+            ventureProfiles,
+            sectorsRepresented: sectors.size,
+            locationsRepresented: locations.size,
+            recentFounders,
+          },
+          refetch: fetchDirectoryStats,
+        });
+      })
+      .catch(() => {
+        setDirectoryStats((prev) => ({
+          ...prev,
+          isLoading: false,
+          isError: true,
+          refetch: fetchDirectoryStats,
+        }));
+      });
+  };
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
@@ -182,6 +271,13 @@ export default function Home() {
     const closeMenu = () => setIsOpen(false);
     window.addEventListener("resize", closeMenu);
     return () => window.removeEventListener("resize", closeMenu);
+  }, []);
+
+  useEffect(() => {
+    fetchDirectoryStats();
+    const interval = setInterval(fetchDirectoryStats, 5 * 60_000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeMenu = () => setIsOpen(false);
