@@ -212,7 +212,21 @@ export default function Home() {
           return row;
         });
 
-        const consentCol = "Can we list you in the public Built in Jos directory?";
+        // Fuzzy-match column headers so minor wording differences in the form don't break things
+        const findCol = (keywords: string[]) =>
+          headers.find((h) =>
+            keywords.every((kw) => h.toLowerCase().includes(kw.toLowerCase()))
+          ) ?? "";
+
+        const consentCol = findCol(["list", "directory"]) || findCol(["public"]) || findCol(["consent"]);
+        const ventureCol = findCol(["venture"]) || findCol(["startup"]) || findCol(["business"]);
+        const sectorCol  = findCol(["sector"]) || findCol(["industry"]);
+        const locationCol = findCol(["based"]) || findCol(["location"]) || findCol(["city"]);
+        const nameCol    = findCol(["name"]);
+
+        // If no consent column found, treat every row as public (they're in a public sheet)
+        const noConsentCol = !consentCol;
+
         let publicFounderCount = 0;
         let ventureProfiles = 0;
         const sectors = new Set<string>();
@@ -220,13 +234,14 @@ export default function Home() {
         const recentFounders: Array<{ name: string; venture: string; sector: string; location: string }> = [];
 
         for (const row of [...rows].reverse()) {
-          const isPublic = (row[consentCol] || "").toLowerCase().startsWith("yes");
+          const consentValue = (row[consentCol] || "").toLowerCase();
+          const isPublic = noConsentCol || consentValue.startsWith("yes") || consentValue.includes("yes");
           if (isPublic) {
             publicFounderCount++;
-            const venture = (row["Startup / venture name"] || "").trim();
-            const sector = (row["Sector"] || "").trim();
-            const location = (row["Where are you based?"] || "").trim();
-            const name = (row["Your name"] || "").trim();
+            const venture  = (row[ventureCol]  || "").trim();
+            const sector   = (row[sectorCol]   || "").trim();
+            const location = (row[locationCol] || "").trim();
+            const name     = (row[nameCol]     || "").trim();
             if (venture) ventureProfiles++;
             if (sector) sectors.add(sector);
             if (location) locations.add(location);
