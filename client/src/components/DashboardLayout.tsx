@@ -54,8 +54,15 @@ export default function DashboardLayout({
     localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
   }, [sidebarWidth]);
 
-  if (loading) {
-    return <DashboardLayoutSkeleton />
+  const [authTimedOut, setAuthTimedOut] = useState(false);
+  useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => setAuthTimedOut(true), 3000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  if (loading && !authTimedOut) {
+    return <DashboardLayoutSkeleton />;
   }
 
   if (!user && !allowLocalAccess) {
