@@ -57,7 +57,7 @@ export default function DashboardLayout({
   const [authTimedOut, setAuthTimedOut] = useState(false);
   useEffect(() => {
     if (!loading) return;
-    const timer = setTimeout(() => setAuthTimedOut(true), 3000);
+    const timer = setTimeout(() => setAuthTimedOut(true), 500);
     return () => clearTimeout(timer);
   }, [loading]);
 

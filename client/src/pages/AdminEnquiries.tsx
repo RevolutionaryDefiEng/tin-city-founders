@@ -76,7 +76,7 @@ function EnquiriesDashboard() {
   const mixerFileInput = useRef<HTMLInputElement>(null);
   const giveAndGrowFileInput = useRef<HTMLInputElement>(null);
 
-  const dashboardSession = trpc.dashboard.session.useQuery();
+  const dashboardSession = trpc.dashboard.session.useQuery(undefined, { retry: false });
   const isLocalDashboardSession = Boolean(dashboardSession.data?.authenticated);
   const isAdmin = user?.role === "admin" || isLocalDashboardSession;
   const dashboardLogin = trpc.dashboard.login.useMutation({
