@@ -28,20 +28,20 @@ import {
   X,
 } from "lucide-react";
 
-const heroImage = "/manus-storage/tcf-hero-group_c84bbe3c.jpg";
-const mentorshipImage = "/manus-storage/tcf-group-workshop_baf69e6a.jpg";
+const heroImage = "/grounded1.JPG.jpeg";
+const mentorshipImage = "/grounded2.JPG.jpeg";
 const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
-const womanSpeakerImage = "/manus-storage/tcf-speaker-woman_ad8fa94d.jpg";
-const manSpeakerImage = "/manus-storage/tcf-speaker-man_06305855.jpg";
-const blueSpeakerImage = "/manus-storage/tcf-speaker-blue_568769e1.jpg";
-const officialLogoLightImage = "/manus-storage/tcf-logo-transparent-light-exact_25248531.png";
-const officialLogoDarkImage = "/manus-storage/tcf-logo-transparent-dark-exact_30f7112d.png";
-const sponsorshipProspectusUrl = "/manus-storage/main_62237e25.pdf";
+const womanSpeakerImage = "/speaker2.jpeg";
+const manSpeakerImage = "/speaker1.jpeg";
+const blueSpeakerImage = "/speaker4.jpeg";
+const officialLogoLightImage = "/hero.jpeg";
+const officialLogoDarkImage = "/hero.jpeg";
+const sponsorshipProspectusUrl = "/presentation.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
-const builtInJosInvitationImage = "/manus-storage/builtinjos-join-map_a76d634c.png";
-const programmeSponsorshipImage = "/manus-storage/tcf-programme-sponsorship_9340ff82.jpg";
-const strategicCollaborationImage = "/manus-storage/tcf-strategic-collaboration-authentic_1c059de8.jpg";
-const placeBasedInvestmentImage = "/manus-storage/tcf-place-based-investment-authentic_9b3abbfd.jpg";
+const builtInJosInvitationImage = "/scan.jpeg";
+const programmeSponsorshipImage = "/Settings1.jpg.jpeg";
+const strategicCollaborationImage = "/Settings3.jpg.jpeg";
+const placeBasedInvestmentImage = "/Settings2.jpg.jpeg";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
