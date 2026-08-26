@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
+import { useTransparentLogo } from "@/_core/hooks/useTransparentLogo";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -34,8 +35,8 @@ const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
 const womanSpeakerImage = "/speaker2.jpeg";
 const manSpeakerImage = "/speaker1.jpeg";
 const blueSpeakerImage = "/speaker4.jpeg";
-const officialLogoLightImage = "/logo-mark.svg";
-const officialLogoDarkImage = "/logo.svg";
+const officialLogoLightImage = "/tcf_logo_transparent-2.png";
+const officialLogoDarkImage = "/tcf_logo_transparent-2.png";
 const sponsorshipProspectusUrl = "/presentation.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/scan.jpeg";
@@ -138,11 +139,13 @@ const activationTimingOptions = [
 ] as const;
 
 function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
+  const rawSrc = variant === "dark" ? officialLogoDarkImage : officialLogoLightImage;
+  const logoSrc = useTransparentLogo(rawSrc);
   return (
     <a href="#top" className="brand-lockup" aria-label="Tin City Founders home">
       <img
         className="official-logo"
-        src={variant === "dark" ? officialLogoDarkImage : officialLogoLightImage}
+        src={logoSrc}
         alt="Tin City Founders"
       />
     </a>
