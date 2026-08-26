@@ -201,7 +201,7 @@ function EnquiriesDashboard() {
   const [loadingTimedOut, setLoadingTimedOut] = useState(false);
   useEffect(() => {
     if (!loading && !dashboardSession.isLoading) return;
-    const timer = setTimeout(() => setLoadingTimedOut(true), 3000);
+    const timer = setTimeout(() => setLoadingTimedOut(true), 500);
     return () => clearTimeout(timer);
   }, [loading, dashboardSession.isLoading]);
 

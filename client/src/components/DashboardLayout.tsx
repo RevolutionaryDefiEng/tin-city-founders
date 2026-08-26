@@ -61,7 +61,7 @@ export default function DashboardLayout({
     return () => clearTimeout(timer);
   }, [loading]);
 
-  if (loading && !authTimedOut) {
+  if (loading && !authTimedOut && !allowLocalAccess) {
     return <DashboardLayoutSkeleton />;
   }
 
