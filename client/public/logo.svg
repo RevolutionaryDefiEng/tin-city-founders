@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" fill="none">
+  <defs>
+    <linearGradient id="goldTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0c744"/>
+      <stop offset="50%" stop-color="#d4950f"/>
+      <stop offset="100%" stop-color="#b87a08"/>
+    </linearGradient>
+    <linearGradient id="goldMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4950f"/>
+      <stop offset="100%" stop-color="#8a5c04"/>
+    </linearGradient>
+    <linearGradient id="goldLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8a910"/>
+      <stop offset="100%" stop-color="#a06808"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Small top diamond -->
+  <polygon points="140,4 148,14 140,24 132,14" fill="url(#goldTop)"/>
+
+  <!-- Main gem body top crown facets -->
+  <polygon points="108,28 140,28 130,50 118,50" fill="url(#goldTop)"/>
+  <polygon points="140,28 172,28 162,50 150,50" fill="#e8a910"/>
+
+  <!-- Upper girdle -->
+  <polygon points="96,38 108,28 118,50 106,56" fill="url(#goldLeft)"/>
+  <polygon points="172,28 184,38 174,56 162,50" fill="#c8870c"/>
+
+  <!-- Middle facets -->
+  <polygon points="106,56 118,50 140,80 118,72" fill="url(#goldMid)"/>
+  <polygon points="118,50 150,50 140,80" fill="url(#goldTop)"/>
+  <polygon points="150,50 162,50 162,72 140,80" fill="#b87408"/>
+  <polygon points="162,50 174,56 162,72 140,80" fill="url(#goldMid)"/>
+
+  <!-- Lower pavillion facets -->
+  <polygon points="106,56 118,72 140,80 96,38" fill="url(#goldLeft)" opacity="0.85"/>
+  <polygon points="174,56 184,38 140,80 162,72" fill="#a06408" opacity="0.85"/>
+
+  <!-- Gem outline stroke -->
+  <polyline points="108,28 96,38 106,56 118,72 140,80 162,72 174,56 184,38 172,28" fill="none" stroke="#f0c033" stroke-width="0.8" opacity="0.6"/>
+  <line x1="108" y1="28" x2="140" y2="28" stroke="#f0c033" stroke-width="0.8" opacity="0.6"/>
+  <line x1="140" y1="28" x2="172" y2="28" stroke="#f0c033" stroke-width="0.8" opacity="0.6"/>
+  <line x1="118" y1="50" x2="162" y2="50" stroke="#f0c033" stroke-width="0.6" opacity="0.5"/>
+  <line x1="140" y1="28" x2="140" y2="80" stroke="#f0c033" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- TIN CITY FOUNDERS text -->
+  <text x="140" y="120" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="22" font-weight="800" letter-spacing="3" fill="#d4950f">TIN CITY FOUNDERS</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="132" x2="200" y2="132" stroke="#d4950f" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Subtitle -->
+  <text x="140" y="152" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="9" font-weight="600" letter-spacing="2.5" fill="#c8860a" opacity="0.85">JOS · PLATEAU · EST. 2026</text>
+</svg>

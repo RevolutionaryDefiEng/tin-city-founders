@@ -34,8 +34,8 @@ const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
 const womanSpeakerImage = "/speaker2.jpeg";
 const manSpeakerImage = "/speaker1.jpeg";
 const blueSpeakerImage = "/speaker4.jpeg";
-const officialLogoLightImage = "/hero.jpeg";
-const officialLogoDarkImage = "/hero.jpeg";
+const officialLogoLightImage = "/logo-mark.svg";
+const officialLogoDarkImage = "/logo.svg";
 const sponsorshipProspectusUrl = "/presentation.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/scan.jpeg";
@@ -672,10 +672,20 @@ export default function Home() {
         </div>
         <div className="footer-grid">
           <div><span className="footer-label">A community association for</span><p>Entrepreneurship, innovation, and shared economic progress.</p></div>
-          <div className="footer-links"><a href="#mandate">Our mandate</a><a href="#programmes">Programmes</a><a href="#partnerships">Partnerships</a><a href="#contact">Contact</a><a href="/admin/enquiries">Partner team</a></div>
+          <div className="footer-links"><a href="#mandate">Our mandate</a><a href="#programmes">Programmes</a><a href="#partnerships">Partnerships</a><a href="#contact">Contact</a></div>
           <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:+2347073425222">+234 707 342 5222</a><a href="tel:+2348028505874">+234 802 850 5874</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders on Instagram</a><a href="https://www.tiktok.com/@tincity_founders" target="_blank" rel="noopener noreferrer">@tincity_founders on TikTok</a></div>
         </div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} Tin City Founders</span><span>Made in Jos · Open to the world</span></div>
+        <div className="footer-bottom">
+          <span
+            onDoubleClick={() => {
+              window.location.href = "/admin/enquiries";
+            }}
+            style={{ cursor: "default", userSelect: "none" }}
+          >
+            © {new Date().getFullYear()} Tin City Founders
+          </span>
+          <span>Made in Jos · Open to the world</span>
+        </div>
       </footer>
     </div>
   );
