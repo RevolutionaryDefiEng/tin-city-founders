@@ -359,7 +359,7 @@ export default function Home() {
 
       <main>
         <section className="hero-section" aria-labelledby="hero-title">
-          <img src={heroImage} alt="Tin City Founders community members gathered at an event in Jos" className="hero-image" />
+          <img src={heroImage} fetchPriority="high" alt="Tin City Founders community members gathered at an event in Jos" className="hero-image" />
           <div className="hero-overlay" />
           <div className="hero-topography" aria-hidden="true">
             <span />
