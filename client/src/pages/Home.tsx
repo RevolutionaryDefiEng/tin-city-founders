@@ -656,7 +656,7 @@ export default function Home() {
           <div className="contact-bottom">
             <p>Tell us what your organization is working toward. We will bring the local perspective and an open agenda for practical collaboration.</p>
             <div className="contact-actions">
-              <a href="mailto:info@africanintelligence.tech" className="button-primary button-primary-amber">Email the partnership team <Mail size={18} /></a>
+              <a href="mailto:partnerships@tincityfounders.com" className="button-primary button-primary-amber">Email the partnership team <Mail size={18} /></a>
               <div className="contact-details">
                 <a href="tel:+2347073425222" className="contact-phone"><Phone size={17} /> +234 707 342 5222</a>
                 <a href="tel:+2348028505874" className="contact-phone"><Phone size={17} /> +234 802 850 5874</a>
@@ -676,7 +676,7 @@ export default function Home() {
         <div className="footer-grid">
           <div><span className="footer-label">A community association for</span><p>Entrepreneurship, innovation, and shared economic progress.</p></div>
           <div className="footer-links"><a href="#mandate">Our mandate</a><a href="#programmes">Programmes</a><a href="#partnerships">Partnerships</a><a href="#contact">Contact</a></div>
-          <div className="footer-contact"><a href="mailto:info@africanintelligence.tech">info@africanintelligence.tech</a><a href="tel:+2347073425222">+234 707 342 5222</a><a href="tel:+2348028505874">+234 802 850 5874</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders on Instagram</a><a href="https://www.tiktok.com/@tincity_founders" target="_blank" rel="noopener noreferrer">@tincity_founders on TikTok</a></div>
+          <div className="footer-contact"><a href="mailto:partnerships@tincityfounders.com">partnerships@tincityfounders.com</a><a href="tel:+2347073425222">+234 707 342 5222</a><a href="tel:+2348028505874">+234 802 850 5874</a><a href="https://www.instagram.com/tincity_founders/" target="_blank" rel="noopener noreferrer">@tincity_founders on Instagram</a><a href="https://www.tiktok.com/@tincity_founders" target="_blank" rel="noopener noreferrer">@tincity_founders on TikTok</a></div>
         </div>
         <div className="footer-bottom">
           <span
