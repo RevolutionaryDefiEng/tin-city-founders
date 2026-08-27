@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
-import { useTransparentLogo } from "@/_core/hooks/useTransparentLogo";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -35,8 +34,11 @@ const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
 const womanSpeakerImage = "/speaker2.jpeg";
 const manSpeakerImage = "/speaker1.jpeg";
 const blueSpeakerImage = "/speaker4.jpeg";
-const officialLogoLightImage = "/tcf_logo_transparent-2.png";
-const officialLogoDarkImage = "/tcf_logo_transparent-2.png";
+// Cream-text lockup for dark backgrounds (hero header, footer);
+// evergreen-text lockup for light backgrounds (scrolled header). Both are
+// pre-cut on transparent backgrounds, so no runtime processing is needed.
+const officialLogoLightImage = "/tcf-logo-light.png";
+const officialLogoDarkImage = "/tcf-logo-dark.png";
 const sponsorshipProspectusUrl = "/presentation.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
 const builtInJosInvitationImage = "/scan.jpeg";
@@ -139,8 +141,7 @@ const activationTimingOptions = [
 ] as const;
 
 function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
-  const rawSrc = variant === "dark" ? officialLogoDarkImage : officialLogoLightImage;
-  const logoSrc = useTransparentLogo(rawSrc);
+  const logoSrc = variant === "dark" ? officialLogoDarkImage : officialLogoLightImage;
   return (
     <a href="#top" className="brand-lockup" aria-label="Tin City Founders home">
       <img
@@ -328,7 +329,7 @@ export default function Home() {
     <div id="top" className="min-h-screen overflow-x-hidden bg-[#f4efe5] text-[#1f2e25]">
       <header className={isScrolled ? "site-header site-header-scrolled" : "site-header"}>
         <div className="header-inner">
-          <BrandLockup variant={isScrolled || isOpen ? "dark" : "light"} />
+          <BrandLockup variant={isScrolled ? "dark" : "light"} />
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} className="nav-link">
