@@ -28,23 +28,23 @@ import {
   X,
 } from "lucide-react";
 
-const heroImage = "/grounded1.JPG.jpeg";
-const mentorshipImage = "/grounded2.JPG.jpeg";
-const workshopImage = "/pathway1.jpeg";
-const womanSpeakerImage = "/speaker2.jpeg";
-const manSpeakerImage = "/speaker1.jpeg";
-const blueSpeakerImage = "/speaker4.jpeg";
+const heroImage = "/grounded1.JPG.webp";
+const mentorshipImage = "/grounded2.JPG.webp";
+const workshopImage = "/pathway1.webp";
+const womanSpeakerImage = "/speaker2.webp";
+const manSpeakerImage = "/speaker1.webp";
+const blueSpeakerImage = "/speaker4.webp";
 // Cream-text lockup for dark backgrounds (hero header, footer);
 // evergreen-text lockup for light backgrounds (scrolled header). Both are
 // pre-cut on transparent backgrounds, so no runtime processing is needed.
-const officialLogoLightImage = "/tcf-logo-light.png";
-const officialLogoDarkImage = "/tcf-logo-dark.png";
+const officialLogoLightImage = "/tcf-logo-light.webp";
+const officialLogoDarkImage = "/tcf-logo-dark.webp";
 const sponsorshipProspectusUrl = "/presentation.pdf";
 const builtInJosDirectoryUrl = "https://forms.gle/iUmdd3nRt6hbrjhW6";
-const builtInJosInvitationImage = "/scan.jpeg";
-const programmeSponsorshipImage = "/Settings1.jpg.jpeg";
-const strategicCollaborationImage = "/Settings3.jpg.jpeg";
-const placeBasedInvestmentImage = "/Settings2.jpg.jpeg";
+const builtInJosInvitationImage = "/scan.webp";
+const programmeSponsorshipImage = "/Settings1.jpg.webp";
+const strategicCollaborationImage = "/Settings3.jpg.webp";
+const placeBasedInvestmentImage = "/Settings2.jpg.webp";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -302,6 +302,31 @@ export default function Home() {
     return () => window.removeEventListener("resize", closeMenu);
   }, []);
 
+  // Reveal-on-scroll: fade/lift each [data-reveal] element in as it enters view.
+  // Respects reduced-motion (CSS keeps them visible) and degrades gracefully
+  // when IntersectionObserver is unavailable.
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (!elements.length) return;
+    if (typeof IntersectionObserver === "undefined") {
+      elements.forEach((el) => el.classList.add("reveal-in"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-in");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
+    );
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     fetchDirectoryStats();
     const interval = setInterval(fetchDirectoryStats, 5 * 60_000);
@@ -394,12 +419,12 @@ export default function Home() {
             <span className="section-index">01</span>
             <span>OUR MANDATE</span>
           </div>
-          <div className="mandate-layout">
-            <div className="mandate-statement">
+          <div className="mandate-layout" data-reveal-group>
+            <div className="mandate-statement" data-reveal>
               <div className="plateau-rule" />
               <h2 id="mandate-title">A stronger local economy is built <em>in community.</em></h2>
             </div>
-            <div className="mandate-copy">
+            <div className="mandate-copy" data-reveal>
               <p className="lead-copy">Tin City Founders is a community-based association advancing entrepreneurship, innovation, and economic development among founders and small business owners in Jos.</p>
               <p>We create regular points of connection and practical growth: networking events, mentorship programmes, skills-development initiatives, and community projects that address the everyday conditions shaping local enterprise.</p>
               <a href="#programmes" className="button-text button-text-dark">See the work in motion <ArrowDown size={17} /></a>
@@ -412,16 +437,16 @@ export default function Home() {
         </section>
 
         <section id="programmes" className="programmes-section" aria-labelledby="programmes-title">
-          <div className="programmes-intro">
+          <div className="programmes-intro" data-reveal>
             <div className="section-meta"><span className="section-index">02</span><span>HOW WE SHOW UP</span></div>
             <h2 id="programmes-title">The practical work behind <em>founder momentum.</em></h2>
             <p>We support enterprise as a shared practice: people meeting, learning, and making progress alongside each other.</p>
           </div>
-          <div className="programme-list">
+          <div className="programme-list" data-reveal-group>
             {programmeItems.map((item) => {
               const Icon = item.icon;
               return (
-                <article className="programme-row" key={item.number}>
+                <article className="programme-row" key={item.number} data-reveal>
                   <div className="programme-number">{item.number}</div>
                   <div className="programme-icon"><Icon size={21} strokeWidth={1.8} /></div>
                   <div className="programme-body">
@@ -436,11 +461,11 @@ export default function Home() {
         </section>
 
         <section className="field-story" aria-label="Founder mentorship and skills development">
-          <div className="field-story-photo-wrap">
+          <div className="field-story-photo-wrap" data-reveal>
             <img src={mentorshipImage} alt="Tin City Founders members gathered during a community session" className="field-story-photo" loading="lazy" decoding="async" />
             <div className="photo-caption"><span>FIELD NOTE</span><span>Mentorship is knowledge moving person to person.</span></div>
           </div>
-          <div className="field-story-panel">
+          <div className="field-story-panel" data-reveal>
             <div className="micro-label">CAPABILITY IS A COLLECTIVE ASSET</div>
             <p>When founders can test ideas with peers, learn from experience, and access focused guidance, local potential becomes more durable.</p>
             <div className="field-story-line" />
@@ -449,11 +474,11 @@ export default function Home() {
         </section>
 
         <section className="voices-gallery" aria-labelledby="voices-title">
-          <div className="voices-intro">
+          <div className="voices-intro" data-reveal>
             <span className="micro-label">INSIDE THE ROOM</span>
             <h2 id="voices-title">Ideas gather strength when more people <em>take the floor.</em></h2>
           </div>
-          <div className="voices-photos">
+          <div className="voices-photos" data-reveal>
             <figure className="voice-frame voice-frame-a">
               <img src={womanSpeakerImage} alt="A Tin City Founders member speaking at a community gathering" loading="lazy" decoding="async" />
               <figcaption><span>01</span> Founder exchange</figcaption>
@@ -470,7 +495,7 @@ export default function Home() {
         </section>
 
         <section id="built-in-jos" className="directory-invite" aria-labelledby="directory-title">
-          <div className="directory-copy">
+          <div className="directory-copy" data-reveal>
             <span className="micro-label">BUILT IN JOS · FOUNDER DIRECTORY</span>
             <h2 id="directory-title">Put what you are building <em>on the map.</em></h2>
             <p>Built In Jos is a growing directory of the people, products, and small businesses building across the Plateau. Add your founder profile so new connections, useful introductions, and community visibility can find you.</p>
@@ -501,7 +526,7 @@ export default function Home() {
             </a>
             <span className="directory-footnote">For founders and business owners building in Jos and across Plateau State.</span>
           </div>
-          <div className="directory-side">
+          <div className="directory-side" data-reveal>
             <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="directory-visual" aria-label="Open the Built In Jos directory registration form">
               <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" loading="lazy" decoding="async" />
               <span>Open the directory form <ArrowUpRight size={17} /></span>
@@ -525,7 +550,7 @@ export default function Home() {
         </section>
 
         <section id="partnerships" className="partnerships-section" aria-labelledby="partnerships-title">
-          <div className="partnerships-heading">
+          <div className="partnerships-heading" data-reveal>
             <div className="section-meta section-meta-dark"><span className="section-index">03</span><span>PARTNERSHIP PATHWAYS</span></div>
             <h2 id="partnerships-title">Bring more of what works <em>within reach.</em></h2>
           </div>
@@ -535,7 +560,7 @@ export default function Home() {
             <span>Evidence designed into the work</span>
           </div>
           <div className="partnerships-content">
-            <div className="partnerships-copy">
+            <div className="partnerships-copy" data-reveal>
               <p className="lead-copy">We welcome international organizations, enterprise platforms, and impact investors that see local founders as essential partners in inclusive, practical economic development.</p>
               <p>Every partnership begins with a conversation about the local context, the mutual value of collaboration, and the most responsible way to translate resources into lasting capability.</p>
               <div className="prospectus-download-card">
@@ -606,11 +631,11 @@ export default function Home() {
               </div>
               <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
-            <div className="partnership-pathway-grid" aria-label="Partnership pathways">
+            <div className="partnership-pathway-grid" aria-label="Partnership pathways" data-reveal-group>
                 {partnershipItems.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <a className="partnership-pathway-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
+                    <a className="partnership-pathway-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`} data-reveal>
                       <div className="partnership-pathway-image"><img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" /></div>
                       <div className="partnership-pathway-body">
                         <div className="partnership-card-top"><span>{item.number} · PATHWAY</span><Icon size={20} strokeWidth={1.7} /></div>
@@ -623,11 +648,11 @@ export default function Home() {
                 })}
             </div>
           </div>
-          <div className="pathway-details" aria-label="Detailed sponsorship pathways">
+          <div className="pathway-details" aria-label="Detailed sponsorship pathways" data-reveal-group>
             {partnershipItems.map((item) => {
               const Icon = item.icon;
               return (
-                <article id={item.id} className="pathway-detail" key={item.id}>
+                <article id={item.id} className="pathway-detail" key={item.id} data-reveal>
                   <div className="pathway-detail-top"><span>{item.number} · SPONSORSHIP PATHWAY</span><Icon size={20} strokeWidth={1.8} /></div>
                   <h3>{item.detailTitle}</h3>
                   <p>{item.detailText}</p>
@@ -644,17 +669,17 @@ export default function Home() {
 
         <section className="workshop-section" aria-labelledby="workshop-title">
           <img src={workshopImage} alt="Tin City Founders members gathered together after a community event" className="workshop-image" loading="lazy" decoding="async" />
-          <div className="workshop-note">
+          <div className="workshop-note" data-reveal>
             <span className="micro-label">THE PARTNERSHIP STANDARD</span>
             <h2 id="workshop-title">Grounded in local context. <em>Designed for shared learning.</em></h2>
             <p>Our association operates on a not-for-profit basis, applying income and resources solely to the objectives that strengthen the entrepreneurial community we serve.</p>
           </div>
         </section>
 
-        <section id="contact" className="contact-section" aria-labelledby="contact-title">
-          <div className="contact-kicker"><Handshake size={21} strokeWidth={1.8} /><span>LET’S BUILD WITH PURPOSE</span></div>
-          <h2 id="contact-title">Ready to invest in the next chapter of <em>local enterprise?</em></h2>
-          <div className="contact-bottom">
+        <section id="contact" className="contact-section" aria-labelledby="contact-title" data-reveal-group>
+          <div className="contact-kicker" data-reveal><Handshake size={21} strokeWidth={1.8} /><span>LET’S BUILD WITH PURPOSE</span></div>
+          <h2 id="contact-title" data-reveal>Ready to invest in the next chapter of <em>local enterprise?</em></h2>
+          <div className="contact-bottom" data-reveal>
             <p>Tell us what your organization is working toward. We will bring the local perspective and an open agenda for practical collaboration.</p>
             <div className="contact-actions">
               <a href="mailto:partnerships@tincityfounders.com" className="button-primary button-primary-amber">Email the partnership team <Mail size={18} /></a>

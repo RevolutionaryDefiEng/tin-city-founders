@@ -74,6 +74,16 @@ button { font-family: inherit; }
   .hero-content > :nth-child(3) { animation-delay: 200ms; }
   .hero-content > :nth-child(4) { animation-delay: 270ms; }
   .plateau-rule { transform-origin: left center; animation: rule-grow 900ms 220ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+
+  /* Reveal-on-scroll: elements lift and fade in as they enter the viewport. */
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 760ms cubic-bezier(0.23, 1, 0.32, 1), transform 760ms cubic-bezier(0.23, 1, 0.32, 1); will-change: opacity, transform; }
+  [data-reveal].reveal-in { opacity: 1; transform: none; }
+  /* Gentle stagger for grouped items sharing a container. */
+  [data-reveal-group] > [data-reveal] { transition-delay: 0ms; }
+  [data-reveal-group] > [data-reveal]:nth-child(2) { transition-delay: 80ms; }
+  [data-reveal-group] > [data-reveal]:nth-child(3) { transition-delay: 160ms; }
+  [data-reveal-group] > [data-reveal]:nth-child(4) { transition-delay: 240ms; }
+  [data-reveal-group] > [data-reveal]:nth-child(5) { transition-delay: 320ms; }
 }
 
 .site-header { position: fixed; inset: 0 0 auto; z-index: 50; color: #fffdf7; transition: background-color 220ms ease, box-shadow 220ms ease, color 220ms ease; }
