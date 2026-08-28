@@ -30,7 +30,7 @@ import {
 
 const heroImage = "/grounded1.JPG.jpeg";
 const mentorshipImage = "/grounded2.JPG.jpeg";
-const workshopImage = "/manus-storage/tcf-small-group_1d0b1dfb.jpg";
+const workshopImage = "/pathway1.jpeg";
 const womanSpeakerImage = "/speaker2.jpeg";
 const manSpeakerImage = "/speaker1.jpeg";
 const blueSpeakerImage = "/speaker4.jpeg";
@@ -437,7 +437,7 @@ export default function Home() {
 
         <section className="field-story" aria-label="Founder mentorship and skills development">
           <div className="field-story-photo-wrap">
-            <img src={mentorshipImage} alt="Tin City Founders members gathered during a community session" className="field-story-photo" />
+            <img src={mentorshipImage} alt="Tin City Founders members gathered during a community session" className="field-story-photo" loading="lazy" decoding="async" />
             <div className="photo-caption"><span>FIELD NOTE</span><span>Mentorship is knowledge moving person to person.</span></div>
           </div>
           <div className="field-story-panel">
@@ -455,15 +455,15 @@ export default function Home() {
           </div>
           <div className="voices-photos">
             <figure className="voice-frame voice-frame-a">
-              <img src={womanSpeakerImage} alt="A Tin City Founders member speaking at a community gathering" />
+              <img src={womanSpeakerImage} alt="A Tin City Founders member speaking at a community gathering" loading="lazy" decoding="async" />
               <figcaption><span>01</span> Founder exchange</figcaption>
             </figure>
             <figure className="voice-frame voice-frame-b">
-              <img src={manSpeakerImage} alt="A Tin City Founders member sharing an idea at a gathering" />
+              <img src={manSpeakerImage} alt="A Tin City Founders member sharing an idea at a gathering" loading="lazy" decoding="async" />
               <figcaption><span>02</span> Practical insight</figcaption>
             </figure>
             <figure className="voice-frame voice-frame-c">
-              <img src={blueSpeakerImage} alt="A Tin City Founders member contributing to a community conversation" />
+              <img src={blueSpeakerImage} alt="A Tin City Founders member contributing to a community conversation" loading="lazy" decoding="async" />
               <figcaption><span>03</span> Local perspective</figcaption>
             </figure>
           </div>
@@ -503,7 +503,7 @@ export default function Home() {
           </div>
           <div className="directory-side">
             <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="directory-visual" aria-label="Open the Built In Jos directory registration form">
-              <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" />
+              <img src={builtInJosInvitationImage} alt="Built In Jos invitation to join the founder map" loading="lazy" decoding="async" />
               <span>Open the directory form <ArrowUpRight size={17} /></span>
             </a>
             <section className="recent-founder-feed" aria-labelledby="recent-founders-title">
@@ -611,7 +611,7 @@ export default function Home() {
                   const Icon = item.icon;
                   return (
                     <a className="partnership-pathway-card" href={`#${item.id}`} key={item.title} aria-label={`Explore ${item.title}`}>
-                      <div className="partnership-pathway-image"><img src={item.image} alt={item.imageAlt} /></div>
+                      <div className="partnership-pathway-image"><img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" /></div>
                       <div className="partnership-pathway-body">
                         <div className="partnership-card-top"><span>{item.number} · PATHWAY</span><Icon size={20} strokeWidth={1.7} /></div>
                         <h3>{item.title}</h3>
@@ -643,7 +643,7 @@ export default function Home() {
         </section>
 
         <section className="workshop-section" aria-labelledby="workshop-title">
-          <img src={workshopImage} alt="Tin City Founders members gathered together after a community event" className="workshop-image" />
+          <img src={workshopImage} alt="Tin City Founders members gathered together after a community event" className="workshop-image" loading="lazy" decoding="async" />
           <div className="workshop-note">
             <span className="micro-label">THE PARTNERSHIP STANDARD</span>
             <h2 id="workshop-title">Grounded in local context. <em>Designed for shared learning.</em></h2>
