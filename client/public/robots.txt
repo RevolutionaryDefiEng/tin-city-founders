@@ -1,0 +1,10 @@
+# Tin City Founders — robots.txt
+# Allow all reputable crawlers to index the public site.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin/enquiries
+
+# Sitemap location
+Sitemap: https://tincityfounders.com/sitemap.xml
