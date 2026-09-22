@@ -1,5 +1,6 @@
 import { COOKIE_NAME } from "@shared/const";
 import { createPartnerEnquiry, getPartnerEnquirySummary, getResilientLiveDirectoryStats, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
+import { getFundingEvents, getFundingOpportunities, getScamWatch } from "./fundingBoard";
 import { createDashboardSession, DASHBOARD_SESSION_COOKIE, dashboardLoginSchema, dashboardSessionMaxAgeMs, hasDashboardSession, isValidDashboardCredential } from "./dashboardAuth";
 import { directoryCsvRefreshSchema, latestDirectoryImportSummary, refreshDirectoryFromCsv } from "./directoryImport";
 import { getSessionCookieOptions } from "./_core/cookies";
@@ -31,6 +32,13 @@ export const appRouter = router({
   }),
   directory: router({
     stats: publicProcedure.query(() => getResilientLiveDirectoryStats()),
+  }),
+  funding: router({
+    list: publicProcedure.query(() => getFundingOpportunities()),
+    scamWatch: publicProcedure.query(() => getScamWatch()),
+  }),
+  events: router({
+    list: publicProcedure.query(() => getFundingEvents()),
   }),
   dashboard: router({
     session: publicProcedure.query(async ({ ctx }) => ({

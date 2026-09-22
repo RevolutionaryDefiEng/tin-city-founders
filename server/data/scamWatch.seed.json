@@ -1,0 +1,62 @@
+[
+  {
+    "col1": "",
+    "whatYouWillSee": "fggrantloan.ng",
+    "whyProblem": "Mimics the FG grant portal",
+    "whatToDoInstead": "The real one is grant.fedgrantandloan.gov.ng"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "credicorp-register.ng",
+    "whyProblem": "Fake CREDICORP registration site",
+    "whatToDoInstead": "The real one is credicorp.ng"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "bdic.ng / nyif.bdic.ng",
+    "whyProblem": "Presents itself as the NYIF application form",
+    "whatToDoInstead": "Not a government domain. Use fmyd.gov.ng or nmfb.com.ng"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "\"Meta grant\" / \"Facebook grant\" DMs",
+    "whyProblem": "No such programme exists for Nigeria",
+    "whatToDoInstead": "Meta's global small business grant ended in 2021. Meta never asks for a fee, BVN or bank details"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "NIRSAL loan application blogs",
+    "whyProblem": "Numerous fake intermediaries",
+    "whatToDoInstead": "NIRSAL MFB charges NO application fee. Any request for payment is fraud. Only nmfb.com.ng"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "\"NADF 5 million farmers recruitment 2026\"",
+    "whyProblem": "Viral message, officially denied",
+    "whatToDoInstead": "NADF and the FG have publicly denied this. It is fake"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "Google Women Founders Fund (as 'open')",
+    "whyProblem": "Listed as live on social media but it is closed",
+    "whatToDoInstead": "Google's own page says there are no Women Founders Funds available. There has never been an Africa cohort"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "Orange Social Venture Prize (for Nigeria)",
+    "whyProblem": "Widely mislisted as open to Nigeria",
+    "whatToDoInstead": "Orange does not operate in Nigeria. Nigerian founders are NOT eligible"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "\"IFC SME Growth Accelerator 2026\"",
+    "whyProblem": "Heavily promoted by aggregators with inconsistent details",
+    "whatToDoInstead": "Verify on ifc.org before sending documents or paying any consultant"
+  },
+  {
+    "col1": "",
+    "whatYouWillSee": "Any 'processing fee' or 'clearance charge'",
+    "whyProblem": "Universal red flag",
+    "whatToDoInstead": "No legitimate federal grant or loan on this sheet charges a fee to APPLY"
+  }
+]
