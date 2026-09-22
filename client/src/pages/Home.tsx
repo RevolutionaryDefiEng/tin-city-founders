@@ -165,128 +165,15 @@ export default function Home() {
       toast.error("We could not submit your enquiry. Please try again or email the team directly.");
     },
   });
-  type DirectoryStats = {
-    isLoading: boolean;
-    isError: boolean;
-    data: {
-      directoryResponses: number;
-      publicFounderCount: number;
-      ventureProfiles: number;
-      sectorsRepresented: number;
-      locationsRepresented: number;
-      recentFounders: Array<{ name: string; venture: string; sector: string; location: string }>;
-    } | null;
-    refetch: () => void;
-  };
 
-  const [directoryStats, setDirectoryStats] = useState<DirectoryStats>({
-    isLoading: true,
-    isError: false,
-    data: null,
-    refetch: () => {},
+  // Directory statistics are computed server-side from the published Google
+  // Sheet via the tRPC `directory.stats` endpoint (see server/db.ts). The server
+  // uses a quote/newline-aware CSV parser, so counts match the live sheet — do
+  // not re-parse the CSV in the browser. Refresh every 5 minutes.
+  const directoryStats = trpc.directory.stats.useQuery(undefined, {
+    refetchInterval: 5 * 60_000,
+    refetchOnWindowFocus: false,
   });
-
-  const fetchDirectoryStats = () => {
-    setDirectoryStats((prev) => ({ ...prev, isLoading: true, isError: false }));
-    const csvUrl =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSq-soguK5YPLMqa4x5Vtsk-heiPhZArBs84u8MzgZhbCxqngm10iukY8e--gUJ8xkh9Gna4bKgHYhn/pub?output=csv";
-
-    fetch(csvUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch");
-        return res.text();
-      })
-      .then((csv) => {
-        // Robust quote-aware CSV line splitter
-        const splitCsvLine = (line: string): string[] => {
-          const cols: string[] = [];
-          let current = "";
-          let inQuotes = false;
-          for (const ch of line) {
-            if (ch === '"') { inQuotes = !inQuotes; }
-            else if (ch === "," && !inQuotes) { cols.push(current.trim()); current = ""; }
-            else { current += ch; }
-          }
-          cols.push(current.trim());
-          return cols.map((c) => c.replace(/^"|"$/g, "").trim());
-        };
-
-        const lines = csv.trim().split("\n");
-        const headers = splitCsvLine(lines[0]);
-        const rows = lines.slice(1).map((line) => {
-          const cols = splitCsvLine(line);
-          const row: Record<string, string> = {};
-          headers.forEach((h, i) => { row[h] = cols[i] ?? ""; });
-          return row;
-        });
-
-        // Log headers so we can debug column names if needed
-        console.log("[Directory] CSV headers detected:", headers);
-
-        // Fuzzy-match column headers
-        const findCol = (keywords: string[]) =>
-          headers.find((h) =>
-            keywords.every((kw) => h.toLowerCase().includes(kw.toLowerCase()))
-          ) ?? "";
-
-        const consentCol  = findCol(["list", "directory"]) || findCol(["public", "directory"]) || findCol(["consent"]) || findCol(["list"]);
-        const ventureCol  = findCol(["venture"]) || findCol(["startup"]) || findCol(["business"]);
-        const sectorCol   = findCol(["sector"]) || findCol(["industry"]);
-        const locationCol = findCol(["based"]) || findCol(["location"]) || findCol(["city"]) || findCol(["state"]);
-        const nameCol     = findCol(["your name"]) || findCol(["full name"]) || findCol(["name"]);
-
-        console.log("[Directory] Matched columns:", { consentCol, ventureCol, sectorCol, locationCol, nameCol });
-
-        // If no consent column found, treat all rows as public (public sheet = implicit consent)
-        const noConsentCol = !consentCol;
-
-        let publicFounderCount = 0;
-        let ventureProfiles = 0;
-        const sectors = new Set<string>();
-        const locations = new Set<string>();
-        const recentFounders: Array<{ name: string; venture: string; sector: string; location: string }> = [];
-
-        for (const row of [...rows].reverse()) {
-          const consentValue = (row[consentCol] || "").toLowerCase();
-          const isPublic = noConsentCol || consentValue.includes("yes");
-          if (isPublic) {
-            publicFounderCount++;
-            const venture  = (row[ventureCol]  || "").trim();
-            const sector   = (row[sectorCol]   || "").trim();
-            const location = (row[locationCol] || "").trim();
-            const name     = (row[nameCol]     || "").trim();
-            if (venture) ventureProfiles++;
-            if (sector) sectors.add(sector);
-            if (location) locations.add(location);
-            if (recentFounders.length < 4) {
-              recentFounders.push({ name, venture, sector, location });
-            }
-          }
-        }
-
-        setDirectoryStats({
-          isLoading: false,
-          isError: false,
-          data: {
-            directoryResponses: rows.length,
-            publicFounderCount,
-            ventureProfiles,
-            sectorsRepresented: sectors.size,
-            locationsRepresented: locations.size,
-            recentFounders,
-          },
-          refetch: fetchDirectoryStats,
-        });
-      })
-      .catch(() => {
-        setDirectoryStats((prev) => ({
-          ...prev,
-          isLoading: false,
-          isError: true,
-          refetch: fetchDirectoryStats,
-        }));
-      });
-  };
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
@@ -299,13 +186,6 @@ export default function Home() {
     const closeMenu = () => setIsOpen(false);
     window.addEventListener("resize", closeMenu);
     return () => window.removeEventListener("resize", closeMenu);
-  }, []);
-
-  useEffect(() => {
-    fetchDirectoryStats();
-    const interval = setInterval(fetchDirectoryStats, 5 * 60_000);
-    return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeMenu = () => setIsOpen(false);
