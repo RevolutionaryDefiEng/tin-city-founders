@@ -289,17 +289,12 @@ export async function getLiveDirectoryStats(): Promise<LiveDirectoryStats> {
     };
   } catch (error) {
     console.error("Error fetching live Google Sheet data:", error);
-    // Fallback if the fetch fails
-    return {
-      directoryResponses: 142,
-      publicFounderCount: 118,
-      ventureProfiles: 94,
-      sectorsRepresented: 12,
-      locationsRepresented: 4,
-      recentFounders: [],
-    };
+    // Rethrow so the resilient reader (createDirectoryStatsReader) can serve the
+    // last known-good cached value, and — if there is no cache yet — the client
+    // surfaces its graceful "refreshing / Try again" state. Returning invented
+    // fallback numbers here would hide the failure and display wrong counts.
+    throw error instanceof Error ? error : new Error("Failed to fetch directory statistics");
   }
-
 }
 
 const readResilientDirectoryStats = createDirectoryStatsReader(getLiveDirectoryStats);
