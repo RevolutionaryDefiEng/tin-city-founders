@@ -4,6 +4,7 @@
  * Jos evergreen for trust, Tin Amber for movement, and staggered field-journal layouts.
  */
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
@@ -405,6 +406,9 @@ export default function Home() {
             <a href={builtInJosDirectoryUrl} target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
               Add your founder profile <ArrowUpRight size={18} />
             </a>
+            <Link href="/funding" className="button-text button-text-dark directory-funding-link">
+              See funding you may qualify for <ArrowUpRight size={16} />
+            </Link>
             <span className="directory-footnote">For founders and business owners building in Jos and across Plateau State.</span>
           </div>
           <div className="directory-side" data-reveal>
