@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
+import EventsSection from "@/components/EventsSection";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -548,6 +549,8 @@ export default function Home() {
             </section>
           </div>
         </section>
+
+        <EventsSection />
 
         <section id="partnerships" className="partnerships-section" aria-labelledby="partnerships-title">
           <div className="partnerships-heading" data-reveal>
