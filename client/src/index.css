@@ -452,3 +452,28 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
   .footer-grid { grid-template-columns: 1fr; gap: 33px; padding: 45px 0; }
   .footer-bottom { gap: 8px; }
 }
+
+/* ============================================================
+   Events archive — "Gatherings / Field notes" (Plateau Ledger)
+   ============================================================ */
+.events-section { padding: clamp(70px, 9vw, 120px) 6vw; background: var(--background); }
+.events-inner { max-width: 1180px; margin: 0 auto; }
+.events-head { max-width: 720px; margin-bottom: 40px; }
+.events-head h2 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: clamp(2rem, 4vw, 3.1rem); letter-spacing: -0.035em; margin: 14px 0 12px; }
+.events-head h2 em { color: #b8770c; font-style: italic; }
+.events-head p { font-size: 15px; line-height: 1.7; color: #40514a; margin: 0; }
+.events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+.event-card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.event-card-media { aspect-ratio: 16 / 9; background: #234536; overflow: hidden; }
+.event-card-media img { width: 100%; height: 100%; object-fit: cover; }
+.event-card-media-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #234536, #183c2e); color: #f6d69d; font-family: "DM Serif Display", Georgia, serif; font-size: 30px; }
+.event-card-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.event-card-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #b8770c; }
+.event-card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.event-card-meta .event-count { color: #234536; }
+.event-card h3 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 21px; line-height: 1.12; margin: 0; letter-spacing: -0.02em; }
+.event-card-summary { font-size: 13px; line-height: 1.55; color: #40514a; margin: 0; }
+.event-card-sectors { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.event-card-sectors span { font-size: 10.5px; color: #59665b; background: #f1ece1; padding: 3px 8px; border-radius: 2px; }
+.event-card-outcome { font-size: 12px; color: #234536; margin: 4px 0 0; padding-top: 10px; border-top: 1px solid var(--border); }
+.event-card-outcome strong { color: #b8770c; }

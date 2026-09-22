@@ -1,5 +1,6 @@
 import { COOKIE_NAME } from "@shared/const";
 import { createPartnerEnquiry, getPartnerEnquirySummary, getResilientLiveDirectoryStats, listPartnerEnquiries, updatePartnerEnquiryStatus } from "./db";
+import { getEvents } from "./events";
 import { createDashboardSession, DASHBOARD_SESSION_COOKIE, dashboardLoginSchema, dashboardSessionMaxAgeMs, hasDashboardSession, isValidDashboardCredential } from "./dashboardAuth";
 import { directoryCsvRefreshSchema, latestDirectoryImportSummary, refreshDirectoryFromCsv } from "./directoryImport";
 import { getSessionCookieOptions } from "./_core/cookies";
@@ -31,6 +32,9 @@ export const appRouter = router({
   }),
   directory: router({
     stats: publicProcedure.query(() => getResilientLiveDirectoryStats()),
+  }),
+  events: router({
+    list: publicProcedure.query(() => getEvents()),
   }),
   dashboard: router({
     session: publicProcedure.query(async ({ ctx }) => ({
