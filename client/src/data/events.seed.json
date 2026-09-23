@@ -1,0 +1,26 @@
+[
+  {
+    "id": "founders-circle-q1-2026",
+    "title": "Founders' Circle — Peer Practice Night",
+    "date": "2026-03",
+    "location": "Jos, Plateau State",
+    "participantCount": 42,
+    "sectors": ["Tech / Software", "Creative / Media", "Agritech"],
+    "partners": [],
+    "summary": "An evening of practical peer exchange where Jos builders shared live challenges, opened doors for one another, and turned mutual support into next steps.",
+    "outcome": "New introductions and follow-on collaborations across ventures.",
+    "photoUrl": ""
+  },
+  {
+    "id": "built-in-jos-launch-2026",
+    "title": "Built In Jos — Directory Launch",
+    "date": "2026-02",
+    "location": "Jos, Plateau State",
+    "participantCount": 60,
+    "sectors": ["Commerce / Retail", "Fintech", "Hospitality / Food", "Education"],
+    "partners": [],
+    "summary": "The community gathered to put what they are building on the map — kicking off the Built In Jos founder directory.",
+    "outcome": "Founding cohort of public founder profiles created.",
+    "photoUrl": ""
+  }
+]

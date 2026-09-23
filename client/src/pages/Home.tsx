@@ -9,6 +9,7 @@ import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
 import EventsSection from "@/components/EventsSection";
+import { useDirectoryStats } from "@/_core/hooks/useDirectoryStats";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -169,14 +170,9 @@ export default function Home() {
     },
   });
 
-  // Directory statistics are computed server-side from the published Google
-  // Sheet via the tRPC `directory.stats` endpoint (see server/db.ts). The server
-  // uses a quote/newline-aware CSV parser, so counts match the live sheet — do
-  // not re-parse the CSV in the browser. Refresh every 5 minutes.
-  const directoryStats = trpc.directory.stats.useQuery(undefined, {
-    refetchInterval: 5 * 60_000,
-    refetchOnWindowFocus: false,
-  });
+  // Directory statistics are fetched directly from the published Google Sheets
+  // CSV in the browser — no backend required. Works on both localhost and Vercel.
+  const directoryStats = useDirectoryStats();
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
@@ -243,6 +239,9 @@ export default function Home() {
                 {item.label}
               </a>
             ))}
+            <Link href="/funding" className="nav-link nav-funding-link">
+              Funding <ArrowUpRight size={13} strokeWidth={2.4} />
+            </Link>
           </nav>
           <a href="#contact" className="header-cta">
             Start a conversation <ArrowUpRight size={16} strokeWidth={2.2} />
@@ -262,6 +261,9 @@ export default function Home() {
               {item.label} <ChevronRight size={18} />
             </a>
           ))}
+          <Link href="/funding" onClick={closeMenu} className="mobile-menu-funding">
+            See Funding You May Qualify For <ArrowUpRight size={17} />
+          </Link>
           <a href="#contact" onClick={closeMenu} className="mobile-menu-cta">
             Start a conversation <ArrowUpRight size={17} />
           </a>

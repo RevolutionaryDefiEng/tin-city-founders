@@ -1,11 +1,25 @@
 /**
  * Editorial archive of past Tin City Founders gatherings — theme, participants,
- * sectors, partners, outcomes. Investor-facing proof of momentum. Data comes
- * from the sheet-synced `events.list` endpoint; renders nothing until there is
- * at least one event, so it never shows an empty shell.
+ * sectors, partners, outcomes. Investor-facing proof of momentum.
+ *
+ * Data source: client/src/data/events.seed.json (static import — works on
+ * both localhost and Vercel without any backend). When the boss provides real
+ * event data, replace the contents of that JSON file and redeploy.
  */
-import { trpc } from "@/lib/trpc";
 import { CalendarDays, MapPin, Users } from "lucide-react";
+import seedData from "@/data/events.seed.json";
+
+type TcfEvent = {
+  id: string;
+  title: string;
+  date?: string;
+  location?: string;
+  participantCount?: number;
+  sectors: string[];
+  summary?: string;
+  outcome?: string;
+  photoUrl?: string;
+};
 
 function formatDate(date: string): string {
   const m = date.match(/^(\d{4})-(\d{2})(?:-(\d{2}))?$/);
@@ -17,9 +31,9 @@ function formatDate(date: string): string {
   return `${months[Number(m[2]) - 1] ?? ""} ${m[1]}`.trim() || date;
 }
 
+const list: TcfEvent[] = seedData as TcfEvent[];
+
 export default function EventsSection() {
-  const events = trpc.events.list.useQuery(undefined, { refetchOnWindowFocus: false });
-  const list = events.data ?? [];
   if (!list.length) return null;
 
   return (
