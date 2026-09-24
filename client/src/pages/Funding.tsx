@@ -104,7 +104,7 @@ function OpportunityCard({
             Official page <ArrowUpRight size={15} />
           </a>
         ) : <span className="fund-card-link fund-card-link-muted">Link pending verification</span>}
-        <a href="/#contact" className="fund-card-help">Get help applying</a>
+        <a href="/#partner-enquiry" className="fund-card-help">Get help applying</a>
       </div>
     </article>
   );
@@ -160,7 +160,7 @@ export default function Funding() {
     <div className="fund-page">
       <header className="fund-header">
         <Link href="/" className="fund-back"><ArrowLeft size={16} /> Tin City Founders</Link>
-        <a href="/#contact" className="fund-header-cta">Start a conversation <ArrowUpRight size={15} /></a>
+        <a href="/#partner-enquiry" className="fund-header-cta">Start a conversation <ArrowUpRight size={15} /></a>
       </header>
 
       <section className="fund-hero">

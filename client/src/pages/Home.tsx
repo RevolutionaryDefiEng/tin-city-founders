@@ -178,6 +178,15 @@ export default function Home() {
     const onScroll = () => setIsScrolled(window.scrollY > 32);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
+    if (window.location.hash) {
+      setTimeout(() => {
+        const id = window.location.hash.substring(1);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
