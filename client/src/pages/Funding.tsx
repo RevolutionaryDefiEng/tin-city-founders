@@ -18,7 +18,7 @@ import {
   Sparkles,
   TriangleAlert,
 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+
 import { rankOpportunities } from "@shared/funding/match";
 import { CANONICAL_SECTORS, type FundingOpportunity, type MatchInput, type Sector } from "@shared/funding/types";
 
@@ -110,10 +110,22 @@ function OpportunityCard({
   );
 }
 
+import { normalizeOpportunity, normalizeScam } from "@shared/funding/normalize";
+import type { RawFundingOpportunity, ScamWatchEntry } from "@shared/funding/types";
+
+import tcfSeed from "@/data/fundingBoard.seed.json";
+import globalSeed from "@/data/fundingBoardGlobal.seed.json";
+import scamSeed from "@/data/scamWatch.seed.json";
+
 export default function Funding() {
-  const opportunitiesQuery = trpc.funding.list.useQuery(undefined, { refetchOnWindowFocus: false });
-  const scamQuery = trpc.funding.scamWatch.useQuery(undefined, { refetchOnWindowFocus: false });
-  const all = useMemo(() => opportunitiesQuery.data ?? [], [opportunitiesQuery.data]);
+  const all = useMemo(() => {
+    const rawTcf = tcfSeed as RawFundingOpportunity[];
+    const rawGlobal = globalSeed as RawFundingOpportunity[];
+    const combined = [...rawTcf, ...rawGlobal];
+    return combined.map(normalizeOpportunity).filter((o) => o.opportunity);
+  }, []);
+
+  const scamQuery = { data: scamSeed as ScamWatchEntry[] };
 
   // ---- matcher state ----
   const [match, setMatch] = useState<MatchInput>({});
@@ -232,7 +244,7 @@ export default function Funding() {
             and delivery beyond any one founder’s capacity. Where there is a fee, it is a token for access and hands-on
             help, never a barrier.
           </p>
-          <a href="/#contact" className="button-primary button-primary-amber">Talk to us about support <ArrowUpRight size={17} /></a>
+          <a href="/#partner-enquiry" className="button-primary button-primary-amber">Talk to us about support <ArrowUpRight size={17} /></a>
         </div>
         <ul className="fund-services-list">
           {SUPPORT_SERVICES.map((s) => (
@@ -246,7 +258,7 @@ export default function Funding() {
         <div className="fund-board-head">
           <span className="micro-label"><Filter size={13} /> BROWSE EVERYTHING</span>
           <h2 id="board-title">The full board</h2>
-          <p>{opportunitiesQuery.isLoading ? "Loading opportunities…" : `${filtered.length} of ${all.length} opportunities`}</p>
+          <p>{filtered.length} of {all.length} opportunities</p>
         </div>
 
         <div className="fund-filters">
@@ -265,13 +277,9 @@ export default function Funding() {
           <label className="fund-check"><input type="checkbox" checked={equityFreeOnly} onChange={(e) => setEquityFreeOnly(e.target.checked)} /> Equity-free</label>
         </div>
 
-        {opportunitiesQuery.isError && !all.length ? (
-          <p className="fund-empty">The board is refreshing. Please check back shortly.</p>
-        ) : (
-          <div className="fund-grid">
-            {filtered.map((o) => <OpportunityCard key={o.id} o={o} />)}
-          </div>
-        )}
+        <div className="fund-grid">
+          {filtered.map((o) => <OpportunityCard key={o.id} o={o} />)}
+        </div>
       </section>
 
       {/* ---- Scam watch ---- */}

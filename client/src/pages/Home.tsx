@@ -217,15 +217,28 @@ export default function Home() {
   const handlePartnerEnquiry = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    submitPartnerEnquiry.mutate({
-      organizationName: String(form.get("organizationName") ?? ""),
-      contactName: String(form.get("contactName") ?? ""),
-      contactEmail: String(form.get("contactEmail") ?? ""),
-      organizationType: String(form.get("organizationType") ?? "") as (typeof organizationTypeOptions)[number]["value"],
-      intendedSupport: String(form.get("intendedSupport") ?? "") as (typeof supportOptions)[number]["value"],
-      activationTiming: String(form.get("activationTiming") ?? "") as (typeof activationTimingOptions)[number]["value"],
-      message: String(form.get("message") ?? "") || undefined,
-    });
+    const orgName = String(form.get("organizationName") ?? "");
+    const contactName = String(form.get("contactName") ?? "");
+    const contactEmail = String(form.get("contactEmail") ?? "");
+    const orgType = String(form.get("organizationType") ?? "");
+    const intendedSupport = String(form.get("intendedSupport") ?? "");
+    const activationTiming = String(form.get("activationTiming") ?? "");
+    const message = String(form.get("message") ?? "");
+
+    const subject = encodeURIComponent(`Partnership Enquiry: ${orgName}`);
+    const body = encodeURIComponent(`Organization Name: ${orgName}
+Contact Name: ${contactName}
+Contact Email: ${contactEmail}
+Organization Type: ${orgType}
+Intended Support: ${intendedSupport}
+Activation Timing: ${activationTiming}
+
+Message/Exploration:
+${message}`);
+
+    window.location.href = `mailto:partnerships@tincityfounders.com?subject=${subject}&body=${body}`;
+    setEnquirySent(true);
+    toast.success("Opening your email client...");
   };
 
   return (
