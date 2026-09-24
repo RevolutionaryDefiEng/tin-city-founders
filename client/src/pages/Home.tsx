@@ -33,7 +33,7 @@ import {
 
 const heroImage = "/grounded1.JPG.webp";
 const mentorshipImage = "/grounded2.JPG.webp";
-const workshopImage = "/pathway1.webp";
+const workshopImage = "/pathway.jpeg";
 const womanSpeakerImage = "/speaker2.webp";
 const manSpeakerImage = "/speaker1.webp";
 const blueSpeakerImage = "/speaker4.webp";
