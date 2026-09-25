@@ -81,7 +81,23 @@ const programmeItems = [
   },
 ];
 
-const partnershipItems = [
+type PartnershipItem = {
+  id: string;
+  number: string;
+  title: string;
+  tier: string;
+  text: string;
+  detailTitle: string;
+  detailText: string;
+  scope: string;
+  timeline: string;
+  outcomes: string[];
+  icon: React.ElementType;
+  image: string;
+  imageAlt: string;
+};
+
+const partnershipItems: PartnershipItem[] = [
   {
     id: "programme-sponsorship",
     number: "01",
@@ -145,7 +161,6 @@ const organizationTypeOptions = [
   { value: "international_organization", label: "International organization" },
   { value: "enterprise_platform", label: "Enterprise platform" },
   { value: "impact_funder", label: "Foundation or impact funder" },
-  { value: "foundation", label: "Foundation" },
   { value: "other", label: "Other" },
 ] as const;
 
@@ -567,7 +582,7 @@ export default function Home() {
                   </form>
                 )}
               </div>
-              <a href="#contact" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
+              <a href="#partner-enquiry" className="button-text button-text-dark partnership-conversation-link">Start a partnership conversation <ArrowUpRight size={17} /></a>
             </div>
             <div className="partnership-pathway-grid" aria-label="Partnership pathways" data-reveal-group>
                 {partnershipItems.map((item) => {

@@ -135,8 +135,9 @@ export function useDirectoryStats(): HookResult {
         setData(computeStats(rows));
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         if (cancelled) return;
+        console.error("[useDirectoryStats] Failed to fetch or parse CSV:", err);
         setIsError(true);
         setIsLoading(false);
       });
