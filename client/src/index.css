@@ -253,16 +253,18 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-form label { display: grid; gap: 6px; min-width: 0; }
 .partner-enquiry-form label > span { color: #4e6054; font-size: 8px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; }
 .partner-enquiry-form label > span em { color: #8d8e81; font-size: 7px; font-style: normal; }
-.partner-enquiry-form input, .partner-enquiry-form select, .partner-enquiry-form textarea { width: 100%; border: 1px solid #bfb5a5; border-radius: 0; background: #fffdfa; color: #1f2e25; outline: none; font: inherit; font-size: 12px; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.partner-enquiry-form input, .partner-enquiry-form select, .partner-enquiry-form textarea { width: 100%; border: 1px solid #bfb5a5; border-radius: 0; background: #fffdfa; color: #1f2e25; font: inherit; font-size: 12px; transition: border-color 160ms ease, box-shadow 160ms ease; }
 .partner-enquiry-form input, .partner-enquiry-form select { height: 39px; padding: 0 10px; }
 .partner-enquiry-form textarea { min-height: 76px; padding: 10px; resize: vertical; }
 .partner-enquiry-form input::placeholder, .partner-enquiry-form textarea::placeholder { color: #97958d; }
-.partner-enquiry-form input:focus, .partner-enquiry-form select:focus, .partner-enquiry-form textarea:focus { border-color: #d58c24; box-shadow: 0 0 0 2px rgba(213, 140, 36, 0.18); }
+.partner-enquiry-form input:focus, .partner-enquiry-form select:focus, .partner-enquiry-form textarea:focus { border-color: #d58c24; box-shadow: 0 0 0 2px rgba(213, 140, 36, 0.18); outline: none; }
+.partner-enquiry-form input:focus-visible, .partner-enquiry-form select:focus-visible, .partner-enquiry-form textarea:focus-visible { outline: 2px solid #d58c24; outline-offset: 1px; }
 .partner-enquiry-span { grid-column: 1 / -1; }
 .partner-enquiry-submit { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 45px; margin-top: 15px; border: 0; background: #234536; color: #fffdf7; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; transition: background 160ms ease, transform 160ms ease; }
 .partner-enquiry-submit:hover:not(:disabled) { background: #35634e; }
 .partner-enquiry-submit:active:not(:disabled) { transform: scale(0.98); }
 .partner-enquiry-submit:disabled { cursor: wait; opacity: 0.72; }
+.partner-enquiry-submit:focus-visible { outline: 2px solid #d58c24; outline-offset: 3px; }
 .partner-enquiry-success { display: grid; gap: 8px; padding: 17px; border-left: 3px solid #d58c24; background: #e5ede3; color: #234536; }
 .partner-enquiry-success span { color: #7d4a24; font-size: 8px; letter-spacing: 0.13em; font-weight: 800; }
 .partner-enquiry-success strong { font-family: "DM Serif Display", Georgia, serif; font-size: 20px; line-height: 1.12; font-weight: 400; }
@@ -299,7 +301,8 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .pathway-detail:nth-child(3) { border-top: 4px solid #80907f; }
 .pathway-detail:hover { transform: translateY(-4px); box-shadow: 0 12px 23px rgba(35, 54, 43, 0.11); }
 .pathway-detail-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #7d4a24; font-size: 8px; letter-spacing: 0.1em; font-weight: 800; }
-.pathway-detail h3 { margin: 40px 0 13px; color: #234536; font-size: 30px; line-height: 1; }
+.pathway-tier { margin: 12px 0 0; color: #496053; font-size: 9px; letter-spacing: 0.06em; font-weight: 700; text-transform: uppercase; }
+.pathway-detail h3 { margin: 16px 0 13px; color: #234536; font-size: 30px; line-height: 1; }
 .pathway-detail p { margin: 0 0 17px; color: #556257; font-size: 12px; line-height: 1.65; }
 .pathway-scope { display: grid; gap: 6px; margin: 0 0 17px; padding: 10px 0; border-top: 1px solid #e3dacb; border-bottom: 1px solid #e3dacb; }
 .pathway-scope span { color: #7d4a24; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; }
@@ -309,6 +312,7 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .pathway-detail li::before { content: ""; flex: 0 0 5px; width: 5px; height: 5px; margin-top: 5px; background: #d58c24; transform: rotate(45deg); }
 .pathway-detail-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; color: #234536; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; }
 .pathway-detail-link:hover { color: #8a541f; }
+.pathway-detail-link:focus-visible { outline: 2px solid #d58c24; outline-offset: 3px; }
 
 @media (max-width: 1160px) {
   .header-inner { gap: 23px; }
@@ -507,8 +511,9 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .fund-matcher-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 22px; }
 .fund-matcher-grid label, .fund-filters .fund-check { display: flex; flex-direction: column; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: #40514a; }
 .fund-matcher-grid select, .fund-matcher-grid input[type="number"], .fund-filters select, .fund-search input {
-  width: 100%; border: 1px solid var(--border); border-radius: 0; background: #fffdfa; color: var(--foreground); padding: 11px 12px; font: inherit; font-size: 13px; outline: none; transition: border-color 160ms ease; text-transform: none; font-weight: 500; letter-spacing: 0; }
-.fund-matcher-grid select:focus, .fund-matcher-grid input:focus, .fund-filters select:focus, .fund-search input:focus { border-color: #d58c24; }
+  width: 100%; border: 1px solid var(--border); border-radius: 0; background: #fffdfa; color: var(--foreground); padding: 11px 12px; font: inherit; font-size: 13px; transition: border-color 160ms ease; text-transform: none; font-weight: 500; letter-spacing: 0; }
+.fund-matcher-grid select:focus, .fund-matcher-grid input:focus, .fund-filters select:focus, .fund-search input:focus { border-color: #d58c24; outline: none; }
+.fund-matcher-grid select:focus-visible, .fund-matcher-grid input:focus-visible, .fund-filters select:focus-visible, .fund-search input:focus-visible { outline: 2px solid #d58c24; outline-offset: 1px; }
 .fund-check { flex-direction: row !important; align-items: center; gap: 9px !important; text-transform: none !important; letter-spacing: 0 !important; font-weight: 600 !important; font-size: 13px !important; }
 .fund-check input { width: 16px; height: 16px; accent-color: #d58c24; }
 

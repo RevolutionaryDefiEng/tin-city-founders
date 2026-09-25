@@ -86,11 +86,17 @@ const partnershipItems = [
     id: "programme-sponsorship",
     number: "01",
     title: "Programme sponsorship",
+    tier: "Entry partnership · Defined cohort or series",
     text: "Underwrite a founder cohort, skills series, or learning infrastructure designed around a defined local need.",
     detailTitle: "Anchor a practical season of founder growth.",
     detailText: "Support a clearly defined series of founder gatherings, capability clinics, or mentor-led learning designed around local business needs.",
-    scope: "A defined founder cohort, learning series, or repeatable clinic cycle shaped around one priority need.",
-    outcomes: ["A named founder cohort or learning series", "A shared delivery plan and reporting rhythm", "Thoughtful visibility within a trusted local community"],
+    scope: "A named founder cohort (15–30 participants), learning series, or repeatable clinic cycle shaped around one priority need.",
+    timeline: "4–8 weeks from first conversation to activation.",
+    outcomes: [
+      "Named cohort or series, with a shared delivery plan and milestone check-ins",
+      "Closing impact note documenting participation, topics covered, and founder feedback",
+      "Thoughtful visibility within a trusted local community",
+    ],
     icon: HeartHandshake,
     image: programmeSponsorshipImage,
     imageAlt: "A practical founder learning session led by a mentor",
@@ -99,11 +105,17 @@ const partnershipItems = [
     id: "strategic-collaboration",
     number: "02",
     title: "Strategic collaboration",
+    tier: "Project partnership · Tools, expertise, or market access",
     text: "Bring expertise, technology, market access, or research capacity into a community that values practical exchange.",
     detailTitle: "Put useful expertise and access in the room.",
     detailText: "Co-design a focused activation that connects founders with tools, specialist knowledge, new market relationships, or relevant research capacity.",
-    scope: "A focused activation that brings a partner’s tool, expertise, or market access to a clearly defined founder group.",
-    outcomes: ["A locally adapted activation or workshop", "Direct founder access to practical expertise", "Shared learning captured for future programming"],
+    scope: "A focused activation that brings a partner's tool, expertise, or market access to a clearly defined founder group.",
+    timeline: "6–10 weeks from scoping to delivery.",
+    outcomes: [
+      "A locally adapted activation or workshop, co-designed with Tin City Founders",
+      "Direct founder access to practical expertise or tools for a defined period",
+      "Shared learning captured for future programming",
+    ],
     icon: Network,
     image: strategicCollaborationImage,
     imageAlt: "Tin City Founders members participating in a practical community session",
@@ -112,11 +124,17 @@ const partnershipItems = [
     id: "place-based-investment",
     number: "03",
     title: "Place-based investment",
+    tier: "Strategic partnership · Community infrastructure",
     text: "Help convene solutions that support resilient small businesses and more inclusive local economic development.",
     detailTitle: "Strengthen the conditions that help enterprise stay.",
     detailText: "Invest in the connective work around small businesses: local convening, community infrastructure, and collaborative responses to shared economic challenges.",
     scope: "A community-facing pilot or convening season that advances one shared condition for stronger local enterprise.",
-    outcomes: ["A place-aware scope shaped with local founders", "A coalition approach to shared challenges", "Evidence of participation, learning, and outcomes"],
+    timeline: "8–16 weeks from alignment to first community outcome.",
+    outcomes: [
+      "A place-aware scope shaped with local founders and agreed by both parties",
+      "A coalition approach to shared challenges, with defined roles and a reporting rhythm",
+      "Evidence of participation, learning, and outcomes — usable for your own impact reporting",
+    ],
     icon: Globe2,
     image: placeBasedInvestmentImage,
     imageAlt: "Tin City Founders members in a peer working session with laptops and planning notes",
@@ -126,7 +144,7 @@ const partnershipItems = [
 const organizationTypeOptions = [
   { value: "international_organization", label: "International organization" },
   { value: "enterprise_platform", label: "Enterprise platform" },
-  { value: "impact_funder", label: "Impact funder or investor" },
+  { value: "impact_funder", label: "Foundation or impact funder" },
   { value: "foundation", label: "Foundation" },
   { value: "other", label: "Other" },
 ] as const;
@@ -476,14 +494,14 @@ export default function Home() {
           </div>
           <div className="partnerships-content">
             <div className="partnerships-copy" data-reveal>
-              <p className="lead-copy">We welcome international organizations, enterprise platforms, and impact investors that see local founders as essential partners in inclusive, practical economic development.</p>
+              <p className="lead-copy">We welcome international organizations, enterprise platforms, and impact funders and institutional partners that see local founders as essential partners in inclusive, practical economic development.</p>
               <p>Every partnership begins with a conversation about the local context, the mutual value of collaboration, and the most responsible way to translate resources into lasting capability.</p>
               <div className="prospectus-download-card">
                 <div className="prospectus-card-meta"><span>PARTNERSHIP BRIEF</span><span>2026 · PDF</span></div>
                 <h3>See the community model, sponsorship pathways, and first 90 days.</h3>
                 <p>Built from Tin City Founders’ operating roadmap, founder-spotlight model, and community constitution.</p>
                 <a href={sponsorshipProspectusUrl} download target="_blank" rel="noreferrer" className="button-primary button-primary-amber">
-                  Download sponsorship prospectus <FileDown size={18} />
+                  Download partnership brief <FileDown size={18} />
                 </a>
               </div>
               <div id="partner-enquiry" className="partner-enquiry-form-wrap" aria-labelledby="partner-enquiry-title">
@@ -573,10 +591,12 @@ export default function Home() {
               const Icon = item.icon;
               return (
                 <article id={item.id} className="pathway-detail" key={item.id} data-reveal>
-                  <div className="pathway-detail-top"><span>{item.number} · SPONSORSHIP PATHWAY</span><Icon size={20} strokeWidth={1.8} /></div>
+                  <div className="pathway-detail-top"><span>{item.number} · PARTNERSHIP PATHWAY</span><Icon size={20} strokeWidth={1.8} /></div>
+                  <p className="pathway-tier">{item.tier}</p>
                   <h3>{item.detailTitle}</h3>
                   <p>{item.detailText}</p>
                   <div className="pathway-scope"><span>Typical scope</span><strong>{item.scope}</strong></div>
+                  <div className="pathway-scope"><span>Typical timeline</span><strong>{item.timeline}</strong></div>
                   <ul>
                     {item.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}
                   </ul>
