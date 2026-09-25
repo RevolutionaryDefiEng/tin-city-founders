@@ -5,7 +5,6 @@
  */
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
 import { heroCopy } from "@/lib/brandCopy";
 import { toast } from "sonner";
 import EventsSection from "@/components/EventsSection";
@@ -48,6 +47,15 @@ const builtInJosInvitationImage = "/scan.webp";
 const programmeSponsorshipImage = "/Settings1.jpg.webp";
 const strategicCollaborationImage = "/Settings3.jpg.webp";
 const placeBasedInvestmentImage = "/Settings2.jpg.webp";
+
+// Partner enquiries are delivered to this endpoint. Set VITE_ENQUIRY_ENDPOINT
+// in the environment (Vercel) to a form endpoint that accepts a JSON POST and
+// returns 2xx — e.g. Formspree (https://formspree.io/f/xxxx), Getform, or a
+// Google Apps Script Web App. When it is unset we fall back to an honest mailto
+// hand-off rather than silently dropping the lead and faking success.
+const enquiryEndpoint = ((import.meta.env.VITE_ENQUIRY_ENDPOINT as string | undefined) ?? "").trim();
+const partnershipEmail = "partnerships@tincityfounders.com";
+const partnershipPhone = "+234 707 342 5222";
 
 const navItems = [
   { label: "Our mandate", href: "#mandate" },
@@ -159,16 +167,7 @@ function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [enquirySent, setEnquirySent] = useState(false);
-  const submitPartnerEnquiry = trpc.partnerships.submitEnquiry.useMutation({
-    onSuccess: () => {
-      setEnquirySent(true);
-      toast.success("Your partnership enquiry has been received.");
-    },
-    onError: () => {
-      toast.error("We could not submit your enquiry. Please try again or email the team directly.");
-    },
-  });
+  const [enquiryStatus, setEnquiryStatus] = useState<"idle" | "submitting" | "success" | "mailto" | "error">("idle");
 
   // Directory statistics are fetched directly from the published Google Sheets
   // CSV in the browser — no backend required. Works on both localhost and Vercel.
@@ -223,31 +222,57 @@ export default function Home() {
 
   const closeMenu = () => setIsOpen(false);
 
-  const handlePartnerEnquiry = (event: React.FormEvent<HTMLFormElement>) => {
+  const handlePartnerEnquiry = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const orgName = String(form.get("organizationName") ?? "");
-    const contactName = String(form.get("contactName") ?? "");
-    const contactEmail = String(form.get("contactEmail") ?? "");
-    const orgType = String(form.get("organizationType") ?? "");
-    const intendedSupport = String(form.get("intendedSupport") ?? "");
-    const activationTiming = String(form.get("activationTiming") ?? "");
-    const message = String(form.get("message") ?? "");
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
+    const payload = {
+      organizationName: String(form.get("organizationName") ?? ""),
+      contactName: String(form.get("contactName") ?? ""),
+      contactEmail: String(form.get("contactEmail") ?? ""),
+      organizationType: String(form.get("organizationType") ?? ""),
+      intendedSupport: String(form.get("intendedSupport") ?? ""),
+      activationTiming: String(form.get("activationTiming") ?? ""),
+      message: String(form.get("message") ?? ""),
+    };
 
-    const subject = encodeURIComponent(`Partnership Enquiry: ${orgName}`);
-    const body = encodeURIComponent(`Organization Name: ${orgName}
-Contact Name: ${contactName}
-Contact Email: ${contactEmail}
-Organization Type: ${orgType}
-Intended Support: ${intendedSupport}
-Activation Timing: ${activationTiming}
+    // No server sink configured → honest mailto hand-off. We cannot confirm
+    // delivery, so we never claim the enquiry was "received".
+    if (!enquiryEndpoint) {
+      const subject = encodeURIComponent(`Partnership Enquiry: ${payload.organizationName}`);
+      const body = encodeURIComponent(
+        `Organization Name: ${payload.organizationName}\n` +
+          `Contact Name: ${payload.contactName}\n` +
+          `Contact Email: ${payload.contactEmail}\n` +
+          `Organization Type: ${payload.organizationType}\n` +
+          `Intended Support: ${payload.intendedSupport}\n` +
+          `Activation Timing: ${payload.activationTiming}\n\n` +
+          `Message/Exploration:\n${payload.message}`,
+      );
+      window.location.href = `mailto:${partnershipEmail}?subject=${subject}&body=${body}`;
+      setEnquiryStatus("mailto");
+      return;
+    }
 
-Message/Exploration:
-${message}`);
-
-    window.location.href = `mailto:partnerships@tincityfounders.com?subject=${subject}&body=${body}`;
-    setEnquirySent(true);
-    toast.success("Opening your email client...");
+    setEnquiryStatus("submitting");
+    try {
+      const res = await fetch(enquiryEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...payload,
+          _subject: `Partnership Enquiry: ${payload.organizationName}`,
+        }),
+      });
+      if (!res.ok) throw new Error(`Enquiry endpoint returned ${res.status}`);
+      formEl.reset();
+      setEnquiryStatus("success");
+      toast.success("Your partnership enquiry has been received.");
+    } catch (error) {
+      console.error("[Enquiry] submission failed:", error);
+      setEnquiryStatus("error");
+      toast.error("We couldn't submit your enquiry automatically. Please email the partnership team.");
+    }
   };
 
   return (
@@ -488,10 +513,10 @@ ${message}`);
                   <h3 id="partner-enquiry-title">Tell us where you see the fit.</h3>
                   <p>Share a few details and the partnership team will respond with a locally grounded next step.</p>
                 </div>
-                {enquirySent ? (
+                {enquiryStatus === "success" ? (
                   <div className="partner-enquiry-success" role="status">
                     <span>ENQUIRY RECEIVED</span>
-                    <strong>Thank you. We will review your intended support and follow up using the contact details provided.</strong>
+                    <strong>Thank you. The partnership team will review your intended support and follow up using the contact details you provided.</strong>
                   </div>
                 ) : (
                   <form className="partner-enquiry-form" onSubmit={handlePartnerEnquiry}>
@@ -534,8 +559,19 @@ ${message}`);
                         <textarea name="message" rows={3} maxLength={2000} placeholder="A founder clinic, convening season, tool access, visibility programme, or another idea." />
                       </label>
                     </div>
-                    <button type="submit" className="partner-enquiry-submit" disabled={submitPartnerEnquiry.isPending}>
-                      {submitPartnerEnquiry.isPending ? "Sending enquiry…" : "Send partner enquiry"} <ArrowUpRight size={17} />
+                    {enquiryStatus === "error" ? (
+                      <p className="partner-enquiry-note partner-enquiry-note-error" role="alert">
+                        We couldn't submit your enquiry automatically. Please email{" "}
+                        <a href={`mailto:${partnershipEmail}`}>{partnershipEmail}</a> or call {partnershipPhone} and we'll pick it up right away.
+                      </p>
+                    ) : enquiryStatus === "mailto" ? (
+                      <p className="partner-enquiry-note" role="status">
+                        We've opened your email app to finish sending to{" "}
+                        <a href={`mailto:${partnershipEmail}`}>{partnershipEmail}</a>. If nothing opened, email us there directly or call {partnershipPhone}.
+                      </p>
+                    ) : null}
+                    <button type="submit" className="partner-enquiry-submit" disabled={enquiryStatus === "submitting"}>
+                      {enquiryStatus === "submitting" ? "Sending enquiry…" : "Send partner enquiry"} <ArrowUpRight size={17} />
                     </button>
                   </form>
                 )}

@@ -266,6 +266,9 @@ h1 em, h2 em { color: #d6a45a; font-style: italic; }
 .partner-enquiry-success { display: grid; gap: 8px; padding: 17px; border-left: 3px solid #d58c24; background: #e5ede3; color: #234536; }
 .partner-enquiry-success span { color: #7d4a24; font-size: 8px; letter-spacing: 0.13em; font-weight: 800; }
 .partner-enquiry-success strong { font-family: "DM Serif Display", Georgia, serif; font-size: 20px; line-height: 1.12; font-weight: 400; }
+.partner-enquiry-note { margin: 14px 0 0; padding: 11px 13px; border-left: 3px solid #d58c24; background: #f3ede1; color: #59492e; font-size: 12px; line-height: 1.5; }
+.partner-enquiry-note a { font-weight: 800; color: #234536; text-decoration: underline; }
+.partner-enquiry-note-error { border-left-color: #b4352e; background: #f7ece7; color: #7a3b2f; }
 .partnership-conversation-link { margin-top: 18px; }
 .partnership-pathway-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; align-items: stretch; }
 .partnership-pathway-card { display: grid; min-width: 0; overflow: hidden; border: 1px solid #d2c8b9; background: #fffdfa; color: #234536; text-decoration: none; box-shadow: 0 12px 26px rgba(35, 54, 43, 0.08); transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease; }
