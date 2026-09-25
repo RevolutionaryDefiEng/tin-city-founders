@@ -150,7 +150,70 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+function vitePluginStaticSEO(): Plugin {
+  return {
+    name: "static-seo-generator",
+    closeBundle() {
+      // Run after Vite finishes building to generate static HTML for specific routes
+      const outDir = path.resolve(import.meta.dirname, "dist/public");
+      const indexHtmlPath = path.join(outDir, "index.html");
+      
+      if (!fs.existsSync(indexHtmlPath)) return;
+      const baseHtml = fs.readFileSync(indexHtmlPath, "utf-8");
+
+      // 1. Generate /funding/index.html
+      const fundingDir = path.join(outDir, "funding");
+      fs.mkdirSync(fundingDir, { recursive: true });
+
+      let fundingHtml = baseHtml;
+      
+      // Update Title
+      fundingHtml = fundingHtml.replace(
+        /<title>.*?<\/title>/,
+        "<title>Funding & Opportunities — Tin City Founders</title>"
+      );
+      
+      // Update Descriptions
+      const fundingDesc = "Explore vetted funding opportunities, grants, and technical assistance programs available to startups and small businesses in Jos, Plateau State.";
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+name="description"\s+content="[^"]*"\s*\/>/,
+        `<meta name="description" content="${fundingDesc}" />`
+      );
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+property="og:description"\s+content="[^"]*"\s*\/>/,
+        `<meta property="og:description" content="${fundingDesc}" />`
+      );
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/>/,
+        `<meta name="twitter:description" content="${fundingDesc}" />`
+      );
+      
+      // Update OG Title & Twitter Title
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/,
+        `<meta property="og:title" content="Funding & Opportunities — Tin City Founders" />`
+      );
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/,
+        `<meta name="twitter:title" content="Funding & Opportunities — Tin City Founders" />`
+      );
+
+      // Update Canonical & OG URL
+      fundingHtml = fundingHtml.replace(
+        /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/,
+        `<link rel="canonical" href="https://tincityfounders.com/funding" />`
+      );
+      fundingHtml = fundingHtml.replace(
+        /<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/,
+        `<meta property="og:url" content="https://tincityfounders.com/funding" />`
+      );
+
+      fs.writeFileSync(path.join(fundingDir, "index.html"), fundingHtml, "utf-8");
+    },
+  };
+}
+
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStaticSEO()];
 
 export default defineConfig({
   plugins,

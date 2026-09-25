@@ -48,13 +48,9 @@ const programmeSponsorshipImage = "/Settings1.jpg.webp";
 const strategicCollaborationImage = "/Settings3.jpg.webp";
 const placeBasedInvestmentImage = "/Settings2.jpg.webp";
 
-// Partner enquiries are delivered to this endpoint. Set VITE_ENQUIRY_ENDPOINT
-// in the environment (Vercel) to a form endpoint that accepts a JSON POST and
-// returns 2xx — e.g. Formspree (https://formspree.io/f/xxxx), Getform, or a
-// Google Apps Script Web App. When it is unset we fall back to an honest mailto
-// hand-off rather than silently dropping the lead and faking success.
-const enquiryEndpoint = ((import.meta.env.VITE_ENQUIRY_ENDPOINT as string | undefined) ?? "").trim();
-const partnershipEmail = "partnerships@tincityfounders.com";
+// Partner enquiries are submitted directly to Formspree via POST.
+// No backend or email client required — works on both localhost and Vercel.
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljdlzwz";
 const partnershipPhone = "+234 707 342 5222";
 
 const navItems = [
@@ -167,7 +163,7 @@ function BrandLockup({ variant = "light" }: { variant?: "light" | "dark" }) {
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [enquiryStatus, setEnquiryStatus] = useState<"idle" | "submitting" | "success" | "mailto" | "error">("idle");
+  const [enquiryStatus, setEnquiryStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   // Directory statistics are fetched directly from the published Google Sheets
   // CSV in the browser — no backend required. Works on both localhost and Vercel.
@@ -224,6 +220,7 @@ export default function Home() {
 
   const handlePartnerEnquiry = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (enquiryStatus === "submitting") return; // prevent duplicate submissions
     const formEl = event.currentTarget;
     const form = new FormData(formEl);
     const payload = {
@@ -236,27 +233,9 @@ export default function Home() {
       message: String(form.get("message") ?? ""),
     };
 
-    // No server sink configured → honest mailto hand-off. We cannot confirm
-    // delivery, so we never claim the enquiry was "received".
-    if (!enquiryEndpoint) {
-      const subject = encodeURIComponent(`Partnership Enquiry: ${payload.organizationName}`);
-      const body = encodeURIComponent(
-        `Organization Name: ${payload.organizationName}\n` +
-          `Contact Name: ${payload.contactName}\n` +
-          `Contact Email: ${payload.contactEmail}\n` +
-          `Organization Type: ${payload.organizationType}\n` +
-          `Intended Support: ${payload.intendedSupport}\n` +
-          `Activation Timing: ${payload.activationTiming}\n\n` +
-          `Message/Exploration:\n${payload.message}`,
-      );
-      window.location.href = `mailto:${partnershipEmail}?subject=${subject}&body=${body}`;
-      setEnquiryStatus("mailto");
-      return;
-    }
-
     setEnquiryStatus("submitting");
     try {
-      const res = await fetch(enquiryEndpoint, {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
@@ -264,14 +243,14 @@ export default function Home() {
           _subject: `Partnership Enquiry: ${payload.organizationName}`,
         }),
       });
-      if (!res.ok) throw new Error(`Enquiry endpoint returned ${res.status}`);
+      if (!res.ok) throw new Error(`Formspree returned ${res.status}`);
       formEl.reset();
       setEnquiryStatus("success");
       toast.success("Your partnership enquiry has been received.");
     } catch (error) {
       console.error("[Enquiry] submission failed:", error);
       setEnquiryStatus("error");
-      toast.error("We couldn't submit your enquiry automatically. Please email the partnership team.");
+      toast.error("We couldn't submit your enquiry. Please try again or email the partnership team.");
     }
   };
 
@@ -561,13 +540,7 @@ export default function Home() {
                     </div>
                     {enquiryStatus === "error" ? (
                       <p className="partner-enquiry-note partner-enquiry-note-error" role="alert">
-                        We couldn't submit your enquiry automatically. Please email{" "}
-                        <a href={`mailto:${partnershipEmail}`}>{partnershipEmail}</a> or call {partnershipPhone} and we'll pick it up right away.
-                      </p>
-                    ) : enquiryStatus === "mailto" ? (
-                      <p className="partner-enquiry-note" role="status">
-                        We've opened your email app to finish sending to{" "}
-                        <a href={`mailto:${partnershipEmail}`}>{partnershipEmail}</a>. If nothing opened, email us there directly or call {partnershipPhone}.
+                        We couldn't submit your enquiry. Please try again or email the partnership team directly.
                       </p>
                     ) : null}
                     <button type="submit" className="partner-enquiry-submit" disabled={enquiryStatus === "submitting"}>

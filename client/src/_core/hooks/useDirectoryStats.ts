@@ -22,42 +22,51 @@ export type DirectoryStats = {
   recentFounders: Array<{ name: string; venture: string; sector: string; location: string }>;
 };
 
-/** Browser-compatible CSV parser that respects RFC 4180 quoted fields. */
 function parseCsv(text: string): Array<Record<string, string>> {
-  const parseLine = (line: string): string[] => {
-    const result: string[] = [];
-    let current = "";
-    let inQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (ch === "," && !inQuotes) {
-        result.push(current.trim());
-        current = "";
-      } else {
-        current += ch;
-      }
-    }
-    result.push(current.trim());
-    return result;
-  };
+  const rows: string[][] = [];
+  let currentRow: string[] = [];
+  let currentCell = "";
+  let inQuotes = false;
 
-  const lines = text.split(/\r?\n/);
-  if (lines.length < 2) return [];
-  const headers = parseLine(lines[0]);
-  return lines
-    .slice(1)
-    .filter((l) => l.trim())
-    .map((line) => {
-      const vals = parseLine(line);
-      return Object.fromEntries(headers.map((h, i) => [h, vals[i] ?? ""]));
-    });
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        currentCell += '"';
+        i++; // skip escaped quote
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      currentRow.push(currentCell.trim());
+      currentCell = "";
+    } else if ((char === '\n' || (char === '\r' && nextChar === '\n')) && !inQuotes) {
+      if (char === '\r') i++; // skip \n
+      currentRow.push(currentCell.trim());
+      rows.push(currentRow);
+      currentRow = [];
+      currentCell = "";
+    } else {
+      currentCell += char;
+    }
+  }
+
+  // Push the final cell/row if not empty
+  if (currentCell || currentRow.length > 0) {
+    currentRow.push(currentCell.trim());
+    rows.push(currentRow);
+  }
+
+  // Filter out completely empty rows
+  const validRows = rows.filter(row => row.some(cell => cell !== ""));
+  if (validRows.length < 2) return [];
+
+  const headers = validRows[0];
+  return validRows.slice(1).map((row) => {
+    return Object.fromEntries(headers.map((h, i) => [h, row[i] ?? ""]));
+  });
 }
 
 function computeStats(rows: Array<Record<string, string>>): DirectoryStats {

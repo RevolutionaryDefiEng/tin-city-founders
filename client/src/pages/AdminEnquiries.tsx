@@ -400,5 +400,21 @@ function EnquiriesDashboard() {
 }
 
 export default function AdminEnquiries() {
+  const isStaticProduction = window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1";
+  
+  if (isStaticProduction) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-8 bg-[#f4efe5] text-[#1f2e25]">
+         <div className="text-center max-w-md grid gap-4">
+            <ShieldCheck className="mx-auto h-12 w-12 text-[#d58c24]" />
+            <span className="text-xs font-extrabold tracking-[0.16em] text-[#7d4a24]">RESTRICTED</span>
+            <h1 className="font-serif text-3xl text-[#234536]">Dashboard Unavailable</h1>
+            <p className="text-sm leading-7 text-[#59665b]">The Partner Team dashboard is only accessible via the local administrative server. The production application is static.</p>
+            <Button asChild variant="outline" className="mt-4 border-[#234536] bg-transparent text-[#234536] hover:bg-[#e6ede3]"><Link href="/">Return to website</Link></Button>
+         </div>
+      </div>
+    );
+  }
+
   return <DashboardLayout allowLocalAccess><EnquiriesDashboard /></DashboardLayout>;
 }

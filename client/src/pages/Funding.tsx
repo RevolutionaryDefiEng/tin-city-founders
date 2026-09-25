@@ -4,7 +4,7 @@
  * "How we help you win" services block is the natural monetisation layer.
  * Styled with the Plateau Ledger tokens so it reads as part of the site.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import {
   ArrowLeft,
@@ -142,6 +142,17 @@ export default function Funding() {
   const [openOnly, setOpenOnly] = useState(false);
   const [noCacOnly, setNoCacOnly] = useState(false);
   const [equityFreeOnly, setEquityFreeOnly] = useState(false);
+
+  useEffect(() => {
+    const prev = document.title;
+    document.title = "Funding & Opportunities — Tin City Founders";
+    const prevDesc = document.querySelector("meta[name='description']")?.getAttribute("content") ?? "";
+    document.querySelector("meta[name='description']")?.setAttribute("content", "Explore vetted funding opportunities, grants, and technical assistance programs available to startups and small businesses in Jos, Plateau State.");
+    return () => {
+      document.title = prev;
+      document.querySelector("meta[name='description']")?.setAttribute("content", prevDesc);
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
